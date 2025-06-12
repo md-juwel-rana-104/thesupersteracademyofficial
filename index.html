@@ -13,6 +13,9 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- SweetAlert2 for Success Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         /* CSS Reset and Basic Setup */
         :root {
@@ -616,7 +619,6 @@
                     </div>
                     <div class="achievements-grid">
                         <div class="achievement-card">
-                            <!-- আপনার পাঠানো প্রথম ছবি -->
                             <img src="https://i.imgur.com/KqWqgTj.png" alt="Joypurhat Offline Event - Awarding a Supervisor">
                             <div class="achievement-card-content">
                                 <h3>Joypurhat Offline Business Event</h3>
@@ -624,7 +626,6 @@
                             </div>
                         </div>
                         <div class="achievement-card">
-                             <!-- আপনার পাঠানো দ্বিতীয় ছবি -->
                             <img src="https://i.imgur.com/gK34sVn.png" alt="New Achiever Celebration - Group Photo">
                             <div class="achievement-card-content">
                                 <h3>New Achiever Celebration</h3>
@@ -632,7 +633,6 @@
                             </div>
                         </div>
                         <div class="achievement-card">
-                            <!-- আপনার পাঠানো তৃতীয় ছবি -->
                             <img src="https://i.imgur.com/71oV8vW.png" alt="Leadership Training and Recognition">
                             <div class="achievement-card-content">
                                 <h3>Leadership Recognition</h3>
@@ -900,7 +900,18 @@
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
                     const name = form.querySelector('input[name="Name"]').value;
-                    alert(`Thank you, ${name}! Your registration is successful. We will contact you shortly.`);
+                    
+                    // Show success animation
+                    Swal.fire({
+                        title: 'Success!',
+                        text: `Thank you, ${name}! Your registration is successful. We will contact you shortly.`,
+                        icon: 'success',
+                        confirmButtonText: 'Great!',
+                        background: '#112240',
+                        color: '#ccd6f6',
+                        confirmButtonColor: '#64ffda'
+                    });
+
                     form.reset();
                     districtSelect.innerHTML = '<option value="">Select Division First</option>';
                     districtSelect.disabled = true;
@@ -911,7 +922,16 @@
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
-                    alert('An error occurred. Please try again.');
+                    // Show error animation
+                     Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                        background: '#112240',
+                        color: '#ccd6f6',
+                        confirmButtonColor: '#ff4d4d'
+                    });
                     submitButton.disabled = false;
                     submitButton.innerHTML = 'Secure My Spot Now';
                 });
