@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The SuperSter Academy | Your New Horizon of Success</title>
+    
+    <!-- Google Fonts: Poppins & Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* CSS Reset and Basic Setup */
+        :root {
+            --primary-color: #0a192f; /* Dark Navy */
+            --secondary-color: #112240; /* Lighter Navy */
+            --accent-color: #64ffda; /* Bright Aqua/Teal */
+            --text-light: #ccd6f6;
+            --text-dark: #8892b0;
+            --gold-color: #FFD700;
+            --white-color: #ffffff;
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Roboto', sans-serif;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            font-family: var(--font-secondary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-primary);
+            color: var(--white-color);
+            font-weight: 700;
+        }
+        
+        h1 { font-size: 3.2rem; }
+        h2 { font-size: 2.5rem; margin-bottom: 2rem; }
+        h3 { font-size: 1.8rem; }
+
+        p {
+            font-family: var(--font-secondary);
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .section-padding {
+            padding: 6rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .section-title h2 {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+            color: var(--accent-color);
+        }
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .hidden { display: none !important; }
+        .page {
+            padding-top: 100px;
+            min-height: 100vh;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: var(--font-primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white-color);
+            text-decoration: none;
+        }
+        .logo .highlight { color: var(--accent-color); }
+        .nav-links { list-style: none; display: flex; }
+        .nav-links li { margin-left: 1.5rem; }
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: var(--font-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-color); }
+        .nav-links a.btn { border-width: 2px; padding: 8px 20px;}
+
+        /* Mobile Menu */
+        .menu-icon { display: none; font-size: 1.8rem; color: var(--accent-color); cursor: pointer; }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.9)), url('Juwel-Rana-Achievement.jpg') no-repeat center center/cover;
+            text-align: center;
+        }
+        .hero-content {
+            max-width: 800px;
+            animation: fadeIn 1s ease-out 0.2s;
+            animation-fill-mode: both;
+        }
+        .hero-content .subtitle { color: var(--accent-color); font-size: 1.2rem; font-family: var(--font-primary); margin-bottom: 1rem; }
+        .hero-content h1 {
+            color: var(--white-color);
+            margin-bottom: 1.5rem;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+        .hero-content .tagline { color: var(--gold-color); font-size: 1.5rem; font-family: var(--font-secondary); font-weight: 600; margin-bottom: 2rem; }
+        .hero-content .opportunities { color: var(--text-light); font-size: 1.2rem; font-weight: 500; }
+        
+        /* --- NEW HOME SECTION: How It Works --- */
+        .how-it-works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .step-card { background: var(--secondary-color); padding: 2.5rem; border-radius: 10px; text-align: center; border-bottom: 4px solid var(--accent-color); transition: transform 0.3s ease; }
+        .step-card:hover { transform: translateY(-10px); }
+        .step-card .step-number { font-size: 3rem; font-weight: 800; color: var(--accent-color); line-height: 1; margin-bottom: 1rem; }
+        .step-card h3 { color: var(--white-color); margin-bottom: 1rem; }
+        .step-card p { color: var(--text-dark); font-size: 1rem; }
+
+        /* --- NEW HOME SECTION: Who Is This For? --- */
+        .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .audience-card { background: var(--secondary-color); padding: 2rem; border-radius: 8px; text-align: center; }
+        .audience-card i { font-size: 2.5rem; color: var(--gold-color); margin-bottom: 1rem; }
+        .audience-card h4 { color: var(--text-light); font-size: 1.2rem; }
+        
+        /* STATS Section */
+        .stats-section { background-color: var(--secondary-color); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center; }
+        .stat-card { background: var(--primary-color); padding: 2rem; border-radius: 10px; border-left: 5px solid var(--accent-color); box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .stat-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .stat-card i { font-size: 3rem; color: var(--gold-color); margin-bottom: 1rem; }
+        .stat-card h3 { font-size: 2.5rem; color: var(--white-color); font-family: var(--font-primary); }
+        .stat-card p { color: var(--text-dark); font-size: 1rem; margin: 0; font-family: var(--font-primary); }
+        .rating { color: var(--gold-color); }
+        
+        /* --- NEW HOME SECTION: Testimonial Snippet --- */
+        .home-testimonial { background: var(--secondary-color); padding: 3rem; border-radius: 10px; text-align: center; max-width: 800px; margin: 0 auto; border-left: 5px solid var(--gold-color); }
+        .home-testimonial .quote-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .home-testimonial .quote-text { font-size: 1.3rem; font-style: italic; color: var(--text-light); margin-bottom: 1.5rem; }
+        .home-testimonial .quote-author { font-weight: 700; color: var(--white-color); font-size: 1.1rem; }
+        .home-testimonial .quote-origin { color: var(--text-dark); }
+        
+        /* --- NEW ABOUT SECTION: Mission/Vision --- */
+        #about-page { background-color: var(--secondary-color); }
+        .mission-vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .mission-vision-grid img { width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .mission-vision-content h3 { color: var(--accent-color); font-size: 2rem; margin-bottom: 1rem; }
+
+        /* --- NEW ABOUT SECTION: What Sets Us Apart --- */
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; }
+        .value-card { background: var(--primary-color); padding: 2.5rem 2rem; border-radius: 8px; border-top: 4px solid var(--gold-color); transition: all 0.3s ease; }
+        .value-card:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+        .value-card i { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .value-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+        /* Founders Section (formerly About Page) */
+        .founders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
+        .founder-card { background: var(--primary-color); padding: 2.5rem; border-radius: 10px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-top: 4px solid var(--accent-color); transition: transform 0.3s ease; }
+        .founder-card:hover { transform: translateY(-10px); }
+        .founder-card img { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 1.5rem auto; border: 4px solid var(--accent-color); }
+        .founder-card h3 { color: var(--white-color); font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .founder-card .title { color: var(--accent-color); font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; }
+        .founder-card .info { color: var(--text-light); margin-bottom: 0.5rem; font-size: 1rem; }
+        .founder-card .info strong { color: var(--gold-color); }
+        .founder-card .quote { font-style: italic; color: var(--text-dark); margin-top: 1.5rem; border-left: 3px solid var(--gold-color); padding-left: 1rem; text-align: left; }
+
+        /* Course Outline Page */
+        .timeline { position: relative; max-width: 1000px; margin: 4rem auto 0 auto; }
+        .timeline::after { content: ''; position: absolute; width: 4px; background-color: var(--accent-color); top: 0; bottom: 0; left: 50%; margin-left: -2px; }
+        .timeline-container { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; }
+        .timeline-container.left { left: 0; }
+        .timeline-container.right { left: 50%; }
+        .timeline-container::after { content: ''; position: absolute; width: 25px; height: 25px; right: -12.5px; background-color: var(--white-color); border: 4px solid var(--accent-color); top: 25px; border-radius: 50%; z-index: 1; }
+        .timeline-container.right::after { left: -12.5px; }
+        .timeline-content { padding: 20px 30px; background-color: var(--secondary-color); position: relative; border-radius: 6px; }
+        .timeline-content h3 { color: var(--gold-color); }
+        .timeline-content ul { list-style-type: none; padding-left: 0; }
+        .timeline-content ul li { padding: 5px 0; color: var(--text-dark); }
+        .timeline-content .duration { font-family: var(--font-primary); font-weight: 600; color: var(--accent-color); margin-top: 10px; }
+
+        /* Achievements Page */
+        .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .achievement-card { background: var(--secondary-color); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
+        .achievement-card:hover { transform: translateY(-10px); }
+        .achievement-card img { width: 100%; height: 220px; object-fit: cover; }
+        .achievement-card-content { padding: 1.5rem; }
+        .achievement-card-content h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
+        .achievement-card-content p { color: var(--text-dark); font-size: 1rem; }
+
+        /* Success Stories Page */
+        .story-highlight { background-color: var(--secondary-color); padding: 3rem; border-radius: 10px; margin-bottom: 4rem; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; }
+        .story-highlight img { width: 150px; height: 150px; border-radius: 50%; border: 5px solid var(--gold-color); }
+        .story-highlight h3 { color: var(--white-color); }
+        .story-highlight .role { color: var(--accent-color); }
+        .story-highlight .quote { font-style: italic; color: var(--text-light); }
+
+        .success-timeline { position: relative; max-width: 800px; margin: 2rem auto; padding: 2rem 0; }
+        .success-timeline::before { content: ''; position: absolute; top: 0; left: 20px; height: 100%; width: 3px; background-color: var(--secondary-color); }
+        .timeline-item { margin-left: 60px; position: relative; padding-bottom: 2.5rem; }
+        .timeline-item::before { content: ''; position: absolute; left: -48.5px; top: 5px; width: 16px; height: 16px; border-radius: 50%; background-color: var(--gold-color); border: 3px solid var(--secondary-color); }
+        .timeline-item .date { font-family: var(--font-primary); font-weight: 600; color: var(--accent-color); margin-bottom: 0.25rem; }
+        .timeline-item h4 { color: var(--white-color); font-size: 1.2rem; }
+
+        /* Testimonials Grid */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .testimonial-card { background: var(--secondary-color); padding: 2rem; border-radius: 10px; border-top: 4px solid var(--gold-color); display: flex; flex-direction: column; }
+        .testimonial-card i { font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .testimonial-card p { flex-grow: 1; }
+        .testimonial-card h4 { margin-top: 1rem; color: var(--white-color); }
+        .testimonial-card span { color: var(--text-dark); font-size: 0.9rem; }
+
+        /* Registration Form */
+        #register-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.95); backdrop-filter: blur(5px); z-index: 2000; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 2rem; }
+        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: var(--white-color); cursor: pointer; transition: color 0.3s ease; }
+        .close-btn:hover { color: var(--accent-color); }
+        .form-container { background-color: var(--secondary-color); padding: 3rem; border-radius: 10px; width: 100%; max-width: 700px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); position: relative; }
+        .form-container h2 { text-align: center; color: var(--accent-color); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-light); font-family: var(--font-primary); }
+        .form-group input, .form-group select { width: 100%; padding: 12px; background: var(--primary-color); border: 1px solid var(--text-dark); border-radius: 5px; color: var(--white-color); font-size: 1rem; font-family: var(--font-secondary); }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 5px rgba(100, 255, 218, 0.5); }
+        .form-group input:disabled, .form-group select:disabled { background-color: #2a3950; cursor: not-allowed; }
+        .form-row { display: flex; gap: 1.5rem; }
+        .form-row .form-group { width: 100%; }
+
+        /* Footer */
+        .footer { background-color: var(--secondary-color); padding: 4rem 0 2rem 0; text-align: center; }
+        .footer-logo { font-size: 2rem; font-weight: 700; color: var(--white-color); margin-bottom: 1rem; }
+        .footer-logo .highlight { color: var(--accent-color); }
+        .footer p { margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .social-links a { color: var(--text-dark); font-size: 1.5rem; margin: 0 1rem; transition: color 0.3s ease; }
+        .social-links a:hover { color: var(--accent-color); }
+        .copyright { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--primary-color); color: var(--text-dark); font-size: 0.9rem;}
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+                background-color: var(--secondary-color); flex-direction: column; justify-content: center;
+                align-items: center; transition: right 0.5s ease-in-out; box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links li { margin: 1.5rem 0; }
+            .menu-icon { display: block; z-index: 1001; }
+            .timeline::after { left: 31px; }
+            .timeline-container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-container.left, .timeline-container.right { left: 0%; }
+            .timeline-container::after { left: 18.5px; }
+            .form-row { flex-direction: column; gap: 0; }
+            .founders-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .story-highlight { grid-template-columns: 1fr; text-align: center; }
+            .story-highlight img { margin: 0 auto 1rem auto; }
+            .mission-vision-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="#" class="logo" onclick="showPage('home-page', document.querySelector('.nav-links a'))">SuperSter<span class="highlight">Academy</span></a>
+            <nav>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#" onclick="showPage('home-page', this)" class="active">Home</a></li>
+                    <li><a href="#" onclick="showPage('about-page', this)">About Us</a></li>
+                    <li><a href="#" onclick="showPage('course-page', this)">Course</a></li>
+                    <li><a href="#" onclick="showPage('achievements-page', this)">Achievements</a></li>
+                    <li><a href="#" onclick="showPage('stories-page', this)">Success Stories</a></li>
+                    <li><a href="#" class="btn" onclick="showPage('register-page', this)">Join Now</a></li>
+                </ul>
+            </nav>
+            <div class="menu-icon" id="menu-icon">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Page Content -->
+        <div id="home-page" class="page">
+            
+            <section class="hero">
+                <div class="hero-content container">
+                    <p class="subtitle">Welcome to The SuperSter Academy</p>
+                    <h1>Transform Your Life with Online Success</h1>
+                    <p class="opportunities">Opportunity: Active Income & Passive Income & Time Leverage</p>
+                    <p class="tagline">Join thousands who earn $500-$2000+ monthly using just their smartphone.</p>
+                    <a href="#" onclick="showPage('register-page', document.querySelector('.nav-links a.btn'))" class="btn">Start Your Journey Today</a>
+                </div>
+            </section>
+            
+            <!-- ====== NEW HOME SECTION: HOW IT WORKS ====== -->
+            <section class="how-it-works-section section-padding">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Your Journey to Success in 3 Simple Steps</h2>
+                    </div>
+                    <div class="how-it-works-grid">
+                        <div class="step-card">
+                            <div class="step-number">01</div>
+                            <h3>Register & Learn</h3>
+                            <p>Join our free 5-day masterclass to understand the entire system from A to Z. No prior experience needed!</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">02</div>
+                            <h3>Implement & Grow</h3>
+                            <p>Apply our proven strategies with guidance from expert mentors. Start building your online business from day one.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">03</div>
+                            <h3>Earn & Inspire</h3>
+                            <p>Achieve your financial goals and become a part of our success community, helping others to achieve their dreams.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== NEW HOME SECTION: WHO IS THIS FOR? ====== -->
+            <section class="who-is-this-for-section section-padding" style="background-color: var(--secondary-color);">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Who Can Join Our Academy?</h2>
+                        <p style="text-align: center; max-width: 800px; margin: -2rem auto 0 auto;">Our platform is designed for anyone with a dream and a smartphone. If you have the will, we have the way.</p>
+                    </div>
+                    <div class="audience-grid">
+                        <div class="audience-card"><i class="fas fa-user-graduate"></i><h4>Students</h4></div>
+                        <div class="audience-card"><i class="fas fa-house-user"></i><h4>Homemakers</h4></div>
+                        <div class="audience-card"><i class="fas fa-user-tie"></i><h4>Job Holders</h4></div>
+                        <div class="audience-card"><i class="fas fa-briefcase"></i><h4>Unemployed</h4></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stats-section section-padding">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <h3>12,000+</h3>
+                            <p>Successful Members</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-dollar-sign"></i>
+                            <h3>$2M+</h3>
+                            <p>Combined Monthly Earnings</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>98%</h3>
+                            <p>Success Rate</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-star"></i>
+                            <h3 class="rating">4.9<span style="font-size: 1.5rem;">/5</span></h3>
+                            <p>Student Satisfaction</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== NEW HOME SECTION: TESTIMONIAL SNIPPET ====== -->
+            <section class="home-testimonial-section section-padding">
+                <div class="container">
+                    <div class="home-testimonial">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p class="quote-text">I used to drive a CNG, working long hours for little pay. I saw an ad and took a chance. Now, my monthly income is over $7000. I can't believe this is my life!</p>
+                        <h4 class="quote-author">- A Top Earner</h4>
+                        <p class="quote-origin">Formerly a CNG Driver</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- About Page Content -->
+        <div id="about-page" class="page hidden">
+            <!-- ====== NEW ABOUT SECTION: MISSION & VISION ====== -->
+            <section class="section-padding">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Our Story: A Vision for a Better Future</h2>
+                    </div>
+                    <div class="mission-vision-grid">
+                        <div class="mission-vision-image">
+                            <img src="https://placehold.co/600x450/112240/ffffff?text=Our+Vision" alt="Our Vision">
+                        </div>
+                        <div class="mission-vision-content">
+                            <h3>Our Mission</h3>
+                            <p>To empower individuals from all walks of life by providing a legitimate, sustainable, and scalable online earning platform. We strive to eliminate financial insecurity by teaching practical skills that generate real-world income.</p>
+                            <h3>Our Vision</h3>
+                            <p>We envision a world where anyone, regardless of their background or location, can achieve financial freedom and live life on their own terms. The SuperSter Academy aims to be the leading catalyst for this transformation globally.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== NEW ABOUT SECTION: WHAT SETS US APART ====== -->
+            <section class="section-padding" style="background-color: var(--primary-color);">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Why The SuperSter Academy Succeeds</h2>
+                        <p style="text-align: center; max-width: 800px; margin: -2rem auto 0 auto;">Our success is built on a foundation of core principles that ensure every member has the best chance to thrive.</p>
+                    </div>
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <i class="fas fa-cogs"></i>
+                            <h3>Proven System</h3>
+                            <p>We don't guess. Our strategies are based on a time-tested model that has already created thousands of success stories.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-users-cog"></i>
+                            <h3>Expert Mentorship</h3>
+                            <p>Learn directly from industry veterans who have walked the path and are dedicated to guiding you every step of the way.</p>
+                        </div>
+                        <div class="value-card">
+                            <i class="fas fa-heart"></i>
+                            <h3>Supportive Community</h3>
+                            <p>You are never alone. Join a vibrant community of like-minded individuals who celebrate your wins and support you through challenges.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-section section-padding">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Meet Our Founders</h2>
+                    </div>
+                    
+                    <div class="founders-grid">
+                        <!-- Mr. Omar Faruk -->
+                        <div class="founder-card">
+                            <img src="https://placehold.co/120x120/6a11cb/ffffff?text=OF" alt="Mr. Omar Faruk">
+                            <h3>Mr. Omar Faruk</h3>
+                            <p class="title">Founder & Senior Manager</p>
+                            <p class="info"><strong>Experience:</strong> 9+ Years</p>
+                            <p class="info"><strong>Monthly Income:</strong> $11,000+</p>
+                            <p class="info"><strong>Students Mentored:</strong> 10,000+</p>
+                            <p class="quote">"Success is not just about earning money, it's about transforming lives and creating opportunities for others."</p>
+                        </div>
+
+                        <!-- Mr. Juwel Rana -->
+                        <div class="founder-card">
+                            <img src="https://placehold.co/120x120/2575fc/ffffff?text=JR" alt="Mr. Juwel Rana">
+                            <h3>Mr. Juwel Rana</h3>
+                            <p class="title">Co-Founder & Assistant Manager</p>
+                            <p class="info"><strong>Monthly Income:</strong> $1,000+</p>
+                            <p class="info"><strong>Journey Started:</strong> March 23, 2023</p>
+                            <p class="info"><strong>Growth Rate:</strong> 2000% in 22 months</p>
+                            <p class="quote">"From zero to hero, if I can do it, anyone can. The key is taking that first courageous step with the right guide."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Course Outline Page Content -->
+        <div id="course-page" class="page hidden">
+            <section class="course-section section-padding">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>5-Day Transformation Program</h2>
+                        <p style="text-align: center; max-width: 800px; margin: -2rem auto 0 auto;">Master the complete online earning ecosystem in just 5 days with our intensive, practical curriculum.</p>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-container left">
+                            <div class="timeline-content">
+                                <h3>Day 1: Digital Earning Opportunity</h3>
+                                <ul>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Active vs. Passive Income</li>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> The Concept of Time Leverage</li>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> ESBI Model Analysis</li>
+                                </ul>
+                                <p class="duration">Duration: 40 Minutes</p>
+                            </div>
+                        </div>
+                        <div class="timeline-container right">
+                            <div class="timeline-content">
+                                <h3>Day 2: Industry Direction</h3>
+                                <ul>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Intro to Forever Living Products</li>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Global Market: 85% Aloe Vera & 89% Honey</li>
+                                </ul>
+                                <p class="duration">Duration: 1 Hour 10 Minutes</p>
+                            </div>
+                        </div>
+                        <div class="timeline-container left">
+                            <div class="timeline-content">
+                                <h3>Day 3: The Marketing Plan</h3>
+                                <ul>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> World's Easiest Marketing Plan</li>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> 12 Different Types of Income Projects</li>
+                                </ul>
+                                <p class="duration">Duration: 1 Hour 30 Minutes</p>
+                            </div>
+                        </div>
+                        <div class="timeline-container right">
+                            <div class="timeline-content">
+                                <h3>Day 4: Product Knowledge</h3>
+                                <ul>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> World's Best Health & Wellness Products</li>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Understanding Product Quality and Benefits</li>
+                                </ul>
+                                <p class="duration">Duration: 1 Hour 10 Minutes</p>
+                            </div>
+                        </div>
+                        <div class="timeline-container left">
+                            <div class="timeline-content">
+                                <h3>Day 5: How to Start Your Business</h3>
+                                <ul>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Fast, Medium, & Slow Business Tracks</li>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Why This is Crucial For You</li>
+                                    <li><i class="fas fa-check" style="color: var(--accent-color);"></i> Live Q&A Session</li>
+                                </ul>
+                                <p class="duration">Duration: 1 Hour 15 Minutes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Achievements Page Content -->
+        <div id="achievements-page" class="page hidden">
+            <section class="achievements-section section-padding">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Our Community in Action</h2>
+                        <p style="text-align: center; max-width: 800px; margin: -2rem auto 0 auto;">We believe in celebrating every milestone. Here's a glimpse of our vibrant community events and achievements.</p>
+                    </div>
+                    <div class="achievements-grid">
+                        <div class="achievement-card">
+                            <!-- আপনার পাঠানো প্রথম ছবি -->
+                            <img src="https://i.imgur.com/KqWqgTj.png" alt="Joypurhat Offline Event - Awarding a Supervisor">
+                            <div class="achievement-card-content">
+                                <h3>Joypurhat Offline Business Event</h3>
+                                <p>Celebrating our new achievers at a vibrant offline event in Joypurhat. Here, a new Supervisor is being awarded for their outstanding performance.</p>
+                            </div>
+                        </div>
+                        <div class="achievement-card">
+                             <!-- আপনার পাঠানো দ্বিতীয় ছবি -->
+                            <img src="https://i.imgur.com/gK34sVn.png" alt="New Achiever Celebration - Group Photo">
+                            <div class="achievement-card-content">
+                                <h3>New Achiever Celebration</h3>
+                                <p>A proud moment for our top performers and mentors. This group photo captures the spirit of community and shared success that defines our academy.</p>
+                            </div>
+                        </div>
+                        <div class="achievement-card">
+                            <!-- আপনার পাঠানো তৃতীয় ছবি -->
+                            <img src="https://i.imgur.com/71oV8vW.png" alt="Leadership Training and Recognition">
+                            <div class="achievement-card-content">
+                                <h3>Leadership Recognition</h3>
+                                <p>An exclusive moment where a high-achieving member receives a special award, recognizing their dedication and leadership within the community.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Success Stories Page Content -->
+        <div id="stories-page" class="page hidden">
+            <section class="stories-section section-padding">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>From Zero to Hero: Real Success Stories</h2>
+                    </div>
+
+                    <div class="story-highlight">
+                        <img src="https://placehold.co/150x150/2575fc/ffffff?text=JR" alt="Juwel Rana">
+                        <div>
+                            <h3>The Journey of Mr. Juwel Rana</h3>
+                            <p class="role">Co-Founder & Top Mentor</p>
+                            <p class="quote">"I started with nothing but a dream. Today, I'm living it and helping others do the same. This system works."</p>
+                        </div>
+                    </div>
+
+                    <div class="success-timeline">
+                        <div class="timeline-item">
+                            <p class="date">March 2023</p>
+                            <h4>The Beginning</h4>
+                            <p>Started with zero knowledge but immense determination.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <p class="date">June 2023</p>
+                            <h4>First Success</h4>
+                            <p>Completed the training and earned the first $100 online.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <p class="date">December 2023</p>
+                            <h4>The Breakthrough</h4>
+                            <p>Crossed the $1,000 monthly income milestone.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <p class="date">Present Day</p>
+                            <h4>Giving Back</h4>
+                            <p>Became a Co-Founder, now mentoring thousands of students towards their own success.</p>
+                        </div>
+                    </div>
+
+                    <h3 style="text-align: center; font-size: 2rem; color: var(--white-color); margin: 4rem 0 2rem 0;">What Our Students Say</h3>
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"As a student, I struggled to manage my expenses. Thanks to this academy, I now earn over $1000 a month and support my family. It's truly life-changing!"</p>
+                            <h4>- An Aspiring Student</h4>
+                            <span>Monthly Income: $1,000+</span>
+                        </div>
+                        <div class="testimonial-card">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"I used to drive a CNG, working long hours for little pay. I saw an ad and took a chance. Now, my monthly income is over $7000. I can't believe this is my life!"</p>
+                            <h4>- Former CNG Driver</h4>
+                            <span>Monthly Income: $7,000+</span>
+                        </div>
+                        <div class="testimonial-card">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"Being a homemaker, I never thought I could have a career. The SuperSter Academy gave me the confidence and skills to build my own business from home. I feel so empowered!"</p>
+                            <h4>- A Successful Homemaker</h4>
+                            <span>Building Her Empire</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Registration Page Content (FORM) -->
+        <div id="register-page" class="page hidden">
+            <span class="close-btn" onclick="closeForm()">×</span>
+            <div class="form-container">
+                <h2>Register for the Free Masterclass</h2>
+                <form id="registration-form" name="registration-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mentor-name">Mentor's Name (if any)</label>
+                        <input type="text" id="mentor-name" name="MentorName" placeholder="Enter mentor's name">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="division">Division</label>
+                            <select id="division" name="Division" required>
+                                <option value="">Select Division</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="district">District</label>
+                            <select id="district" name="District" required disabled>
+                                <option value="">Select Division First</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="upazila">Upazila / Thana</label>
+                        <input type="text" id="upazila" name="Upazila" placeholder="Enter your Upazila / Thana" required disabled>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="number">Mobile Number</label>
+                            <input type="tel" id="number" name="Mobile" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp Number</label>
+                            <input type="tel" id="whatsapp" name="WhatsApp" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profession">Profession</label>
+                        <select id="profession" name="Profession" required>
+                            <option value="">Select Profession</option>
+                            <option value="student">Student</option>
+                            <option value="housewife">Homemaker</option>
+                            <option value="service_holder">Service Holder / Job</option>
+                            <option value="businessman">Businessman</option>
+                            <option value="freelancer">Freelancer</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="engineer">Engineer</option>
+                            <option value="expatriate">Expatriate</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="facebook-id">Facebook Profile Link</label>
+                        <input type="url" id="facebook-id" name="FacebookLink" required>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Secure My Spot Now</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">SuperSter<span class="highlight">Academy</span></div>
+            <p>The most trusted platform for online earning opportunities. We've helped over 12,000 people achieve financial freedom through our proven system. Join us and become a superstar yourself!</p>
+            <div class="social-links">
+                 <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                 <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                 <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                 <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="copyright">
+                <p>© 2024 The SuperSter Academy. All Rights Reserved. Designed for success.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const addressData = {
+            'Dhaka': ['Dhaka', 'Faridpur', 'Gazipur', 'Gopalganj', 'Kishoreganj', 'Madaripur', 'Manikganj', 'Munshiganj', 'Narayanganj', 'Narsingdi', 'Rajbari', 'Shariatpur', 'Tangail'],
+            'Chattogram': ['Chattogram', 'Bandarban', 'Brahmanbaria', 'Chandpur', 'Cumilla', 'Cox\'s Bazar', 'Feni', 'Khagrachhari', 'Lakshmipur', 'Noakhali', 'Rangamati'],
+            'Rajshahi': ['Rajshahi', 'Bogra', 'Joypurhat', 'Naogaon', 'Natore', 'Chapainawabganj', 'Pabna', 'Sirajganj'],
+            'Khulna': ['Khulna', 'Bagerhat', 'Chuadanga', 'Jashore', 'Jhenaidah', 'Kushtia', 'Magura', 'Meherpur', 'Narail', 'Satkhira'],
+            'Barishal': ['Barishal', 'Barguna', 'Bhola', 'Jhalokati', 'Patuakhali', 'Pirojpur'],
+            'Sylhet': ['Sylhet', 'Habiganj', 'Moulvibazar', 'Sunamganj'],
+            'Rangpur': ['Rangpur', 'Dinajpur', 'Gaibandha', 'Kurigram', 'Lalmonirhat', 'Nilphamari', 'Panchagarh', 'Thakurgaon'],
+            'Mymensingh': ['Mymensingh', 'Jamalpur', 'Netrokona', 'Sherpur']
+        };
+
+        const divisionSelect = document.getElementById('division');
+        const districtSelect = document.getElementById('district');
+        const upazilaInput = document.getElementById('upazila'); 
+
+        window.onload = () => {
+            for (const division in addressData) {
+                const option = document.createElement('option');
+                option.value = division;
+                option.textContent = division;
+                divisionSelect.appendChild(option);
+            }
+        };
+
+        divisionSelect.onchange = () => {
+            const selectedDivision = divisionSelect.value;
+            districtSelect.innerHTML = '<option value="">Select District</option>';
+            districtSelect.disabled = true;
+            upazilaInput.value = ''; 
+            upazilaInput.disabled = true;
+
+            if (selectedDivision && addressData[selectedDivision]) {
+                const districts = addressData[selectedDivision];
+                districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+                districtSelect.disabled = false;
+            }
+        };
+
+        districtSelect.onchange = () => {
+            const selectedDistrict = districtSelect.value;
+            if (selectedDistrict) {
+                upazilaInput.disabled = false;
+                upazilaInput.focus();
+            } else {
+                upazilaInput.disabled = true;
+            }
+        };
+        
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        function showPage(pageId, clickedLink) {
+            pages.forEach(page => page.classList.add('hidden'));
+            
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+
+            if (clickedLink && !clickedLink.classList.contains('btn')) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                clickedLink.classList.add('active');
+            }
+
+            const mobileNav = document.getElementById('nav-links');
+            mobileNav.classList.remove('active');
+            
+            document.body.style.overflow = (pageId === 'register-page') ? 'hidden' : 'auto';
+            if (pageId !== 'register-page') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        function closeForm() {
+            showPage('home-page', document.querySelector('.nav-links a[onclick*="home-page"]'));
+        }
+
+        const menuIcon = document.getElementById('menu-icon');
+        const navLinksMobile = document.getElementById('nav-links');
+        menuIcon.addEventListener('click', () => {
+            navLinksMobile.classList.toggle('active');
+        });
+        
+        const form = document.forms['registration-form'];
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxqZALYvEWYjvWSj65MxJwx6-r12o8moQAvR-EOph55zvNlVa4d6IxsivqeMP44Czvo3g/exec';
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Submitting...';
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    const name = form.querySelector('input[name="Name"]').value;
+                    alert(`Thank you, ${name}! Your registration is successful. We will contact you shortly.`);
+                    form.reset();
+                    districtSelect.innerHTML = '<option value="">Select Division First</option>';
+                    districtSelect.disabled = true;
+                    upazilaInput.disabled = true;
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Secure My Spot Now';
+                    closeForm();
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('An error occurred. Please try again.');
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Secure My Spot Now';
+                });
+        });
+
+        // Initialize with home page
+        showPage('home-page', document.querySelector('.nav-links a[onclick*="home-page"]'));
+    </script>
+</body>
+</html>
