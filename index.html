@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The SuperSter Academy | System Interface</title>
+    <title>The Superster Academy | System Interface</title>
 
     <!-- Google Fonts: Poppins, Roboto, and Share Tech Mono for the loader -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,7 +62,7 @@
         }
 
         /* =================================================================== */
-        /* START: HACKER PRELOADER CSS (নতুন অংশ) */
+        /* START: HACKER PRELOADER CSS */
         /* =================================================================== */
         #preloader {
             position: fixed;
@@ -433,6 +433,98 @@
         .testimonial-card h4 { margin-top: 1rem; color: var(--white-color); }
         .testimonial-card span { color: var(--text-dark); font-size: 0.9rem; }
 
+        /* START: NEW COMMENT SECTION CSS */
+        .comments-section {
+            background-color: var(--primary-color);
+        }
+        .comments-list {
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .comment-card {
+            background: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: flex;
+            gap: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        .comment-card.new-comment-animation {
+             animation: fadeIn 0.5s ease-out; /* Animation only for new user comments */
+        }
+        .comment-avatar {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .comment-body {
+            flex-grow: 1;
+        }
+        .comment-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .comment-meta .name {
+            font-weight: 700;
+            color: var(--white-color);
+            font-size: 1.1rem;
+        }
+        .comment-meta .date {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+        }
+        .comment-text {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin: 0;
+            white-space: pre-wrap; /* To respect line breaks */
+            word-break: break-word;
+        }
+        .comment-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--secondary-color);
+            padding: 2.5rem;
+            border-radius: 10px;
+        }
+        .comment-form-container h3 {
+            text-align: center;
+            color: var(--gold-color);
+            margin-bottom: 2rem;
+        }
+        #comment-form textarea {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            border: 1px solid var(--text-dark);
+            border-radius: 5px;
+            color: var(--white-color);
+            font-size: 1rem;
+            font-family: var(--font-secondary);
+            min-height: 120px;
+            resize: vertical;
+        }
+        #comment-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(100, 255, 218, 0.5);
+        }
+        /* END: NEW COMMENT SECTION CSS */
+
+
         /* Registration Form */
         #register-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.95); backdrop-filter: blur(5px); z-index: 2000; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 2rem; }
         .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: var(--white-color); cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; }
@@ -441,8 +533,8 @@
         .form-container h2 { text-align: center; color: var(--accent-color); }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-light); font-family: var(--font-primary); }
-        .form-group input, .form-group select { width: 100%; padding: 12px; background: var(--primary-color); border: 1px solid var(--text-dark); border-radius: 5px; color: var(--white-color); font-size: 1rem; font-family: var(--font-secondary); }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 5px rgba(100, 255, 218, 0.5); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; background: var(--primary-color); border: 1px solid var(--text-dark); border-radius: 5px; color: var(--white-color); font-size: 1rem; font-family: var(--font-secondary); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 5px rgba(100, 255, 218, 0.5); }
         .form-group input:disabled, .form-group select:disabled { background-color: #2a3950; cursor: not-allowed; opacity: 0.7; }
         .form-row { display: flex; gap: 1.5rem; }
         .form-row .form-group { width: 100%; }
@@ -452,6 +544,61 @@
         .iti__country:hover, .iti__country.iti__highlight { background-color: var(--primary-color); }
         .iti__dial-code { color: var(--text-dark); }
         .swal2-container { z-index: 3000; }
+
+        .required-star {
+            color: var(--gold-color);
+            margin-left: 4px;
+        }
+        .social-link-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .social-link-row select {
+            width: 150px;
+            flex-shrink: 0;
+        }
+        .social-link-row input {
+            flex-grow: 1;
+        }
+        .remove-social-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: background 0.3s ease;
+        }
+        .remove-social-btn:hover {
+            background: #c93737;
+        }
+        .remove-social-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        #add-social-link-btn {
+            width: auto;
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--gold-color);
+            color: var(--gold-color);
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        #add-social-link-btn:hover {
+            background: var(--gold-color);
+            color: var(--primary-color);
+        }
+
 
         /* Light Trail Effect */
         .trail {
@@ -504,13 +651,27 @@
             .story-highlight { grid-template-columns: 1fr; text-align: center; }
             .story-highlight img { margin: 0 auto 1rem auto; }
             .mission-vision-grid { grid-template-columns: 1fr; }
+
+            /* Social links responsive */
+            .social-link-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .social-link-row select {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .remove-social-btn {
+                width: 100%;
+                border-radius: 5px;
+            }
         }
     </style>
 
 </head>
 <body>
 
-<!-- START: HACKER PRELOADER HTML (নতুন অংশ) -->
+<!-- START: HACKER PRELOADER HTML -->
 <div id="preloader">
     <div class="preloader-content">
         <div id="loader-text-container">
@@ -526,7 +687,7 @@
 <!-- HEADER & NAVIGATION -->
 <header class="header">
     <div class="container navbar">
-        <a href="#" class="logo" onclick="showPage('home-page', document.querySelector('.nav-links a'))">SuperSter<span class="highlight">Academy</span></a>
+        <a href="#" class="logo" onclick="showPage('home-page', this)">The Superster<span class="highlight">Academy</span></a>
         <nav>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#" onclick="showPage('home-page', this)" class="active">Home</a></li>
@@ -545,18 +706,16 @@
 <main>
     <!-- Home Page Content -->
     <div id="home-page" class="page">
-
         <section class="hero">
             <canvas id="hero-canvas"></canvas>
             <div class="hero-content container">
-                <p class="subtitle">Welcome to The SuperSter Academy</p>
+                <p class="subtitle">Welcome to The Superster Academy</p>
                 <h1>Transform Your Life with Online Success</h1>
                 <p class="opportunities">Opportunity: Active Income & Passive Income & Time Leverage</p>
                 <p class="tagline">Join thousands who earn $500-$2000+ monthly using just their smartphone.</p>
-                <a href="#" onclick="showPage('register-page', document.querySelector('.nav-links a.btn'))" class="btn">Start Your Journey Today</a>
+                <a href="#" class="btn" onclick="showPage('register-page', this)">Start Your Journey Today</a>
             </div>
         </section>
-
         <section class="how-it-works-section section-padding">
             <div class="container">
                 <div class="section-title reveal">
@@ -581,7 +740,6 @@
                 </div>
             </div>
         </section>
-
         <section class="who-is-this-for-section section-padding" style="background-color: var(--secondary-color);">
             <div class="container">
                 <div class="section-title reveal">
@@ -596,7 +754,6 @@
                 </div>
             </div>
         </section>
-
         <section class="stats-section section-padding">
             <div class="container">
                 <div class="stats-grid">
@@ -623,7 +780,6 @@
                 </div>
             </div>
         </section>
-
         <section class="home-testimonial-section section-padding">
             <div class="container">
                 <div class="home-testimonial reveal">
@@ -667,7 +823,6 @@
                 </div>
             </div>
         </section>
-
         <section class="section-padding">
             <div class="container">
                 <div class="section-title reveal">
@@ -675,7 +830,7 @@
                 </div>
                 <div class="mission-vision-grid">
                     <div class="mission-vision-image reveal">
-                        <img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/female.jpg?raw=true" alt="Empowered members of The SuperSter Academy">
+                        <img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/female.jpg?raw=true" alt="Empowered members of The Superster Academy">
                     </div>
                     <div class="mission-vision-content reveal">
                         <div class="mission-vision-item">
@@ -690,11 +845,10 @@
                 </div>
             </div>
         </section>
-
         <section class="section-padding" style="background-color: var(--primary-color);">
             <div class="container">
                 <div class="section-title reveal">
-                    <h2>Why The SuperSter Academy Succeeds</h2>
+                    <h2>Why The Superster Academy Succeeds</h2>
                     <p style="text-align: center; max-width: 800px; margin: -2rem auto 0 auto;">Our success is built on a foundation of core principles that ensure every member has the best chance to thrive.</p>
                 </div>
                 <div class="values-grid">
@@ -818,7 +972,7 @@
                         <img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/IMG_20250621_230550.remini-enhanced.jpg?raw=true" alt="Team Strategy Session">
                         <div class="achievement-card-content">
                             <h3>Interactive Team Training</h3>
-                            <p>Our members engage in dynamic training sessions, sharing strategies and fostering a collaborative environment. Success is a team sport at SuperSter Academy.</p>
+                            <p>Our members engage in dynamic training sessions, sharing strategies and fostering a collaborative environment. Success is a team sport at The Superster Academy.</p>
                         </div>
                     </div>
                 </div>
@@ -882,13 +1036,45 @@
                     </div>
                     <div class="testimonial-card reveal">
                         <i class="fas fa-quote-left"></i>
-                        <p>"Being a homemaker, I never thought I could have a career. The SuperSter Academy gave me the confidence and skills to build my own business from home. I feel so empowered!"</p>
+                        <p>"Being a homemaker, I never thought I could have a career. The Superster Academy gave me the confidence and skills to build my own business from home. I feel so empowered!"</p>
                         <h4>- A Successful Homemaker</h4>
                         <span>Building Her Empire</span>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- START: NEW COMMENT SECTION -->
+        <section class="comments-section section-padding" style="padding-top: 0;">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>Community Feedback</h2>
+                </div>
+
+                <div class="comments-list" id="comments-list">
+                    <!-- Dynamically generated comments will be inserted here by JavaScript -->
+                </div>
+
+                <div class="comment-form-container reveal">
+                    <h3>Share Your Thoughts</h3>
+                    <form id="comment-form" name="comment-form">
+                        <!-- Hidden field to identify the form type in Google Apps Script -->
+                        <input type="hidden" name="FormType" value="Comment">
+
+                        <div class="form-group">
+                            <label for="comment-name">Your Name</label>
+                            <input type="text" id="comment-name" name="Name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment-text">Your Comment</label>
+                            <textarea id="comment-text" name="Comment" required placeholder="Share your experience with the academy! What did you learn? How has it helped you? আপনার মূল্যবান মতামত এখানে লিখুন..."></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- END: NEW COMMENT SECTION -->
     </div>
 
     <!-- Registration Page Content (FORM) -->
@@ -897,6 +1083,9 @@
         <div class="form-container">
             <h2>Register for the Free Masterclass</h2>
             <form id="registration-form" name="registration-form">
+                <!-- Hidden field to identify the form type in Google Apps Script -->
+                <input type="hidden" name="FormType" value="Registration">
+
                 <div class="form-group">
                     <label for="name">Your Name</label>
                     <input type="text" id="name" name="Name" required placeholder="Enter your full name">
@@ -965,10 +1154,17 @@
                         <option value="Other">Other</option>
                     </select>
                 </div>
+
                 <div class="form-group">
-                    <label for="facebook-id">Facebook Profile Link</label>
-                    <input type="url" id="facebook-id" name="FacebookLink" required placeholder="https://facebook.com/yourprofile">
+                    <label>Social Media Profile<span class="required-star">*</span></label>
+                    <div id="social-links-container">
+                        <!-- Dynamic rows will be added here by JS -->
+                    </div>
+                    <button type="button" id="add-social-link-btn">+ Add More</button>
+                    <!-- Hidden input to store combined data for Google Sheets -->
+                    <input type="hidden" name="SocialLinks" id="social-links-data">
                 </div>
+
                 <button type="submit" class="btn" style="width: 100%;">Secure My Spot Now</button>
             </form>
         </div>
@@ -978,8 +1174,8 @@
 <!-- FOOTER -->
 <footer class="footer">
     <div class="container">
-        <div class="footer-logo">SuperSter<span class="highlight">Academy</span></div>
-        <p>The most trusted platform for online earning opportunities. We've helped over 12,000 people achieve financial freedom through our proven system. Join us and become a superstar yourself!</p>
+        <div class="footer-logo">The Superster<span class="highlight">Academy</span></div>
+        <p>The most trusted platform for online earning opportunities. We've helped over 12,000 people achieve financial freedom through our proven system. Join us and unlock your true potential!</p>
         <div class="social-links">
             <a href="https://www.facebook.com/share/g/1GFmtw2Ewr/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
             <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -987,286 +1183,48 @@
             <a href="https://wa.me/8801705241369" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
         </div>
         <div class="copyright">
-            <p>© 2024 The SuperSter Academy. All Rights Reserved. Designed for success.</p>
+            <p>© 2024 The Superster Academy. All Rights Reserved. Designed for success.</p>
         </div>
     </div>
 </footer>
 
 <script>
-    // ============== START: HACKER PRELOADER SCRIPT (নতুন অংশ) ==============
     document.addEventListener('DOMContentLoaded', () => {
-        const preloader = document.getElementById('preloader');
-        const loaderText = document.getElementById('loader-text');
 
-        const messages = [
-            "INITIALIZING_SYSTEM...",
-            "CONNECTING_TO_MAINFRAME...",
-            "DECRYPTING_PROTOCOLS...",
-            "BYPASSING_FIREWALL...",
-            "ACCESS_GRANTED."
-        ];
+        // ============== GLOBAL VARIABLES & CONSTANTS ==============
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const menuIcon = document.getElementById('menu-icon');
+        const navLinksMobile = document.getElementById('nav-links');
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxqZALYvEWYjvWSj65MxJwx6-r12o8moQAvR-EOph55zvNlVa4d6IxsivqeMP44Czvo3g/exec';
+        const fullAddressData = { "Barishal": { "Barguna": { "Amtali": [], "Bamna": [], "Barguna Sadar": [], "Betagi": [], "Patharghata": [], "Taltali": [] }, "Barishal": { "Agailjhara": [], "Babuganj": [], "Bakerganj": [], "Banaripara": [], "Gaurnadi": [], "Hizla": [], "Barishal Sadar": [], "Mehendiganj": [], "Muladi": [], "Wazirpur": [] }, "Bhola": { "Bhola Sadar": [], "Burhanuddin": [], "Char Fasson": [], "Daulatkhan": [], "Lalmohan": [], "Manpura": [], "Tazumuddin": [] }, "Jhalokati": { "Jhalokati Sadar": [], "Kathalia": [], "Nalchity": [], "Rajapur": [] }, "Patuakhali": { "Bauphal": [], "Dashmina": [], "Galachipa": [], "Kalapara": [], "Mirzaganj": [], "Patuakhali Sadar": [], "Rangabali": [], "Dumki": [] }, "Pirojpur": { "Bhandaria": [], "Kawkhali": [], "Mathbaria": [], "Nazirpur": [], "Pirojpur Sadar": [], "Nesarabad (Swarupkati)": [], "Zianagar": [] } }, "Chattogram": { "Bandarban": { "Alikadam": [], "Bandarban Sadar": [], "Lama": [], "Naikhongchhari": [], "Rowangchhari": [], "Ruma": [], "Thanchi": [] }, "Brahmanbaria": { "Akhaura": [], "Bancharampur": [], "Brahmanbaria Sadar": [], "Kasba": [], "Nabinagar": [], "Nasirnagar": [], "Sarail": [] }, "Chandpur": { "Chandpur Sadar": [], "Faridganj": [], "Haimchar": [], "Haziganj": [], "Kachua": [], "Matlab Dakshin": [], "Matlab Uttar": [], "Shahrasti": [] }, "Chattogram": { "Anwara": [], "Banshkhali": [], "Boalkhali": [], "Chandanaish": [], "Fatikchhari": [], "Hathazari": [], "Lohagara": [], "Mirsharai": [], "Patiya": [], "Rangunia": [], "Raozan": [], "Sandwip": [], "Satkania": [], "Sitakunda": [] }, "Cumilla": { "Barura": [], "Brahmanpara": [], "Burichang": [], "Chandina": [], "Chauddagram": [], "Daudkandi": [], "Debidwar": [], "Homna": [], "Laksam": [], "Muradnagar": [], "Nangalkot": [], "Titas": [] }, "Cox's Bazar": { "Chakaria": [], "Cox's Bazar Sadar": [], "Kutubdia": [], "Maheshkhali": [], "Pekua": [], "Ramu": [], "Teknaf": [], "Ukhia": [] }, "Feni": { "Chhagalnaiya": [], "Daganbhuiyan": [], "Feni Sadar": [], "Fulgazi": [], "Parshuram": [], "Sonagazi": [] }, "Khagrachhari": { "Dighinala": [], "Khagrachhari Sadar": [], "Lakshmichhari": [], "Mahalchhari": [], "Manikchhari": [], "Matiranga": [], "Panchhari": [], "Ramgarh": [] }, "Lakshmipur": { "Kamalnagar": [], "Lakshmipur Sadar": [], "Raipur": [], "Ramganj": [], "Ramgati": [] }, "Noakhali": { "Begumganj": [], "Chatkhil": [], "Noakhali Sadar (Sudharam)": [], "Hatiya": [], "Kabirhat": [], "Senbagh": [], "Subarnachar": [], "Sonaimuri": [] }, "Rangamati": { "Bagaichhari": [], "Barkal": [], "Belaichhari": [], "Juraichhari": [], "Kaptai": [], "Kaukhali (Betbunia)": [], "Langadu": [], "Naniarchar": [], "Rajasthali": [], "Rangamati Sadar": [] } }, "Dhaka": { "Dhaka": { "Dhamrai": [], "Dohar": [], "Keraniganj": [], "Nawabganj": [], "Savar": [] }, "Faridpur": { "Alfadanga": [], "Bhanga": [], "Boalmari": [], "Charbhadrasan": [], "Faridpur Sadar": [], "Madhukhali": [], "Nagarkanda": [], "Sadarpur": [], "Saltha": [] }, "Gazipur": { "Gazipur Sadar": [], "Kaliakair": [], "Kaliganj": [], "Kapasia": [], "Sreepur": [] }, "Gopalganj": { "Gopalganj Sadar": [], "Kashiani": [], "Kotalipara": [], "Muksudpur": [], "Tungipara": [] }, "Kishoreganj": { "Astagram": [], "Bajitpur": [], "Bhairab": [], "Hossainpur": [], "Itna": [], "Karimganj": [], "Katiadi": [], "Kishoreganj Sadar": [], "Kuliarchar": [], "Mithamain": [], "Nikli": [], "Pakundia": [], "Tarail": [] }, "Madaripur": { "Kalkini": [], "Madaripur Sadar": [], "Rajoir": [], "Shibchar": [] }, "Manikganj": { "Daulatpur": [], "Ghior": [], "Harirampur": [], "Manikganj Sadar": [], "saturia": [], "Shibalaya": [], "Singair": [] }, "Munshiganj": { "Gazaria": [], "Lohajang": [], "Munshganj Sadar": [], "Sirajdikhan": [], "Sreenagar": [], "Tongibari": [] }, "Narayanganj": { "Araihazar": [], "Bandar": [], "Narayanganj Sadar": [], "Rupganj": [], "Sonargaon": [] }, "Narsingdi": { "Belabo": [], "Monohardi": [], "Narsingdi Sadar": [], "Palash": [], "Raipura": [], "Shibpur": [] }, "Rajbari": { "Baliakandi": [], "Goalandaghat": [], "Pangsha": [], "Rajbari Sadar": [] }, "Shariatpur": { "Bhedarganj": [], "Damudya": [], "Gosairhat": [], "Naria": [], "Shariatpur Sadar": [], "Zajira": [] }, "Tangail": { "Basail": [], "Bhuapur": [], "Ghatail": [], "Gopalpur": [], "Kalihati": [], "Madhupur": [], "Mirzapur": [], "Nagarpur": [], "Sakhipur": [], "Tangail Sadar": [] } }, "Khulna": { "Bagerhat": { "Bagerhat Sadar": [], "Chitalmari": [], "Fakirhat": [], "Kachua": [], "Mollahat": [], "Mongla": [], "Morrelganj": [], "Rampal": [], "Sarankhola": [] }, "Chuadanga": { "Alamdanga": [], "Chuadanga Sadar": [], "Damurhuda": [], "Jibannagar": [] }, "Jashore": { "Abhaynagar": [], "Bagherpara": [], "Chaugachha": [], "Jashore Sadar": [], "Jhikargachha": [], "Keshabpur": [], "Manirampur": [], "Sharsha": [] }, "Jhenaidah": { "Harinakundu": [], "Jhenaidah Sadar": [], "Kaliganj": [], "Kotchandpur": [], "Maheshpur": [], "Shailkupa": [] }, "Khulna": { "Batiaghata": [], "Dacope": [], "Dighalia": [], "Dumuria": [], "Koyra": [], "Paikgachha": [], "Phultala": [], "Rupsha": [], "Terokhada": [] }, "Kushtia": { "Bheramara": [], "Daulatpur": [], "Khoksa": [], "Kumarkhali": [], "Kushtia Sadar": [], "Mirpur": [] }, "Magura": { "Magura Sadar": [], "Mohammadpur": [], "Shalikha": [], "Sreepur": [] }, "Meherpur": { "Gangni": [], "Meherpur Sadar": [], "Mujibnagar": [] }, "Narail": { "Kalia": [], "Lohagara": [], "Narail Sadar": [] } }, "Mymensingh": { "Jamalpur": { "Baksiganj": [], "Dewanganj": [], "Islampur": [], "Jamalpur Sadar": [], "Madarganj": [], "Melandaha": [], "Sarishabari": [] }, "Mymensingh": { "Bhaluka": [], "Dhobaura": [], "Fulbaria": [], "Gaffargaon": [], "Gauripur": [], "Haluaghat": [], "Ishwarganj": [], "Mymensingh Sadar": [], "Nandail": [], "Phulpur": [], "Trishal": [] }, "Netrokona": { "Atpara": [], "Barhatta": [], "Durgapur": [], "Khaliajuri": [], "Kalmakanda": [], "Kendua": [], "Madan": [], "Mohanganj": [], "Netrokona Sadar": [], "Purbadhala": [] }, "Sherpur": { "Jhenaigati": [], "Nakla": [], "Nalitabari": [], "Sherpur Sadar": [], "Sreebardi": [] } }, "Rajshahi": { "Bogura": { "Adamdighi": [], "Bogura Sadar": [], "Dhunat": [], "Dhupchanchia": [], "Gabtali": [], "Kahaloo": [], "Nandigram": [], "Sariakandi": [], "Shajahanpur": [], "Sherpur": [], "Shibganj": [], "Sonatala": [] }, "Joypurhat": { "Akkelpur": [], "Joypurhat Sadar": [], "Kalai": [], "Khetlal": [], "Panchbibi": [] }, "Naogaon": { "Atrai": [], "Badalgachhi": [], "Dhamoirhat": [], "Manda": [], "Mahadebpur": [], "Naogaon Sadar": [], "Niamatpur": [], "Patnitala": [], "Porsha": [], "Raninagar": [], "Sapahar": [] }, "Pabna": { "Atgharia": [], "Bera": [], "Bhangura": [], "Chatmohar": [], "Faridpur": [], "Ishwardi": [], "Pabna Sadar": [], "Santhia": [], "Sujanagar": [] }, "Rajshahi": { "Bagha": [], "Bagmara": [], "Charghat": [], "Durgapur": [], "Godagari": [], "Mohanpur": [], "Paba": [], "Puthia": [], "Tanore": [] }, "Sirajganj": { "Belkuchi": [], "Chauhali": [], "Kamarkhanda": [], "Kazipur": [], "Raiganj": [], "Shahjadpur": [], "Sirajganj Sadar": [], "Tarash": [], "Ullahpara": [] } }, "Rangpur": { "Dinajpur": { "Biral": [], "Birampur": [], "Birganj": [], "Bochaganj": [], "Chirirbandar": [], "Dinajpur Sadar": [], "Ghoraghat": [], "Hakimpur": [], "Kaharole": [], "Khansama": [], "Nawabganj": [], "Parbatipur": [], "Phulbari": [] }, "Gaibandha": { "Fulchhari": [], "Gaibandha Sadar": [], "Gobindaganj": [], "Palashbari": [], "Sadullapur": [], "Saghata": [], "Sundarganj": [] }, "Kurigram": { "Bhurungamari": [], "Char Rajibpur": [], "Chilmari": [], "Kurigram Sadar": [], "Nageshwari": [], "Phulbari": [], "Rajarhat": [], "Rowmari": [], "Ulipur": [] }, "Lalmonirhat": { "Aditmari": [], "Hatibandha": [], "Kaliganj": [], "Lalmonirhat Sadar": [], "Patgram": [] }, "Nilphamari": { "Dimla": [], "Domar": [], "Jaldhaka": [], "Kishoreganj": [], "Nilphamari Sadar": [], "Syedpur": [] }, "Panchagarh": { "Atwari": [], "Boda": [], "Debiganj": [], "Panchagarh Sadar": [], "Tetulia": [] }, "Rangpur": { "Badarganj": [], "Gangachhara": [], "Kaunia": [], "Mithapukur": [], "Pirgachha": [], "Pirganj": [], "Rangpur Sadar": [], "Taraganj": [] } }, "Sylhet": { "Habiganj": { "Ajmiriganj": [], "Bahubal": [], "Baniyachong": [], "Chunarughat": [], "Habiganj Sadar": [], "Lakhai": [], "Madhabpur": [], "Nabiganj": [] }, "Moulvibazar": { "Barlekha": [], "Juri": [], "Kamalganj": [], "Kulaura": [], "Moulvibazar Sadar": [], "Rajnagar": [], "Sreemangal": [] }, "Sunamganj": { "Bishwamvarpur": [], "Chhatak": [], "Derai": [], "Dharamapasha": [], "Dowarabazar": [], "Jagannathpur": [], "Jamalganj": [], "Sullah": [], "Sunamganj Sadar": [], "Tahirpur": [] }, "Sylhet": { "Balaganj": [], "Beanibazar": [], "Bishwanath": [], "Companiganj": [], "Fenchuganj": [], "Golapganj": [], "Gowainghat": [], "Jaintiapur": [], "Kanaighat": [], "South Surma": [], "Sylhet Sadar": [], "Zakiganj": [] } } };
 
-        let messageIndex = 0;
-        let charIndex = 0;
-
-        function typeMessage() {
-            if (messageIndex < messages.length) {
-                if (charIndex < messages[messageIndex].length) {
-                    loaderText.textContent += messages[messageIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeMessage, 50); // Typing speed
-                } else {
-                    // Finished typing a message, wait then start next one
-                    messageIndex++;
-                    charIndex = 0;
-                    setTimeout(() => {
-                        loaderText.textContent = ''; // Clear for next message
-                        typeMessage();
-                    }, 1000); // Delay between messages
-                }
+        // ============== HELPER FUNCTIONS ==============
+        const showPage = (pageId, clickedLink) => {
+            pages.forEach(page => page.classList.add('hidden'));
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
             }
-        }
-
-        // Start the typing animation
-        typeMessage();
-
-        // Hide the preloader after the animation sequence and page load
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                preloader.classList.add('hidden');
-            }, 4500); // Should be slightly longer than the progress bar animation
-        });
-    });
-    // ============== END: HACKER PRELOADER SCRIPT ==============
-
-
-    // ==========================================================
-    // HERO PARTICLE ANIMATION
-    // ==========================================================
-    const canvas = document.getElementById('hero-canvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: null, y: null, radius: 150 };
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = document.querySelector('.hero').offsetHeight;
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-
-        class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
+            if (clickedLink && !clickedLink.classList.contains('btn')) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                clickedLink.classList.add('active');
             }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.fill();
+            if (navLinksMobile) {
+                navLinksMobile.classList.remove('active');
             }
-            update() {
-                if (this.x > canvas.width || this.x < 0) {
-                    this.directionX = -this.directionX;
-                }
-                if (this.y > canvas.height || this.y < 0) {
-                    this.directionY = -this.directionY;
-                }
-
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if(distance < mouse.radius + this.size){
-                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10){ this.x += 5; }
-                    if(mouse.x > this.x && this.x > this.size * 10){ this.x -= 5; }
-                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10){ this.y += 5; }
-                    if(mouse.y > this.y && this.y > this.size * 10){ this.y -= 5; }
-                }
-
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
+            document.body.style.overflow = (pageId === 'register-page') ? 'hidden' : 'auto';
+            if (pageId !== 'register-page') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-        }
+            setTimeout(revealElements, 100);
+        };
 
-        function init() {
-            particles = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 1;
-                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * .4) - 0.2;
-                let directionY = (Math.random() * .4) - 0.2;
-                let color = 'rgba(100, 255, 218, 0.6)';
-                particles.push(new Particle(x, y, directionX, directionY, size, color));
-            }
-        }
+        const closeForm = () => {
+            showPage('home-page', document.querySelector('.nav-links a[onclick*="home-page"]'));
+        };
 
-        function connect(){
-            let opacityValue = 1;
-            for(let a=0; a < particles.length; a++){
-                for(let b=a; b < particles.length; b++){
-                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x))
-                    + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
-                    if(distance < (canvas.width/7) * (canvas.height/7)){
-                        opacityValue = 1 - (distance/20000);
-                        ctx.strokeStyle = `rgba(255, 215, 0, ${opacityValue})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, innerWidth, innerHeight);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-            }
-            connect();
-        }
-
-        resizeCanvas();
-        init();
-        animate();
-    }
-    // ==========================================================
-
-    const fullAddressData = { "Barishal": { "Barguna": { "Amtali": [], "Bamna": [], "Barguna Sadar": [], "Betagi": [], "Patharghata": [], "Taltali": [] }, "Barishal": { "Agailjhara": [], "Babuganj": [], "Bakerganj": [], "Banaripara": [], "Gaurnadi": [], "Hizla": [], "Barishal Sadar": [], "Mehendiganj": [], "Muladi": [], "Wazirpur": [] }, "Bhola": { "Bhola Sadar": [], "Burhanuddin": [], "Char Fasson": [], "Daulatkhan": [], "Lalmohan": [], "Manpura": [], "Tazumuddin": [] }, "Jhalokati": { "Jhalokati Sadar": [], "Kathalia": [], "Nalchity": [], "Rajapur": [] }, "Patuakhali": { "Bauphal": [], "Dashmina": [], "Galachipa": [], "Kalapara": [], "Mirzaganj": [], "Patuakhali Sadar": [], "Rangabali": [], "Dumki": [] }, "Pirojpur": { "Bhandaria": [], "Kawkhali": [], "Mathbaria": [], "Nazirpur": [], "Pirojpur Sadar": [], "Nesarabad (Swarupkati)": [], "Zianagar": [] } }, "Chattogram": { "Bandarban": { "Alikadam": [], "Bandarban Sadar": [], "Lama": [], "Naikhongchhari": [], "Rowangchhari": [], "Ruma": [], "Thanchi": [] }, "Brahmanbaria": { "Akhaura": [], "Bancharampur": [], "Brahmanbaria Sadar": [], "Kasba": [], "Nabinagar": [], "Nasirnagar": [], "Sarail": [] }, "Chandpur": { "Chandpur Sadar": [], "Faridganj": [], "Haimchar": [], "Haziganj": [], "Kachua": [], "Matlab Dakshin": [], "Matlab Uttar": [], "Shahrasti": [] }, "Chattogram": { "Anwara": [], "Banshkhali": [], "Boalkhali": [], "Chandanaish": [], "Fatikchhari": [], "Hathazari": [], "Lohagara": [], "Mirsharai": [], "Patiya": [], "Rangunia": [], "Raozan": [], "Sandwip": [], "Satkania": [], "Sitakunda": [] }, "Cumilla": { "Barura": [], "Brahmanpara": [], "Burichang": [], "Chandina": [], "Chauddagram": [], "Daudkandi": [], "Debidwar": [], "Homna": [], "Laksam": [], "Muradnagar": [], "Nangalkot": [], "Titas": [] }, "Cox's Bazar": { "Chakaria": [], "Cox's Bazar Sadar": [], "Kutubdia": [], "Maheshkhali": [], "Pekua": [], "Ramu": [], "Teknaf": [], "Ukhia": [] }, "Feni": { "Chhagalnaiya": [], "Daganbhuiyan": [], "Feni Sadar": [], "Fulgazi": [], "Parshuram": [], "Sonagazi": [] }, "Khagrachhari": { "Dighinala": [], "Khagrachhari Sadar": [], "Lakshmichhari": [], "Mahalchhari": [], "Manikchhari": [], "Matiranga": [], "Panchhari": [], "Ramgarh": [] }, "Lakshmipur": { "Kamalnagar": [], "Lakshmipur Sadar": [], "Raipur": [], "Ramganj": [], "Ramgati": [] }, "Noakhali": { "Begumganj": [], "Chatkhil": [], "Noakhali Sadar (Sudharam)": [], "Hatiya": [], "Kabirhat": [], "Senbagh": [], "Subarnachar": [], "Sonaimuri": [] }, "Rangamati": { "Bagaichhari": [], "Barkal": [], "Belaichhari": [], "Juraichhari": [], "Kaptai": [], "Kaukhali (Betbunia)": [], "Langadu": [], "Naniarchar": [], "Rajasthali": [], "Rangamati Sadar": [] } }, "Dhaka": { "Dhaka": { "Dhamrai": [], "Dohar": [], "Keraniganj": [], "Nawabganj": [], "Savar": [] }, "Faridpur": { "Alfadanga": [], "Bhanga": [], "Boalmari": [], "Charbhadrasan": [], "Faridpur Sadar": [], "Madhukhali": [], "Nagarkanda": [], "Sadarpur": [], "Saltha": [] }, "Gazipur": { "Gazipur Sadar": [], "Kaliakair": [], "Kaliganj": [], "Kapasia": [], "Sreepur": [] }, "Gopalganj": { "Gopalganj Sadar": [], "Kashiani": [], "Kotalipara": [], "Muksudpur": [], "Tungipara": [] }, "Kishoreganj": { "Astagram": [], "Bajitpur": [], "Bhairab": [], "Hossainpur": [], "Itna": [], "Karimganj": [], "Katiadi": [], "Kishoreganj Sadar": [], "Kuliarchar": [], "Mithamain": [], "Nikli": [], "Pakundia": [], "Tarail": [] }, "Madaripur": { "Kalkini": [], "Madaripur Sadar": [], "Rajoir": [], "Shibchar": [] }, "Manikganj": { "Daulatpur": [], "Ghior": [], "Harirampur": [], "Manikganj Sadar": [], "Saturia": [], "Shibalaya": [], "Singair": [] }, "Munshiganj": { "Gazaria": [], "Lohajang": [], "Munshganj Sadar": [], "Sirajdikhan": [], "Sreenagar": [], "Tongibari": [] }, "Narayanganj": { "Araihazar": [], "Bandar": [], "Narayanganj Sadar": [], "Rupganj": [], "Sonargaon": [] }, "Narsingdi": { "Belabo": [], "Monohardi": [], "Narsingdi Sadar": [], "Palash": [], "Raipura": [], "Shibpur": [] }, "Rajbari": { "Baliakandi": [], "Goalandaghat": [], "Pangsha": [], "Rajbari Sadar": [] }, "Shariatpur": { "Bhedarganj": [], "Damudya": [], "Gosairhat": [], "Naria": [], "Shariatpur Sadar": [], "Zajira": [] }, "Tangail": { "Basail": [], "Bhuapur": [], "Ghatail": [], "Gopalpur": [], "Kalihati": [], "Madhupur": [], "Mirzapur": [], "Nagarpur": [], "Sakhipur": [], "Tangail Sadar": [] } }, "Khulna": { "Bagerhat": { "Bagerhat Sadar": [], "Chitalmari": [], "Fakirhat": [], "Kachua": [], "Mollahat": [], "Mongla": [], "Morrelganj": [], "Rampal": [], "Sarankhola": [] }, "Chuadanga": { "Alamdanga": [], "Chuadanga Sadar": [], "Damurhuda": [], "Jibannagar": [] }, "Jashore": { "Abhaynagar": [], "Bagherpara": [], "Chaugachha": [], "Jashore Sadar": [], "Jhikargachha": [], "Keshabpur": [], "Manirampur": [], "Sharsha": [] }, "Jhenaidah": { "Harinakundu": [], "Jhenaidah Sadar": [], "Kaliganj": [], "Kotchandpur": [], "Maheshpur": [], "Shailkupa": [] }, "Khulna": { "Batiaghata": [], "Dacope": [], "Dighalia": [], "Dumuria": [], "Koyra": [], "Paikgachha": [], "Phultala": [], "Rupsha": [], "Terokhada": [] }, "Kushtia": { "Bheramara": [], "Daulatpur": [], "Khoksa": [], "Kumarkhali": [], "Kushtia Sadar": [], "Mirpur": [] }, "Magura": { "Magura Sadar": [], "Mohammadpur": [], "Shalikha": [], "Sreepur": [] }, "Meherpur": { "Gangni": [], "Meherpur Sadar": [], "Mujibnagar": [] }, "Narail": { "Kalia": [], "Lohagara": [], "Narail Sadar": [] } }, "Mymensingh": { "Jamalpur": { "Baksiganj": [], "Dewanganj": [], "Islampur": [], "Jamalpur Sadar": [], "Madarganj": [], "Melandaha": [], "Sarishabari": [] }, "Mymensingh": { "Bhaluka": [], "Dhobaura": [], "Fulbaria": [], "Gaffargaon": [], "Gauripur": [], "Haluaghat": [], "Ishwarganj": [], "Mymensingh Sadar": [], "Nandail": [], "Phulpur": [], "Trishal": [] }, "Netrokona": { "Atpara": [], "Barhatta": [], "Durgapur": [], "Khaliajuri": [], "Kalmakanda": [], "Kendua": [], "Madan": [], "Mohanganj": [], "Netrokona Sadar": [], "Purbadhala": [] }, "Sherpur": { "Jhenaigati": [], "Nakla": [], "Nalitabari": [], "Sherpur Sadar": [], "Sreebardi": [] } }, "Rajshahi": { "Bogura": { "Adamdighi": [], "Bogura Sadar": [], "Dhunat": [], "Dhupchanchia": [], "Gabtali": [], "Kahaloo": [], "Nandigram": [], "Sariakandi": [], "Shajahanpur": [], "Sherpur": [], "Shibganj": [], "Sonatala": [] }, "Joypurhat": { "Akkelpur": [], "Joypurhat Sadar": [], "Kalai": [], "Khetlal": [], "Panchbibi": [] }, "Naogaon": { "Atrai": [], "Badalgachhi": [], "Dhamoirhat": [], "Manda": [], "Mahadebpur": [], "Naogaon Sadar": [], "Niamatpur": [], "Patnitala": [], "Porsha": [], "Raninagar": [], "Sapahar": [] }, "Pabna": { "Atgharia": [], "Bera": [], "Bhangura": [], "Chatmohar": [], "Faridpur": [], "Ishwardi": [], "Pabna Sadar": [], "Santhia": [], "Sujanagar": [] }, "Rajshahi": { "Bagha": [], "Bagmara": [], "Charghat": [], "Durgapur": [], "Godagari": [], "Mohanpur": [], "Paba": [], "Puthia": [], "Tanore": [] }, "Sirajganj": { "Belkuchi": [], "Chauhali": [], "Kamarkhanda": [], "Kazipur": [], "Raiganj": [], "Shahjadpur": [], "Sirajganj Sadar": [], "Tarash": [], "Ullahpara": [] } }, "Rangpur": { "Dinajpur": { "Biral": [], "Birampur": [], "Birganj": [], "Bochaganj": [], "Chirirbandar": [], "Dinajpur Sadar": [], "Ghoraghat": [], "Hakimpur": [], "Kaharole": [], "Khansama": [], "Nawabganj": [], "Parbatipur": [], "Phulbari": [] }, "Gaibandha": { "Fulchhari": [], "Gaibandha Sadar": [], "Gobindaganj": [], "Palashbari": [], "Sadullapur": [], "Saghata": [], "Sundarganj": [] }, "Kurigram": { "Bhurungamari": [], "Char Rajibpur": [], "Chilmari": [], "Kurigram Sadar": [], "Nageshwari": [], "Phulbari": [], "Rajarhat": [], "Rowmari": [], "Ulipur": [] }, "Lalmonirhat": { "Aditmari": [], "Hatibandha": [], "Kaliganj": [], "Lalmonirhat Sadar": [], "Patgram": [] }, "Nilphamari": { "Dimla": [], "Domar": [], "Jaldhaka": [], "Kishoreganj": [], "Nilphamari Sadar": [], "Syedpur": [] }, "Panchagarh": { "Atwari": [], "Boda": [], "Debiganj": [], "Panchagarh Sadar": [], "Tetulia": [] }, "Rangpur": { "Badarganj": [], "Gangachhara": [], "Kaunia": [], "Mithapukur": [], "Pirgachha": [], "Pirganj": [], "Rangpur Sadar": [], "Taraganj": [] } }, "Sylhet": { "Habiganj": { "Ajmiriganj": [], "Bahubal": [], "Baniyachong": [], "Chunarughat": [], "Habiganj Sadar": [], "Lakhai": [], "Madhabpur": [], "Nabiganj": [] }, "Moulvibazar": { "Barlekha": [], "Juri": [], "Kamalganj": [], "Kulaura": [], "Moulvibazar Sadar": [], "Rajnagar": [], "Sreemangal": [] }, "Sunamganj": { "Bishwamvarpur": [], "Chhatak": [], "Derai": [], "Dharamapasha": [], "Dowarabazar": [], "Jagannathpur": [], "Jamalganj": [], "Sullah": [], "Sunamganj Sadar": [], "Tahirpur": [] }, "Sylhet": { "Balaganj": [], "Beanibazar": [], "Bishwanath": [], "Companiganj": [], "Fenchuganj": [], "Golapganj": [], "Gowainghat": [], "Jaintiapur": [], "Kanaighat": [], "South Surma": [], "Sylhet Sadar": [], "Zakiganj": [] } } };
-
-      const phoneInput = document.querySelector("#number");
-      const whatsappInput = document.querySelector("#whatsapp");
-      const phoneIti = window.intlTelInput(phoneInput, {
-          initialCountry: "bd", utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
-      });
-      const whatsappIti = window.intlTelInput(whatsappInput, {
-          initialCountry: "bd", utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
-      });
-
-      function enforceNumeric(input) { input.value = input.value.replace(/[^0-9+]/g, ''); }
-      phoneInput.addEventListener('input', () => enforceNumeric(phoneInput));
-      whatsappInput.addEventListener('input', () => enforceNumeric(whatsappInput));
-
-      phoneInput.addEventListener("keyup", () => {
-        if (phoneInput.value.startsWith('+880')) { phoneIti.setCountry('bd'); }
-        whatsappIti.setCountry(phoneIti.getSelectedCountryData().iso2);
-      });
-
-      const divisionSelect = document.getElementById('division');
-      const districtSelect = document.getElementById('district');
-      const upazilaSelect = document.getElementById('upazila');
-
-      window.addEventListener('load', () => {
-          const divisions = Object.keys(fullAddressData);
-          divisions.forEach(division => {
-              const option = document.createElement('option');
-              option.value = division;
-              option.textContent = division;
-              divisionSelect.appendChild(option);
-          });
-      });
-
-      function resetDropdown(selectElement, defaultText) {
-          selectElement.innerHTML = `<option value="" disabled selected hidden>${defaultText}</option>`;
-          selectElement.disabled = true;
-      }
-
-      divisionSelect.onchange = () => {
-          const selectedDivision = divisionSelect.value;
-          resetDropdown(districtSelect, "Select District");
-          resetDropdown(upazilaSelect, "Select District First");
-          if (selectedDivision) {
-              const districts = Object.keys(fullAddressData[selectedDivision]);
-              districts.forEach(district => {
-                  const option = document.createElement('option');
-                  option.value = district;
-                  option.textContent = district;
-                  districtSelect.appendChild(option);
-              });
-              districtSelect.disabled = false;
-          }
-      };
-
-      districtSelect.onchange = () => {
-          const selectedDivision = divisionSelect.value;
-          const selectedDistrict = districtSelect.value;
-          resetDropdown(upazilaSelect, "Select Upazila");
-          if (selectedDistrict) {
-              const upazilas = Object.keys(fullAddressData[selectedDivision][selectedDistrict]);
-              upazilas.forEach(upazila => {
-                  const option = document.createElement('option');
-                  option.value = upazila;
-                  option.textContent = upazila;
-                  upazilaSelect.appendChild(option);
-              });
-              upazilaSelect.disabled = false;
-          }
-      };
-
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stat-counter');
-            const speed = 200;
-
-            counters.forEach(counter => {
-                const updateCount = () => {
-                    const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText.replace(/\D/g, '');
-
-                    const increment = target / speed;
-
-                    if (count < target) {
-                        const newCount = Math.ceil(count + increment);
-                        if (target === 2000000) {
-                            counter.innerText = '$' + newCount.toLocaleString() + '+';
-                        } else if (target === 98) {
-                            counter.innerText = newCount + '%';
-                        } else {
-                            counter.innerText = newCount.toLocaleString() + '+';
-                        }
-                        setTimeout(updateCount, 15);
-                    } else {
-                        if (target === 2000000) {
-                            counter.innerText = '$' + target.toLocaleString() + '+';
-                        } else if (target === 98) {
-                            counter.innerText = target + '%';
-                        } else {
-                            counter.innerText = target.toLocaleString() + '+';
-                        }
-                    }
-                };
-                updateCount();
-            });
-        }
-
-        let countersAnimated = false;
-        const statsSection = document.querySelector('.stats-section');
-        const observerCounters = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !countersAnimated) {
-                    animateCounters();
-                    countersAnimated = true;
-                    observerCounters.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        if(statsSection) observerCounters.observe(statsSection);
-
-        function revealElements() {
+        const revealElements = () => {
             const reveals = document.querySelectorAll('.reveal');
             const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -1276,8 +1234,8 @@
                     }
                 });
             }, { threshold: 0.1 });
+            reveals.forEach(element => revealObserver.observe(element));
 
-            reveals.forEach(element => { revealObserver.observe(element); });
             const gridContainers = document.querySelectorAll('.how-it-works-grid, .audience-grid, .stats-grid, .founders-grid, .values-grid, .achievements-grid, .testimonials-grid');
             gridContainers.forEach(container => {
                 const items = container.querySelectorAll('.reveal');
@@ -1285,11 +1243,12 @@
                     item.style.transitionDelay = `${index * 150}ms`;
                 });
             });
+
             const timeline = document.querySelector('.timeline');
             if (timeline) {
                 const timelineObserver = new IntersectionObserver((entries, observer) => {
                     entries.forEach(entry => {
-                        if(entry.isIntersecting) {
+                        if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
                         }
@@ -1298,130 +1257,461 @@
                 timelineObserver.observe(timeline);
 
                 const timelineItems = document.querySelectorAll('.timeline-container');
-                 const timelineItemObserver = new IntersectionObserver((entries, observer) => {
+                const timelineItemObserver = new IntersectionObserver((entries, observer) => {
                     entries.forEach((entry, index) => {
-                        if(entry.isIntersecting) {
-                           setTimeout(() => {
-                               entry.target.classList.add('visible');
-                           }, index * 200);
-                           observer.unobserve(entry.target);
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, index * 200);
+                            observer.unobserve(entry.target);
                         }
                     });
                 }, { threshold: 0.1 });
                 timelineItems.forEach(item => timelineItemObserver.observe(item));
             }
-        }
+        };
 
-      const pages = document.querySelectorAll('.page');
-      const navLinks = document.querySelectorAll('.nav-links a');
 
-      const originalShowPage = function(pageId, clickedLink) {
-          pages.forEach(page => page.classList.add('hidden'));
-          const targetPage = document.getElementById(pageId);
-          if (targetPage) {
-              targetPage.classList.remove('hidden');
-          }
+        // ============== INITIALIZATION FUNCTIONS ==============
+        const initPreloader = () => {
+            const preloader = document.getElementById('preloader');
+            if (!preloader) return;
+            const loaderText = document.getElementById('loader-text');
+            const messages = ["INITIALIZING_SYSTEM...", "CONNECTING_TO_MAINFRAME...", "DECRYPTING_PROTOCOLS...", "BYPASSING_FIREWALL...", "ACCESS_GRANTED."];
+            let messageIndex = 0, charIndex = 0;
 
-          if (clickedLink && !clickedLink.classList.contains('btn')) {
-              navLinks.forEach(link => link.classList.remove('active'));
-              clickedLink.classList.add('active');
-          }
+            function typeMessage() {
+                if (messageIndex < messages.length) {
+                    if (charIndex < messages[messageIndex].length) {
+                        loaderText.textContent += messages[messageIndex].charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeMessage, 50);
+                    } else {
+                        messageIndex++;
+                        charIndex = 0;
+                        setTimeout(() => {
+                            loaderText.textContent = '';
+                            typeMessage();
+                        }, 1000);
+                    }
+                }
+            }
+            typeMessage();
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.classList.add('hidden');
+                }, 4500);
+            });
+        };
 
-          const mobileNav = document.getElementById('nav-links');
-          mobileNav.classList.remove('active');
+        const initHeroCanvas = () => {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
 
-          document.body.style.overflow = (pageId === 'register-page') ? 'hidden' : 'auto';
-          if (pageId !== 'register-page') {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-      };
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouse = { x: null, y: null, radius: 150 };
 
-      function showPage(pageId, clickedLink) {
-        originalShowPage(pageId, clickedLink);
-        setTimeout(revealElements, 100);
-      }
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = document.querySelector('.hero').offsetHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = event.x;
+                mouse.y = event.y;
+            });
 
-      function closeForm() {
-          showPage('home-page', document.querySelector('.nav-links a[onclick*="home-page"]'));
-      }
+            class Particle {
+                constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color; }
+                draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
+                update() {
+                    if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; }
+                    if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; }
+                    let dx = mouse.x - this.x; let dy = mouse.y - this.y; let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius + this.size) {
+                        if (mouse.x < this.x && this.x < canvas.width - this.size * 10) { this.x += 5; }
+                        if (mouse.x > this.x && this.x > this.size * 10) { this.x -= 5; }
+                        if (mouse.y < this.y && this.y < canvas.height - this.size * 10) { this.y += 5; }
+                        if (mouse.y > this.y && this.y > this.size * 10) { this.y -= 5; }
+                    }
+                    this.x += this.directionX; this.y += this.directionY; this.draw();
+                }
+            }
 
-      const menuIcon = document.getElementById('menu-icon');
-      const navLinksMobile = document.getElementById('nav-links');
-      menuIcon.addEventListener('click', () => {
-          navLinksMobile.classList.toggle('active');
-      });
+            function initParticles() {
+                particles = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 9000;
+                for (let i = 0; i < numberOfParticles; i++) {
+                    let size = (Math.random() * 2) + 1;
+                    let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                    let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                    let directionX = (Math.random() * .4) - 0.2;
+                    let directionY = (Math.random() * .4) - 0.2;
+                    let color = 'rgba(100, 255, 218, 0.6)';
+                    particles.push(new Particle(x, y, directionX, directionY, size, color));
+                }
+            }
 
-      const form = document.forms['registration-form'];
-      form.addEventListener('submit', function(e) {
-          e.preventDefault();
-          const nameInput = document.getElementById('name');
-          const mentorInput = document.getElementById('mentor-name');
-          const namePattern = /^[a-zA-Z\s.'-]{4,}$/;
+            function connect() {
+                let opacityValue = 1;
+                for (let a = 0; a < particles.length; a++) {
+                    for (let b = a; b < particles.length; b++) {
+                        let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                        if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                            opacityValue = 1 - (distance / 20000);
+                            ctx.strokeStyle = `rgba(255, 215, 0, ${opacityValue})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[a].x, particles[a].y);
+                            ctx.lineTo(particles[b].x, particles[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
 
-          if (!namePattern.test(nameInput.value)) {
-              Swal.fire({
-                  icon: 'error', title: 'Invalid Name', text: 'Please enter a valid full name (at least 4 characters, letters and spaces only).',
-                  background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d'
-              });
-              return;
-          }
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, innerWidth, innerHeight);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                }
+                connect();
+            }
 
-          if (mentorInput.value && !namePattern.test(mentorInput.value)) {
-              Swal.fire({
-                  icon: 'error', title: 'Invalid Mentor Name', text: 'Please enter a valid mentor name (at least 4 characters, letters and spaces only).',
-                  background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d'
-              });
-              return;
-          }
+            initParticles();
+            animate();
+        };
 
-          const fullPhoneNumber = phoneIti.getNumber();
-          const fullWhatsappNumber = whatsappIti.getNumber();
-          const formData = new FormData(form);
-          formData.set('Mobile', fullPhoneNumber);
-          formData.set('WhatsApp', fullWhatsappNumber);
+        const initStatCounters = () => {
+            const statsSection = document.querySelector('.stats-section');
+            if (!statsSection) return;
 
-          const scriptURL = 'https://script.google.com/macros/s/AKfycbxqZALYvEWYjvWSj65MxJwx6-r12o8moQAvR-EOph55zvNlVa4d6IxsivqeMP44Czvo3g/exec';
-          const submitButton = form.querySelector('button[type="submit"]');
+            let countersAnimated = false;
+            const animateCounters = () => {
+                const counters = document.querySelectorAll('.stat-counter');
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText.replace(/\D/g, '');
+                        const increment = target / 200;
+                        if (count < target) {
+                            const newCount = Math.ceil(count + increment);
+                            if (target === 2000000) { counter.innerText = '$' + newCount.toLocaleString() + '+'; }
+                            else if (target === 98) { counter.innerText = newCount + '%'; }
+                            else { counter.innerText = newCount.toLocaleString() + '+'; }
+                            setTimeout(updateCount, 15);
+                        } else {
+                            if (target === 2000000) { counter.innerText = '$' + target.toLocaleString() + '+'; }
+                            else if (target === 98) { counter.innerText = target + '%'; }
+                            else { counter.innerText = target.toLocaleString() + '+'; }
+                        }
+                    };
+                    updateCount();
+                });
+            };
 
-          submitButton.disabled = true;
-          submitButton.innerHTML = 'Submitting...';
+            const observerCounters = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !countersAnimated) {
+                        animateCounters();
+                        countersAnimated = true;
+                        observerCounters.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            observerCounters.observe(statsSection);
+        };
 
-          fetch(scriptURL, { method: 'POST', body: formData})
-              .then(response => {
-                  Swal.fire({
-                      title: 'Success!', text: `Thank you, ${nameInput.value}! Your registration is successful. We will contact you shortly.`,
-                      icon: 'success', confirmButtonText: 'Great!', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#64ffda'
-                  });
-                  form.reset();
-                  resetDropdown(districtSelect, "Select Division First");
-                  resetDropdown(upazilaSelect, "Select District First");
-                  phoneIti.setCountry("bd");
-                  whatsappIti.setCountry("bd");
-                  submitButton.disabled = false;
-                  submitButton.innerHTML = 'Secure My Spot Now';
-                  closeForm();
-              })
-              .catch(error => {
-                  console.error('Error!', error.message);
-                   Swal.fire({
-                      title: 'Error!', text: 'An error occurred. Please check your internet connection and try again.',
-                      icon: 'error', confirmButtonText: 'OK', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d'
-                  });
-                  submitButton.disabled = false;
-                  submitButton.innerHTML = 'Secure My Spot Now';
-              });
-      });
+        const initMobileMenu = () => {
+            if (menuIcon && navLinksMobile) {
+                menuIcon.addEventListener('click', () => {
+                    navLinksMobile.classList.toggle('active');
+                });
+            }
+        };
 
-      document.addEventListener('mousemove', function(e) {
-        const trail = document.createElement('div');
-        trail.className = 'trail';
-        trail.style.left = e.pageX + 'px';
-        trail.style.top = e.pageY + 'px';
-        document.body.appendChild(trail);
-        setTimeout(() => { trail.remove(); }, 1000);
-      });
+        const initLightTrail = () => {
+            document.addEventListener('mousemove', function(e) {
+                const trail = document.createElement('div');
+                trail.className = 'trail';
+                trail.style.left = e.pageX + 'px';
+                trail.style.top = e.pageY + 'px';
+                document.body.appendChild(trail);
+                setTimeout(() => {
+                    trail.remove();
+                }, 1000);
+            });
+        };
 
-      showPage('home-page', document.querySelector('.nav-links a[onclick*="home-page"]'));
+        const initRegistrationForm = () => {
+            const registrationForm = document.forms['registration-form'];
+            if (!registrationForm) return;
+
+            // Phone number fields
+            const phoneInput = registrationForm.querySelector("#number");
+            const whatsappInput = registrationForm.querySelector("#whatsapp");
+            const phoneIti = window.intlTelInput(phoneInput, { initialCountry: "bd", separateDialCode: true, utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js" });
+            const whatsappIti = window.intlTelInput(whatsappInput, { initialCountry: "bd", separateDialCode: true, utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js" });
+            const enforceNumeric = (input) => { input.value = input.value.replace(/\D/g, ''); };
+            phoneInput.addEventListener('input', () => enforceNumeric(phoneInput));
+            whatsappInput.addEventListener('input', () => enforceNumeric(whatsappInput));
+            phoneInput.addEventListener("countrychange", () => whatsappIti.setCountry(phoneIti.getSelectedCountryData().iso2));
+
+            // Address dropdowns
+            const divisionSelect = registrationForm.querySelector('#division');
+            const districtSelect = registrationForm.querySelector('#district');
+            const upazilaSelect = registrationForm.querySelector('#upazila');
+            const divisions = Object.keys(fullAddressData);
+            divisions.forEach(division => {
+                const option = document.createElement('option');
+                option.value = division;
+                option.textContent = division;
+                divisionSelect.appendChild(option);
+            });
+            const resetDropdown = (selectElement, defaultText) => {
+                selectElement.innerHTML = `<option value="" disabled selected hidden>${defaultText}</option>`;
+                selectElement.disabled = true;
+            };
+            divisionSelect.onchange = () => {
+                const selectedDivision = divisionSelect.value;
+                resetDropdown(districtSelect, "Select District");
+                resetDropdown(upazilaSelect, "Select District First");
+                if (selectedDivision) {
+                    const districts = Object.keys(fullAddressData[selectedDivision]);
+                    districts.forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        option.textContent = district;
+                        districtSelect.appendChild(option);
+                    });
+                    districtSelect.disabled = false;
+                }
+            };
+            districtSelect.onchange = () => {
+                const selectedDivision = divisionSelect.value;
+                const selectedDistrict = districtSelect.value;
+                resetDropdown(upazilaSelect, "Select Upazila");
+                if (selectedDistrict) {
+                    const upazilas = Object.keys(fullAddressData[selectedDivision][selectedDistrict]);
+                    upazilas.forEach(upazila => {
+                        const option = document.createElement('option');
+                        option.value = upazila;
+                        option.textContent = upazila;
+                        upazilaSelect.appendChild(option);
+                    });
+                    upazilaSelect.disabled = false;
+                }
+            };
+
+            // Social links
+            const addSocialLinkBtn = registrationForm.querySelector('#add-social-link-btn');
+            const socialLinksContainer = registrationForm.querySelector('#social-links-container');
+            const updateRemoveButtons = () => {
+                const rows = socialLinksContainer.querySelectorAll('.social-link-row');
+                rows.forEach(row => row.querySelector('.remove-social-btn').disabled = (rows.length === 1));
+            };
+            const createSocialLinkRow = () => {
+                const row = document.createElement('div');
+                row.className = 'social-link-row';
+                row.innerHTML = `<select class="social-platform"><option value="Facebook">Facebook</option><option value="Instagram">Instagram</option><option value="TikTok">TikTok</option><option value="LinkedIn">LinkedIn</option><option value="YouTube">YouTube</option><option value="Twitter/X">Twitter / X</option><option value="Other">Other</option></select><input type="url" class="social-link-input" placeholder="Paste link here..." required><button type="button" class="remove-social-btn">X</button>`;
+                socialLinksContainer.appendChild(row);
+                updateRemoveButtons();
+            };
+            addSocialLinkBtn.addEventListener('click', createSocialLinkRow);
+            socialLinksContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-social-btn')) {
+                    e.target.closest('.social-link-row').remove();
+                    updateRemoveButtons();
+                }
+            });
+            createSocialLinkRow();
+
+            // Form submission
+            registrationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nameInput = registrationForm.querySelector('#name');
+                const namePattern = /^[a-zA-Z\s.'-]{4,}$/;
+                if (!namePattern.test(nameInput.value)) {
+                    Swal.fire({ icon: 'error', title: 'Invalid Name', text: 'Please enter a valid full name (at least 4 characters, letters and spaces only).', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d' });
+                    return;
+                }
+                if (!phoneIti.isValidNumber() || !whatsappIti.isValidNumber()) {
+                    Swal.fire({ icon: 'error', title: 'Invalid Phone Number', text: 'Please enter valid Mobile and WhatsApp numbers.', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d' });
+                    return;
+                }
+
+                const submitButton = registrationForm.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Submitting...';
+
+                const formData = new FormData(registrationForm);
+                formData.set('Mobile', phoneIti.getNumber());
+                formData.set('WhatsApp', whatsappIti.getNumber());
+
+                fetch(scriptURL, { method: 'POST', body: formData })
+                    .then(response => {
+                        Swal.fire({ title: 'Success!', text: `Thank you, ${nameInput.value}! Your registration is successful.`, icon: 'success', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#64ffda' });
+                        registrationForm.reset();
+                        resetDropdown(districtSelect, "Select Division First");
+                        resetDropdown(upazilaSelect, "Select District First");
+                        phoneIti.setCountry("bd");
+                        whatsappIti.setCountry("bd");
+                        socialLinksContainer.innerHTML = '';
+                        createSocialLinkRow();
+                        closeForm();
+                    })
+                    .catch(error => {
+                        Swal.fire({ title: 'Error!', text: 'An error occurred. Please try again.', icon: 'error', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d' });
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = 'Secure My Spot Now';
+                    });
+            });
+        };
+
+        const initCommentSection = () => {
+            const commentForm = document.getElementById('comment-form');
+            if (!commentForm) return;
+
+            const addUserCommentToUI = (name, comment) => {
+                const commentsList = document.getElementById('comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment-card new-comment-animation';
+                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                const sanitizedComment = document.createElement('p');
+                sanitizedComment.textContent = comment;
+                newComment.innerHTML = `<div class="comment-avatar">${initials}</div><div class="comment-body"><div class="comment-meta"><span class="name">${name}</span><span class="date">Just now</span></div><p class="comment-text">${sanitizedComment.innerHTML.replace(/\n/g, '<br>')}</p></div>`;
+                commentsList.prepend(newComment);
+            };
+
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nameInput = commentForm.querySelector('#comment-name');
+                const commentInput = commentForm.querySelector('#comment-text');
+                if (nameInput.value.trim() === '' || commentInput.value.trim() === '') {
+                    Swal.fire({ icon: 'error', title: 'Oops...', text: 'Please fill out all fields.', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d' });
+                    return;
+                }
+                const submitButton = commentForm.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Posting...';
+
+                fetch(scriptURL, { method: 'POST', body: new FormData(commentForm) })
+                    .then(response => {
+                        Swal.fire({ title: 'Thank You!', text: 'Your comment has been posted!', icon: 'success', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#64ffda' });
+                        addUserCommentToUI(nameInput.value, commentInput.value);
+                        commentForm.reset();
+                    })
+                    .catch(error => {
+                         Swal.fire({ title: 'Error!', text: 'An error occurred. Please try again.', icon: 'error', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d' });
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = 'Post Comment';
+                    });
+            });
+
+            const commentData = {
+                names: [
+                    'Rahim Sheikh', 'Fatima Akter', 'Jamal Hossain', 'Salma Begum', 'Kamal Uddin', 'Ayesha Siddika', 'Nasir Khan',
+                    'Farzana Yasmin', 'Anwarul Islam', 'Sadia Afrin', 'Mizanur Rahman', 'Nusrat Jahan', 'Al-Amin', 'Tania Sultana',
+                    'Sohel Rana', 'Roksana Parvin', 'Imran Mahmud', 'Sharmin Akter', 'Habibur Rahman', 'Zannatul Ferdous', 'Arif Hasan',
+                    'Mostafa Kamal', 'Sumaiya Islam', 'Masud Rana', 'Rubina Begum', 'Firoz Ahmed', 'Afroza Khatun', 'Mahbub Alam', 'Sonia Roy',
+                    'Zahirul Haque', 'Ishrat Jahan', 'Abdullah Al Mamun', 'Laila Arjuman', 'Rashedul Karim', 'Fahmida Hossain', 'Mehedi Hasan',
+                    'Khadija Akter', 'Shahin Alam', 'Mst. Mousumi', 'Monir Hossain', 'Rehana Parvin', 'Riad Hossen', 'Tanzina Akhter', 'Sajib Ahmed',
+                    'Rina Akter', 'Babul Mia', 'Faruk Hossain', 'Nargis Sultana'
+                ],
+                templates: [
+                    "স্টুডেন্ট থাকা অবস্থায় আমি সাত লক্ষ টাকা দিয়ে বাইক কিনবো আমি ভাবতেও পারিনি। সবকিছু হয়েছে শুধুমাত্র [MENTOR] স্যারের জন্য। আজকে যে আমি কতটা খুশি, তা বলে বোঝাতে পারবো না! [EMOJI]",
+                    "আজকে আমি প্রথম অনলাইন থেকে ইনকাম করলাম! আমার প্রথম ইনকাম ২৭ হাজার টাকা! The Superster Academy-কে অসংখ্য ধন্যবাদ। [MENTOR] স্যার এবং [MENTOR] স্যারকে আমার পাশে থাকার জন্য ধন্যবাদ। [EMOJI]",
+                    "আসলে এখানে কিছু বলার নেই, আমিও এখানকার একজন সদস্য। এখানকার প্রত্যেকটা ব্যক্তি এতো হেল্পফুল! আমি যখনই ব্যর্থ হয়েছি, তখনই কেউ না কেউ আমাকে মোটিভেট করেছে, সাহায্য করেছে। এরকম মানুষরা পাশে থাকলে জীবনে ব্যর্থ হওয়ার কোনো প্রশ্নই আসে না। [EMOJI]",
+                    "আলহামদুলিল্লাহ, নিজের ইনকামের টাকায় বাবা-মায়ের জন্য ঈদের শপিং করলাম। এই অনুভূতি ভাষায় প্রকাশ করার মতো না। ধন্যবাদ [MENTOR] স্যার। [EMOJI]",
+                    "আমি একজন গৃহিণী। ভাবতাম আমার দ্বারা কিছু হবে না। কিন্তু The Superster Academy আমার ধারণা বদলে দিয়েছে। এখন আমি ঘরে বসেই ইনকাম করছি। [EMOJI]",
+                    "যারা ভাবছেন পারবেন কি না, তাদের বলছি, শুধু একটা সিদ্ধান্ত নিন। বাকি পথটা [MENTOR] স্যার এবং তার টিম দেখিয়ে দেবে। [EMOJI]",
+                    "I was skeptical, but this platform is 100% legit. Started earning in my first month. The support from [MENTOR] was incredible. [EMOJI]",
+                    "The 5-day masterclass was an eye-opener! The way [MENTOR] sir explains everything is just brilliant. Best decision of my life was to join. [EMOJI]",
+                    "From zero to my first $500! The journey has just begun. The strategies taught here are priceless. Thnx for this opportunity. [EMOJI]",
+                    "Amar jonne eta shudhu ekta income source na, ekta poribar. Jokhon kono problem e pori, sobai help korar jonno ready thake. Love this community. [EMOJI]",
+                    "First month e 35k+ income! Shob credit [MENTOR] sir er. Uni na thakle kichui possible chilo na. Onek dhonnobad sir. [EMOJI]",
+                    "Jara akhono chinta korchen, tader bolbo r deri korben na. Shothik shidhanto nin, life change hoye jabe. Trust me! [EMOJI]"
+                ],
+                mentors: ['Mr. Juwel Rana', 'Mr. Omar Faruk'],
+                emojis: ['🥰', '✨', '🙏', '🚀', '💪', '🇧🇩', '❤️', '🤩', '💯', '🥹', '🎉']
+            };
+
+            const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+            const generateRandomTimeAgo = () => {
+                const units = ['minute', 'hour', 'day', 'week'];
+                const unit = getRandomElement(units);
+                let time;
+                if (unit === 'minute') time = Math.floor(Math.random() * 59) + 1;
+                else if (unit === 'hour') time = Math.floor(Math.random() * 23) + 1;
+                else if (unit === 'day') time = Math.floor(Math.random() * 6) + 1;
+                else time = Math.floor(Math.random() * 3) + 1;
+                return `${time} ${unit}${time > 1 ? 's' : ''} ago`;
+            };
+
+            const addGeneratedCommentToUI = (name, comment, timeAgo) => {
+                const commentsList = document.getElementById('comments-list');
+                if (!commentsList) return;
+                const newComment = document.createElement('div');
+                newComment.className = 'comment-card';
+                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                const sanitizedComment = document.createElement('p');
+                sanitizedComment.textContent = comment;
+                newComment.innerHTML = `<div class="comment-avatar">${initials}</div><div class="comment-body"><div class="comment-meta"><span class="name">${name}</span><span class="date">${timeAgo}</span></div><p class="comment-text">${sanitizedComment.innerHTML}</p></div>`;
+                commentsList.appendChild(newComment);
+            };
+
+            const generateAndDisplayComments = (count) => {
+                for (let i = 0; i < count; i++) {
+                    const name = getRandomElement(commentData.names);
+                    let commentText = getRandomElement(commentData.templates);
+                    // Replace mentor placeholders multiple times if they exist
+                    commentText = commentText.replace(/\[MENTOR\]/g, () => getRandomElement(commentData.mentors));
+                    commentText = commentText.replace('[EMOJI]', getRandomElement(commentData.emojis));
+                    addGeneratedCommentToUI(name, commentText, generateRandomTimeAgo());
+                }
+            };
+
+            generateAndDisplayComments(100);
+        };
+
+
+        // ============== MAIN EXECUTION ==============
+        initPreloader();
+        initHeroCanvas();
+        initStatCounters();
+        initMobileMenu();
+        initLightTrail();
+        initRegistrationForm();
+        initCommentSection();
+
+        // Set up navigation clicks for main menu
+        navLinks.forEach(link => {
+            const pageIdMatch = link.getAttribute('onclick').match(/'([^']+)'/);
+            if (pageIdMatch && pageIdMatch[1]) {
+                const pageId = pageIdMatch[1];
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showPage(pageId, link);
+                });
+            }
+        });
+
+        // Make functions globally accessible for inline onclick attributes
+        window.showPage = showPage;
+        window.closeForm = closeForm;
+
+        // Initial page load
+        showPage('home-page', document.querySelector('.nav-links a[onclick*="home-page"]'));
+
+    });
 </script>
 </body>
 </html>
