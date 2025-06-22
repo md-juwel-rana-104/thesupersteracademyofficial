@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1277,7 +1276,13 @@
             const preloader = document.getElementById('preloader');
             if (!preloader) return;
             const loaderText = document.getElementById('loader-text');
-            const messages = ["INITIALIZING_SYSTEM...", "CONNECTING_TO_MAINFRAME...", "DECRYPTING_PROTOCOLS...", "BYPASSING_FIREWALL...", "ACCESS_GRANTED."];
+            const messages = [
+                "INITIALIZING...",
+                "LOADING PROFILES...",
+                "FOUNDER: OMAR FARUK",
+                "CO-FOUNDER: JUWEL RANA",
+                "ACCESS GRANTED"
+            ];
             let messageIndex = 0, charIndex = 0;
 
             function typeMessage() {
@@ -1285,14 +1290,14 @@
                     if (charIndex < messages[messageIndex].length) {
                         loaderText.textContent += messages[messageIndex].charAt(charIndex);
                         charIndex++;
-                        setTimeout(typeMessage, 50);
+                        setTimeout(typeMessage, 30);
                     } else {
                         messageIndex++;
                         charIndex = 0;
                         setTimeout(() => {
                             loaderText.textContent = '';
                             typeMessage();
-                        }, 1000);
+                        }, 300);
                     }
                 }
             }
@@ -1300,7 +1305,7 @@
             window.addEventListener('load', () => {
                 setTimeout(() => {
                     preloader.classList.add('hidden');
-                }, 4500);
+                }, 4200);
             });
         };
 
