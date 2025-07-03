@@ -198,21 +198,38 @@
             text-shadow: 0 0 5px var(--text-light);
         }
         /* Media query for smaller screens */
-        @media (max-width: 768px) {
-            .digital-watch-container {
-                padding: 15px 20px;
-                margin: 2rem auto;
-            }
-            .time-display span {
-                font-size: 2.5rem;
-            }
-            #ampm {
-                font-size: 1.2rem;
-            }
-            .date-display {
-                font-size: 0.9rem;
-            }
-        }
+        @media (max-width: 992px) {
+    #about-page { padding: 10px; padding-top: 80px; }
+    .light-bar { width: 80%; max-width: 350px; }
+    .main-title { font-size: 1.8rem; margin-top: 10px; }
+    .team-section::before { display: none; }
+    .members-container {
+        gap: 10px; /* কার্ডগুলোর মধ্যে ফাঁকা জায়গা কমানো হয়েছে */
+    }
+    .member-card {
+        width: 100px; /* মোবাইলের জন্য কার্ডের সাইজ ছোট করা হয়েছে */
+    }
+    .member-photo-container {
+        width: 65px;  /* মোবাইলের জন্য ছবির সাইজ ছোট করা হয়েছে */
+        height: 65px;
+    }
+    .member-name {
+        font-size: 0.7rem;
+    }
+    .member-card.founder .member-photo-container {
+        width: 80px;  /* মোবাইলের জন্য Founder-এর ছবিও ছোট করা হয়েছে */
+        height: 80px;
+    }
+    .member-card:hover { transform: translateY(0) !important; }
+    .light-switch-container {
+        top: 100px;
+        right: 15px;
+    }
+    .member-card.founder {
+        transform: translateY(0);
+        order: -1;
+    }
+}
         /* ======================================================== */
         /* END: DIGITAL WATCH CSS                                   */
         /* ======================================================== */
