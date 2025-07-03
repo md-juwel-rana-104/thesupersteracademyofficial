@@ -320,17 +320,31 @@
         .member-card.founder .member-role { color: var(--gold-color); }
         .member-card.co-founder .member-details { background-color: var(--primary-color); }
         .member-card.co-founder .member-role { color: var(--gold-color); }
+
         @media (max-width: 992px) {
             #about-page { padding: 10px; padding-top: 80px; }
             .light-bar { width: 80%; max-width: 350px; }
             .main-title { font-size: 1.8rem; margin-top: 10px; }
             .team-section::before { display: none; }
-            .members-container { gap: 15px; }
-            .member-card { width: 130px; }
+            .members-container {
+                gap: 20px; /* Increased spacing */
+            }
+            /* Override inline style for the first team section to ensure proper centering on mobile */
+            .team-section:first-of-type .members-container {
+                align-items: center !important;
+            }
+            .member-card {
+                width: 140px; /* Made cards slightly larger for better visibility */
+            }
             .member-card:hover { transform: translateY(0) !important; }
-            .light-switch-container { top: 15px; right: 15px; }
-            /* The rule for .member-card.founder has been removed from here */
-            /* to prevent reordering on mobile and maintain a layout closer to the desktop view. */
+            .light-switch-container {
+                top: 100px; /* Moved switch down to a better position */
+                right: 15px;
+            }
+            .member-card.founder {
+                transform: translateY(0);
+                order: -1;
+            }
         }
         /* ============== END: IMPROVED ABOUT US PAGE STYLES ============== */
 
