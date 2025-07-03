@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | The Superster Academy</title>
+    <title>The Superster Academy | System Interface</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:wght@400&display=swap" rel="stylesheet">
+    <!-- Watch Font (Orbitron) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
 
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- SweetAlert2 for Success Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- intl-tel-input for International Phone Numbers -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
+
 
     <style>
         /* CSS Reset and Basic Setup */
@@ -20,12 +31,14 @@
             --primary-color: #0a192f;
             --secondary-color: #112240;
             --accent-color: #64ffda;
+            --hacker-accent-color: #00f0ff;
             --text-light: #ccd6f6;
             --text-dark: #8892b0;
             --gold-color: #FFD700;
             --white-color: #ffffff;
             --font-primary: 'Poppins', sans-serif;
             --font-secondary: 'Roboto', sans-serif;
+            --font-hacker: 'Share Tech Mono', monospace;
             --transition-smooth: all 0.3s ease-in-out;
         }
 
@@ -46,36 +59,75 @@
             cursor: default;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            position: relative; /* Needed for the pseudo-element */
         }
 
-        /* UPDATED: Fixed background light effect */
-        body::after {
-            content: '';
-            position: fixed; /* This is the key change */
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(ellipse at 50% 20%, #ffc94d 0%, #d48a0f 25%, rgba(10, 25, 47, 0) 70%);
-            z-index: -10;
-            opacity: 0;
-            transition: opacity 0.7s ease-in-out;
-            pointer-events: none; /* Allows clicking through the element */
+        /* =================================================================== */
+        /* START: HACKER PRELOADER CSS */
+        /* =================================================================== */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--primary-color); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            font-family: var(--font-hacker);
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
         }
-        body.about-lights-on::after {
-            opacity: 1;
+        #preloader.hidden { opacity: 0; visibility: hidden; }
+        .preloader-content { text-align: center; width: 90%; max-width: 400px; }
+        #loader-logo-wrapper {
+            margin-bottom: 20px; opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            height: 100px; display: none; align-items: center; justify-content: center;
         }
+        #loader-logo-wrapper.visible { display: flex; opacity: 1; }
+        #loader-logo-wrapper i { font-size: 80px; color: var(--accent-color); text-shadow: 0 0 15px var(--accent-color); }
+        #loader-image-wrapper {
+            margin-bottom: 20px; opacity: 0; transform: scale(0.8);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            height: 100px; display: none;
+        }
+        #loader-image-wrapper.visible { display: block; opacity: 1; transform: scale(1); }
+        #loader-image {
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 3px solid var(--accent-color); object-fit: cover;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.5);
+        }
+        #loader-text-container {
+            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 20px; font-size: 1.2rem; color: var(--hacker-accent-color);
+            text-shadow: 0 0 5px var(--hacker-accent-color); min-height: 50px;
+            transition: color 0.3s ease-in-out;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        #cursor { animation: blink 1s step-end infinite; }
+        .progress-bar { width: 100%; height: 12px; border: 1px solid var(--hacker-accent-color); padding: 2px; box-shadow: 0 0 8px rgba(0, 240, 255, 0.4); }
+        .progress-bar-inner { width: 0; height: 100%; background-color: var(--hacker-accent-color); }
+        /* =================================================================== */
+        /* END: HACKER PRELOADER CSS                                           */
+        /* =================================================================== */
 
+
+        /* ==================== ON-SCROLL REVEAL ANIMATION ==================== */
+        .reveal {
+            position: relative; transform: translateY(50px); opacity: 0;
+            filter: blur(4px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
+        }
+        .reveal.visible { transform: translateY(0); opacity: 1; filter: blur(0); }
+        /* =================================================================== */
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         h1, h2, h3, h4 { font-family: var(--font-primary); color: var(--white-color); font-weight: 700; }
         h1 { font-size: 3.2rem; } h2 { font-size: 2.5rem; margin-bottom: 2rem; } h3 { font-size: 1.8rem; }
         p { font-family: var(--font-secondary); color: var(--text-dark); margin-bottom: 1rem; font-size: 1.1rem; }
+        .section-padding { padding: 6rem 0; }
+        .section-title { text-align: center; margin-bottom: 4rem; }
+        .section-title h2 { position: relative; display: inline-block; padding-bottom: 10px; color: var(--accent-color); }
+        .section-title h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background-color: var(--gold-color); border-radius: 2px; }
         .btn { display: inline-block; padding: 12px 30px; background-color: transparent; color: var(--accent-color); border: 2px solid var(--accent-color); border-radius: 5px; text-decoration: none; font-family: var(--font-primary); font-weight: 600; transition: var(--transition-smooth); cursor: pointer; }
         .btn:hover { background-color: var(--accent-color); color: var(--primary-color); transform: scale(1.05) translateY(-2px); box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2); }
         .hidden { display: none !important; }
         .page { min-height: 100vh; animation: page-enter 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .page:not(#about-page) { padding-top: 100px; }
 
         /* Header & Navigation */
         .header { background-color: rgba(10, 25, 47, 0.85); backdrop-filter: blur(10px); padding: 1rem 0; position: fixed; width: 100%; top: 0; left: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
@@ -84,47 +136,136 @@
         .logo .highlight { color: var(--accent-color); }
         .nav-links { list-style: none; display: flex; }
         .nav-links li { margin-left: 1.5rem; }
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-family: var(--font-primary);
-            font-weight: 500;
-            transition: color 0.3s ease-in-out;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 4px;
-            white-space: nowrap; /* UPDATED: Prevents text like "About Us" from breaking */
-        }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-family: var(--font-primary); font-weight: 500; transition: color 0.3s ease-in-out; cursor: pointer; padding: 5px 10px; border-radius: 4px; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent-color); }
         .nav-links a.btn { border-width: 2px; padding: 8px 20px;}
         .menu-icon { display: none; font-size: 1.8rem; color: var(--accent-color); cursor: pointer; }
 
+        /* HERO SECTION */
+        .hero { height: 100vh; min-height: 700px; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; background-color: var(--primary-color); }
+        #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; }
+        @keyframes hero-fade-up { to { opacity: 1; transform: translateY(0); } }
+        .hero-content > * { opacity: 0; transform: translateY(20px); animation: hero-fade-up 0.8s forwards ease-out; }
+        .hero-content .subtitle { color: var(--accent-color); font-size: 1.2rem; font-family: var(--font-primary); margin-bottom: 1rem; animation-delay: 0.2s;}
+        .hero-content h1 { color: var(--white-color); margin-bottom: 1.5rem; font-size: clamp(2.5rem, 5vw, 4.5rem); text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); animation-delay: 0.4s; }
+        .hero-content .opportunities { color: var(--text-light); font-size: 1.2rem; font-weight: 500; animation-delay: 0.6s; }
+        .hero-content .tagline { color: var(--gold-color); font-size: 1.5rem; font-family: var(--font-secondary); font-weight: 600; margin-bottom: 2rem; animation-delay: 0.8s; }
+        .hero-content .btn { animation-delay: 1.2s; } /* Delay increased for watch */
+
+        /* ======================================================== */
+        /* START: DIGITAL WATCH CSS (ADDED & MODIFIED FOR THEME) */
+        /* ======================================================== */
+        .digital-watch-container {
+            font-family: 'Orbitron', sans-serif;
+            background: rgba(17, 34, 64, 0.5); /* Semi-transparent secondary color */
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.3); /* Accent color glow */
+            border: 1px solid var(--accent-color);
+            text-align: center;
+            backdrop-filter: blur(5px);
+            margin: 2.5rem auto; /* Added margin for spacing */
+            max-width: fit-content;
+            animation-delay: 1s; /* Match hero content animation */
+        }
+        .time-display {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+        .time-display span {
+            font-size: 3.5rem; /* Adjusted for better fit */
+            font-weight: bold;
+            color: var(--accent-color);
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+        /* Animation for the blinking colon */
+        .separator {
+            animation: blink 1s step-end infinite;
+        }
+        #ampm {
+            font-size: 1.5rem; /* Adjusted */
+            margin-left: 10px;
+            color: var(--accent-color);
+        }
+        .date-display {
+            margin-top: 10px;
+            font-size: 1rem; /* Adjusted */
+            color: var(--text-light); /* Matched theme color */
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px var(--text-light);
+        }
+        /* ======================================================== */
+        /* END: DIGITAL WATCH CSS                                   */
+        /* ======================================================== */
+
+        /* How It Works Section */
+        .how-it-works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .step-card { background: var(--secondary-color); padding: 2.5rem; border-radius: 10px; text-align: center; border-bottom: 4px solid var(--accent-color); transition: var(--transition-smooth); }
+        .step-card:hover { transform: translateY(-10px); box-shadow: 0 0 25px rgba(100, 255, 218, 0.2); }
+        .step-card .step-number { font-size: 3rem; font-weight: 800; color: var(--accent-color); line-height: 1; margin-bottom: 1rem; }
+        .step-card h3 { color: var(--white-color); margin-bottom: 1rem; }
+        .step-card p { color: var(--text-dark); font-size: 1rem; }
+
+        /* Who Is This For? Section */
+        .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .audience-card { background: var(--secondary-color); padding: 2rem; border-radius: 8px; text-align: center; transition: var(--transition-smooth); }
+        .audience-card:hover { transform: translateY(-5px); }
+        .audience-card i { font-size: 2.5rem; color: var(--gold-color); margin-bottom: 1rem; }
+        .audience-card h4 { color: var(--text-light); font-size: 1.2rem; }
+
+        /* STATS Section */
+        .stats-section { background-color: var(--secondary-color); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center; }
+        .stat-card { background: var(--primary-color); padding: 2rem; border-radius: 10px; border-left: 5px solid var(--accent-color); box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: var(--transition-smooth); }
+        .stat-card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 15px rgba(255, 215, 0, 0.2); }
+        .stat-card i { font-size: 3rem; color: var(--gold-color); margin-bottom: 1rem; }
+        .stat-card h3 { font-size: 2.5rem; color: var(--white-color); font-family: var(--font-primary); }
+        .stat-card p { color: var(--text-dark); font-size: 1rem; margin: 0; font-family: var(--font-primary); }
+        .rating { color: var(--gold-color); }
+
+        /* HOME TESTIMONIAL Section */
+        .home-testimonial { background: var(--secondary-color); padding: 3rem; border-radius: 10px; text-align: center; max-width: 800px; margin: 0 auto; border-left: 5px solid var(--gold-color); }
+        .home-testimonial .quote-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .home-testimonial .quote-text { font-size: 1.3rem; font-style: italic; color: var(--text-light); margin-bottom: 1.5rem; }
+        .home-testimonial .quote-author { font-weight: 700; color: var(--white-color); font-size: 1.1rem; }
+        .home-testimonial .quote-origin { color: var(--text-dark); }
+
         /* ============== START: IMPROVED ABOUT US PAGE STYLES ============== */
         #about-page {
             font-family: 'Poppins', 'Tiro Bangla', sans-serif;
+            background-color: var(--primary-color);
             color: var(--text-light);
             padding: 20px;
             padding-top: 100px;
             overflow-x: hidden;
             position: relative;
             --about-glow-opacity: 0;
+            --about-background-opacity: 0;
+            --about-glow-spread: 0px;
             --about-connector-color: rgba(100, 255, 218, 0.2);
-            background-color: transparent; /* Background is now handled by body::after */
         }
         #about-page.lights-on {
             --about-glow-opacity: 1;
+            --about-background-opacity: 1;
+            --about-glow-spread: 80px;
         }
-
+        #about-page::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient( ellipse at 50% 25%, #ffc94d 0%, #d48a0f 25%, rgba(10, 25, 47, 0) 70% );
+            opacity: var(--about-background-opacity);
+            transition: opacity 0.7s ease-in-out;
+            z-index: -1;
+        }
         .about-header-wrapper { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
         .banner-lights { display: flex; justify-content: center; margin-bottom: 30px; }
         .cabinet-light { display: flex; flex-direction: column; align-items: center; }
         .arm { width: 25px; height: 50px; background: linear-gradient(to top, #444, #888); border-radius: 10px 10px 0 0; }
         .light-bar {
-            width: 320px;
-            height: 18px;
-            background-color: #fff;
-            border-radius: 20px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, var(--about-glow-opacity)), 0 0 20px rgba(255, 255, 255, var(--about-glow-opacity)), 0 0 40px rgba(255, 201, 77, var(--about-glow-opacity)), 0 0 80px rgba(212, 138, 15, var(--about-glow-opacity));
+            width: 350px; height: 18px; background-color: #fff; border-radius: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, var(--about-glow-opacity)), 0 0 20px rgba(255, 255, 255, var(--about-glow-opacity)), 0 0 40px rgba(255, 201, 77, var(--about-glow-opacity)), 0 0 var(--about-glow-spread) rgba(212, 138, 15, var(--about-glow-opacity));
             transition: box-shadow 0.7s ease-in-out;
         }
         .light-switch-container { position: fixed; top: 100px; right: 25px; z-index: 1001; }
@@ -134,16 +275,7 @@
         .slider:before { position: absolute; content: "🌙"; height: 26px; width: 26px; left: 4px; bottom: 3px; display: flex; align-items: center; justify-content: center; background-color: white; transition: .4s; border-radius: 50%; color: #231a3b; }
         input:checked + .slider { background-color: var(--gold-color); }
         input:checked + .slider:before { transform: translateX(26px); content: "☀️"; }
-        .org-chart-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            padding-bottom: 100px;
-        }
+        .org-chart-container { max-width: 1400px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 70px; padding-bottom: 100px; }
         .about-header-section { display: flex; justify-content: center; align-items: center; flex-direction: column; margin-bottom: 20px; }
         .about-logo-link { display: block; margin-bottom: 20px; }
         .about-logo {
@@ -152,59 +284,144 @@
         }
         .about-logo-link:hover .about-logo { transform: scale(1.1); box-shadow: 0 0 15px var(--accent-color); }
         .main-title { font-size: 2.5rem; font-weight: 700; text-transform: uppercase; color: var(--accent-color); }
-        .about-mission {
-            font-family: var(--font-secondary);
-            color: var(--text-dark);
-            max-width: 800px;
-            margin: 1rem auto 0 auto;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            text-align: center;
-        }
         .team-section { display: flex; flex-direction: column; align-items: center; position: relative; width: 100%;}
-        .team-section:not(:first-of-type)::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 2px; height: 40px; background-color: var(--about-connector-color); }
-        .team-title { font-size: 1.2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 20px; color: var(--text-light); padding: 5px 20px; border: 1px solid var(--about-connector-color); border-radius: 20px; background-color: var(--secondary-color); }
-
-        .members-container {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            max-width: 900px;
-        }
-
-        .member-card { display: flex; flex-direction: column; align-items: center; width: 90px; transition: transform 0.3s ease, opacity 0.5s ease; opacity: 0; transform: translateY(20px); text-align: center; }
+        .team-section:not(:first-of-type)::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 2px; height: 70px; background-color: var(--about-connector-color); }
+        .team-title { font-size: 1.2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 30px; color: var(--text-light); padding: 5px 20px; border: 1px solid var(--about-connector-color); border-radius: 20px; background-color: var(--secondary-color); }
+        .members-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .member-card { display: flex; flex-direction: column; align-items: center; width: 130px; transition: transform 0.3s ease, opacity 0.5s ease; opacity: 0; transform: translateY(20px); }
         .member-card.visible { opacity: 1; transform: translateY(0); }
-        .member-card:hover { transform: translateY(-5px) scale(1.05) !important; }
-
-        .member-photo-container { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--gold-color); overflow: hidden; margin-bottom: 8px; background: #fff; transition: box-shadow 0.3s ease; }
-        .member-card:hover .member-photo-container { box-shadow: 0 0 10px var(--accent-color), 0 0 3px var(--accent-color); }
+        .member-card:hover { transform: translateY(-8px) scale(1.05) !important; }
+        .member-photo-container { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--gold-color); overflow: hidden; margin-bottom: 10px; background: #fff; transition: box-shadow 0.3s ease; }
+        .member-card:hover .member-photo-container { box-shadow: 0 0 15px var(--accent-color), 0 0 5px var(--accent-color); }
         .member-photo-container img { width: 100%; height: 100%; object-fit: cover; }
-
-        .member-details { background-color: var(--secondary-color); padding: 6px 8px; border-radius: 5px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        .member-name { font-size: 0.75rem; font-weight: 600; line-height: 1.2; color: var(--text-light); }
-        .member-role { font-size: 0.65rem; opacity: 0.8; text-transform: uppercase; color: var(--accent-color); }
-
-        .member-card.founder { transform: translateY(0); }
-        .member-card.founder .member-photo-container { width: 45px; height: 45px; border-color: #e74c3c; }
+        .member-details { background-color: var(--secondary-color); padding: 8px 10px; border-radius: 5px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .member-name { font-size: 0.8rem; font-weight: 600; line-height: 1.2; color: var(--text-light); }
+        .member-role { font-size: 0.7rem; opacity: 0.8; text-transform: uppercase; color: var(--accent-color); }
+        .member-card.founder { transform: translateY(-20px); }
+        .member-card.founder .member-photo-container { width: 110px; height: 110px; border-color: #e74c3c; }
         .member-card.founder .member-details { background-color: #e74c3c; }
-        .member-card.founder .member-name { font-size: 0.8rem; color: var(--white-color); }
+        .member-card.founder .member-name { font-size: 0.9rem; color: var(--white-color); }
         .member-card.founder .member-role { color: var(--gold-color); }
         .member-card.co-founder .member-details { background-color: var(--primary-color); }
         .member-card.co-founder .member-role { color: var(--gold-color); }
 
         @media (max-width: 992px) {
             #about-page { padding: 10px; padding-top: 80px; }
-            .light-bar { width: 80%; max-width: 320px; }
+            .light-bar { width: 80%; max-width: 350px; }
             .main-title { font-size: 1.8rem; margin-top: 10px; }
             .team-section::before { display: none; }
-            .members-container { gap: 10px; }
-            .member-card { width: 85px; }
+            .members-container {
+                gap: 15px;
+            }
+            .member-card {
+                width: 110px; /* Adjusted size for denser layout */
+            }
+             .member-photo-container {
+                width: 75px;
+                height: 75px;
+            }
+            .member-name {
+                font-size: 0.7rem;
+            }
+             .member-card.founder .member-photo-container {
+                width: 90px;
+                height: 90px;
+            }
             .member-card:hover { transform: translateY(0) !important; }
-            .light-switch-container { top: 15px; right: 15px; }
-            .member-card.founder { transform: translateY(0); order: -1; }
+            .light-switch-container {
+                top: 100px;
+                right: 15px;
+            }
+            .member-card.founder {
+                transform: translateY(0);
+                order: -1;
+            }
         }
         /* ============== END: IMPROVED ABOUT US PAGE STYLES ============== */
+
+        /* Course Outline Page */
+        .timeline { position: relative; max-width: 1000px; margin: 4rem auto 0 auto; }
+        .timeline::after { content: ''; position: absolute; width: 4px; background-color: var(--accent-color); top: 0; bottom: 0; left: 50%; margin-left: -2px; transform: scaleY(0); transform-origin: top; transition: transform 1.5s ease-out; }
+        .timeline.visible::after { transform: scaleY(1); }
+        .timeline-container { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .timeline-container.visible { opacity: 1; transform: translateY(0); }
+        .timeline-container.left { left: 0; }
+        .timeline-container.right { left: 50%; }
+        .timeline-container::after { content: ''; position: absolute; width: 25px; height: 25px; right: -12.5px; background-color: var(--white-color); border: 4px solid var(--accent-color); top: 25px; border-radius: 50%; z-index: 1; transition: transform 0.5s ease-out; }
+        .timeline-container.right::after { left: -12.5px; }
+        .timeline-container.visible::after { animation: dot-pulse 1.2s ease-out 0.5s; }
+        @keyframes dot-pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.5); } 50% { transform: scale(1.25); box-shadow: 0 0 0 10px rgba(100, 255, 218, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(100, 255, 218, 0); } }
+        .timeline-content { padding: 20px 30px; background-color: var(--secondary-color); position: relative; border-radius: 6px; }
+        .timeline-content h3 { color: var(--gold-color); }
+        .timeline-content ul { list-style-type: none; padding-left: 0; }
+        .timeline-content ul li { padding: 5px 0; color: var(--text-dark); }
+        .timeline-content .duration { font-family: var(--font-primary); font-weight: 600; color: var(--accent-color); margin-top: 10px; }
+
+        /* Achievements Page */
+        .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .achievement-card { background: var(--secondary-color); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.3); transition: var(--transition-smooth); }
+        .achievement-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .achievement-card img { width: 100%; height: 220px; object-fit: cover; }
+        .achievement-card-content { padding: 1.5rem; }
+        .achievement-card-content h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
+        .achievement-card-content p { color: var(--text-dark); font-size: 1rem; }
+
+        /* Success Stories Page & Comments */
+        .story-highlight { background-color: var(--secondary-color); padding: 3rem; border-radius: 10px; margin-bottom: 4rem; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; }
+        .story-highlight img { width: 150px; height: 150px; border-radius: 50%; border: 5px solid var(--gold-color); }
+        .story-highlight h3 { color: var(--white-color); }
+        .story-highlight .role { color: var(--accent-color); }
+        .story-highlight .quote { font-style: italic; color: var(--text-light); }
+        .success-timeline { position: relative; max-width: 800px; margin: 2rem auto; padding: 2rem 0; }
+        .success-timeline::before { content: ''; position: absolute; top: 0; left: 20px; height: 100%; width: 3px; background-color: var(--secondary-color); }
+        .timeline-item { margin-left: 60px; position: relative; padding-bottom: 2.5rem; }
+        .timeline-item::before { content: ''; position: absolute; left: -48.5px; top: 5px; width: 16px; height: 16px; border-radius: 50%; background-color: var(--gold-color); border: 3px solid var(--secondary-color); }
+        .timeline-item .date { font-family: var(--font-primary); font-weight: 600; color: var(--accent-color); margin-bottom: 0.25rem; }
+        .timeline-item h4 { color: var(--white-color); font-size: 1.2rem; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .testimonial-card { background: var(--secondary-color); padding: 2rem; border-radius: 10px; border-top: 4px solid var(--gold-color); display: flex; flex-direction: column; transition: var(--transition-smooth); }
+        .testimonial-card:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+        .testimonial-card i { font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .testimonial-card p { flex-grow: 1; }
+        .testimonial-card h4 { margin-top: 1rem; color: var(--white-color); }
+        .testimonial-card span { color: var(--text-dark); font-size: 0.9rem; }
+        .comments-list { max-width: 800px; margin: 0 auto 2rem auto; display: flex; flex-direction: column; gap: 1.5rem; }
+        .comment-card { background: var(--secondary-color); padding: 1.5rem; border-radius: 8px; display: flex; gap: 1rem; border-left: 4px solid var(--accent-color); }
+        .comment-card.new-comment-animation { animation: page-enter 0.6s ease-out forwards; }
+        .comment-avatar { flex-shrink: 0; width: 50px; height: 50px; border-radius: 50%; background-color: var(--primary-color); color: var(--accent-color); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; }
+        .comment-body { flex-grow: 1; }
+        .comment-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+        .comment-meta .name { font-weight: 700; color: var(--white-color); font-size: 1.1rem; }
+        .comment-meta .date { font-size: 0.8rem; color: var(--text-dark); }
+        .comment-text { color: var(--text-light); font-size: 1rem; margin: 0; white-space: pre-wrap; word-break: break-word; }
+        .comment-form-container { max-width: 800px; margin: 4rem auto 0 auto; background: var(--secondary-color); padding: 2.5rem; border-radius: 10px; }
+        .comment-form-container h3 { text-align: center; color: var(--gold-color); margin-bottom: 2rem; }
+        #comment-form textarea { width: 100%; padding: 12px; background: var(--primary-color); border: 1px solid var(--text-dark); border-radius: 5px; color: var(--white-color); font-size: 1rem; font-family: var(--font-secondary); min-height: 120px; resize: vertical; }
+        #comment-form textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 5px rgba(100, 255, 218, 0.5); }
+        #show-all-comments-btn { background: transparent; border: 1px solid var(--gold-color); color: var(--gold-color); transition: var(--transition-smooth); font-size: 1rem; padding: 10px 25px; }
+        #show-all-comments-btn:hover { background: var(--gold-color); color: var(--primary-color); }
+        #show-all-comments-btn i { margin-left: 8px; }
+
+        /* Registration Form */
+        #register-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.95); backdrop-filter: blur(5px); z-index: 2000; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding: 3rem 1rem; }
+        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: var(--white-color); cursor: pointer; transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; }
+        .close-btn:hover { color: var(--accent-color); transform: rotate(90deg); }
+        .form-container { background-color: var(--secondary-color); padding: 3rem; border-radius: 10px; width: 100%; max-width: 700px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); position: relative; margin: auto 0; }
+        .form-container h2 { text-align: center; color: var(--accent-color); font-size: 2rem; margin-bottom: 2rem;}
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-light); font-family: var(--font-primary); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; background: var(--primary-color); border: 1px solid var(--text-dark); border-radius: 5px; color: var(--white-color); font-size: 1rem; font-family: var(--font-secondary); }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 5px rgba(100, 255, 218, 0.5); }
+        .form-group input:disabled, .form-group select:disabled { background-color: #2a3950; cursor: not-allowed; opacity: 0.7; }
+        .form-row { display: flex; gap: 1.5rem; }
+        .form-row .form-group { width: 100%; }
+        .iti { width: 100%; }
+        .iti__country-list { background-color: var(--secondary-color); border-color: var(--text-dark); }
+        .iti__country { color: var(--text-light); }
+        .iti__country:hover, .iti__country.iti__highlight { background-color: var(--primary-color); }
+        .iti__dial-code { color: var(--text-dark); }
+        .swal2-container { z-index: 3000; }
+        .required-star { color: var(--gold-color); margin-left: 4px; }
 
         /* Light Trail Effect */
         .trail { position: absolute; width: 8px; height: 8px; background-color: var(--accent-color); border-radius: 50%; pointer-events: none; z-index: 999; box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--gold-color); animation: fadeOut 1s forwards; transform: translate(-50%, -50%); }
@@ -219,39 +436,176 @@
         .social-links a:hover { color: var(--accent-color); transform: translateY(-3px); }
         .copyright { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--primary-color); color: var(--text-dark); font-size: 0.9rem;}
 
-        /* Responsive Design */
+        /* =========== RESPONSIVE DESIGN (UPDATED) =========== */
         @media (max-width: 768px) {
+            /* === START: GLOBAL SIZE REDUCTION FOR MOBILE === */
+            html {
+                font-size: 14px; /* Base font size reduced to make all 'rem' units smaller on mobile */
+            }
+            p {
+                font-size: 1rem; /* Paragraphs are now 14px on mobile */
+            }
+            .hero-content .tagline {
+                font-size: 1.2rem; /* Hero tagline made smaller */
+            }
+            /* === END: GLOBAL SIZE REDUCTION === */
+
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
             .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background-color: var(--secondary-color); flex-direction: column; justify-content: center; align-items: center; transition: right 0.5s ease-in-out; box-shadow: -5px 0 15px rgba(0,0,0,0.3); }
             .nav-links.active { right: 0; }
             .nav-links li { margin: 1.5rem 0; }
             .menu-icon { display: block; z-index: 1001; }
+            .timeline::after { left: 31px; }
+            .timeline-container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-container.left, .timeline-container.right { left: 0%; }
+            .timeline-container::after { left: 18.5px; }
+            .form-row { flex-direction: column; gap: 0; }
+            .story-highlight { grid-template-columns: 1fr; text-align: center; }
+            .story-highlight img { margin: 0 auto 1rem auto; }
+            .form-container { padding: 2rem; }
+            .success-timeline::before { left: 10px; }
+            .timeline-item { margin-left: 40px; }
+            .timeline-item::before { left: -28.5px; }
+        }
+
+        /* Fine-tuning for very small phone screens */
+        @media (max-width: 480px) {
+            html {
+                font-size: 13px; /* Further reduction for the smallest screens */
+            }
+            .digital-watch-container {
+                padding: 15px 20px;
+            }
+            .time-display span {
+                font-size: 2.8rem;
+            }
+            .about-header-wrapper {
+                padding: 10px 0;
+            }
+            .main-title {
+                font-size: 1.5rem;
+            }
+            .member-card {
+                width: 90px; /* Making team cards even smaller */
+            }
+            .member-photo-container {
+                width: 60px;
+                height: 60px;
+            }
+            .member-card.founder .member-photo-container {
+                width: 75px;
+                height: 75px;
+            }
+            .member-name {
+                font-size: 0.65rem;
+            }
         }
     </style>
 
 </head>
 <body>
 
+<!-- PRELOADER -->
+<div id="preloader">
+    <div class="preloader-content">
+        <div id="loader-logo-wrapper"><i class="fas fa-graduation-cap"></i></div>
+        <div id="loader-image-wrapper"><img id="loader-image" src="" alt="Leader Photo"></div>
+        <div id="loader-text-container"><span id="loader-text"></span><span id="cursor">_</span></div>
+        <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+    </div>
+</div>
+
 <!-- HEADER & NAVIGATION -->
 <header class="header">
     <div class="container navbar">
-        <a href="#" class="logo">The Superster<span class="highlight">Academy</span></a>
+        <a href="#" class="logo" onclick="showPage('home-page', this)">The Superster<span class="highlight">Academy</span></a>
         <nav>
             <ul class="nav-links" id="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#" class="active">About Us</a></li>
-                <li><a href="#">Course</a></li>
-                <li><a href="#">Achievements</a></li>
-                <li><a href="#">Success Stories</a></li>
-                <li><a href="#" class="btn">Join Now</a></li>
+                <li><a href="#" onclick="showPage('home-page', this)" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('about-page', this)">About Us</a></li>
+                <li><a href="#" onclick="showPage('course-page', this)">Course</a></li>
+                <li><a href="#" onclick="showPage('achievements-page', this)">Achievements</a></li>
+                <li><a href="#" onclick="showPage('stories-page', this)">Success Stories</a></li>
+                <li><a href="#" class="btn" onclick="showPage('register-page', this)">Join Now</a></li>
             </ul>
         </nav>
         <div class="menu-icon" id="menu-icon"><i class="fas fa-bars"></i></div>
     </div>
 </header>
-
 <main>
-    <!-- About Page Content -->
-    <div id="about-page" class="page lights-on">
+    <!-- Home Page Content -->
+    <div id="home-page" class="page">
+        <section class="hero">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-content container">
+                <p class="subtitle">Welcome to The Superster Academy</p>
+                <h1>Transform Your Life with Online Success</h1>
+                <p class="opportunities">Opportunity: Active Income & Passive Income & Time Leverage</p>
+                <p class="tagline">Join thousands who earn $500-$2000+ monthly using just their smartphone.</p>
+
+                <!-- DIGITAL WATCH HTML STRUCTURE (ADDED HERE) -->
+                <div class="digital-watch-container">
+                    <div class="time-display">
+                        <span id="hours">00</span>
+                        <span class="separator">:</span>
+                        <span id="minutes">00</span>
+                        <span class="separator">:</span>
+                        <span id="seconds">00</span>
+                        <span id="ampm">AM</span>
+                    </div>
+                    <div class="date-display">
+                        <span id="day"></span>, <span id="date"></span>
+                    </div>
+                </div>
+
+                <a href="#" class="btn" onclick="showPage('register-page', this)">Start Your Journey Today</a>
+            </div>
+        </section>
+        <section class="how-it-works-section section-padding">
+            <div class="container">
+                <div class="section-title reveal"><h2>Your Journey to Success in 3 Simple Steps</h2></div>
+                <div class="how-it-works-grid">
+                    <div class="step-card reveal"><div class="step-number">01</div><h3>Register & Learn</h3><p>Join our free 5-day masterclass to understand the entire system from A to Z. No prior experience needed!</p></div>
+                    <div class="step-card reveal"><div class="step-number">02</div><h3>Implement & Grow</h3><p>Apply our proven strategies with guidance from expert mentors. Start building your online business from day one.</p></div>
+                    <div class="step-card reveal"><div class="step-number">03</div><h3>Earn & Inspire</h3><p>Achieve your financial goals and become a part of our success community, helping others to achieve their dreams.</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="who-is-this-for-section section-padding" style="background-color: var(--secondary-color);">
+            <div class="container">
+                <div class="section-title reveal"><h2>Who Can Join Our Academy?</h2><p style="text-align: center; max-width: 800px; margin: -2rem auto 0 auto;">Our platform is designed for anyone with a dream and a smartphone. If you have the will, we have the way.</p></div>
+                <div class="audience-grid">
+                    <div class="audience-card reveal"><i class="fas fa-user-graduate"></i><h4>Students</h4></div>
+                    <div class="audience-card reveal"><i class="fas fa-house-user"></i><h4>Homemakers</h4></div>
+                    <div class="audience-card reveal"><i class="fas fa-user-tie"></i><h4>Job Holders</h4></div>
+                    <div class="audience-card reveal"><i class="fas fa-briefcase"></i><h4>Unemployed</h4></div>
+                </div>
+            </div>
+        </section>
+        <section class="stats-section section-padding">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card reveal"><i class="fas fa-users"></i><h3 class="stat-counter" data-target="12000">0+</h3><p>Successful Members</p></div>
+                    <div class="stat-card reveal"><i class="fas fa-dollar-sign"></i><h3 class="stat-counter" data-target="2000000">$0+</h3><p>Combined Monthly Earnings</p></div>
+                    <div class="stat-card reveal"><i class="fas fa-chart-line"></i><h3 class="stat-counter" data-target="98">0%</h3><p>Success Rate</p></div>
+                    <div class="stat-card reveal"><i class="fas fa-star"></i><h3 class="rating">4.9<span style="font-size: 1.5rem;">/5</span></h3><p>Student Satisfaction</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="home-testimonial-section section-padding">
+            <div class="container">
+                <div class="home-testimonial reveal">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p class="quote-text">I used to drive a CNG, working long hours for little pay. I saw an ad and took a chance. Now, my monthly income is over $7000. I can't believe this is my life!</p>
+                    <h4 class="quote-author">- A Top Earner</h4><p class="quote-origin">Formerly a CNG Driver</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page Content (IMPROVED VERSION) -->
+    <div id="about-page" class="page hidden lights-on">
         <div class="about-header-wrapper">
             <div class="banner-lights">
                 <div class="cabinet-light"> <div class="arm"></div> <div class="light-bar"></div> </div>
@@ -271,21 +625,14 @@
                     <div class="about-logo"></div>
                 </a>
                 <h1 class="main-title">The Superstar Academy</h1>
-                <p class="about-mission">
-                  
-                </p>
             </div>
 
+            <!-- Leadership: Founder & Co-Founders -->
             <div class="team-section">
-                <!-- Founders Section (no title needed) -->
-                <div class="members-container" style="align-items: flex-end; margin-bottom: 20px;">
-                    <!-- Card for Mr. Juwel Rana -->
+                <div class="members-container" style="align-items: flex-start;">
                     <div class="member-card co-founder">
                         <div class="member-photo-container"><img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/481902404_564827639942297_761448422007561494_n.jpg?raw=true" alt="Mr. Juwel Rana"></div>
-                        <div class="member-details">
-                            <p class="member-name">Mr. Juwel Rana</p>
-                            <p class="member-role">[CO-FOUNDER]</p>
-                        </div>
+                        <div class="member-details"><p class="member-name">Mr. Juwel Rana</p><p class="member-role">[CO-FOUNDER]</p></div>
                     </div>
                     <div class="member-card founder">
                         <div class="member-photo-container"><img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/506989814_3647819795523218_8106587890812539835_n.jpg?raw=true" alt="MR. Omar Faruk"></div>
@@ -298,8 +645,9 @@
                 </div>
             </div>
 
+            <!-- Adviser Team -->
             <div class="team-section">
-                <h2 class="team-title">Advisory Board</h2>
+                <h2 class="team-title">Adviser</h2>
                 <div class="members-container">
                     <div class="member-card"><div class="member-photo-container"><img src="https://raw.githubusercontent.com/md-juwel-rana-104/thesupersteracademyofficial/refs/heads/main/sarabn.jfif" alt="Saraban Tahura Hasie"></div><div class="member-details"><p class="member-name">Saraban Tahura Hasie</p></div></div>
                     <div class="member-card"><div class="member-photo-container"><img src="https://raw.githubusercontent.com/md-juwel-rana-104/thesupersteracademyofficial/refs/heads/main/salma.jfif" alt="Umme Salma"></div><div class="member-details"><p class="member-name">Umme Salma</p></div></div>
@@ -307,6 +655,7 @@
                 </div>
             </div>
 
+            <!-- Core Leadership Team -->
             <div class="team-section">
                 <h2 class="team-title">Core Leadership Team</h2>
                 <div class="members-container">
@@ -317,6 +666,7 @@
                 </div>
             </div>
 
+            <!-- IT Team -->
             <div class="team-section">
                 <h2 class="team-title">IT Team</h2>
                 <div class="members-container">
@@ -327,6 +677,7 @@
                 </div>
             </div>
 
+            <!-- Creative Team -->
             <div class="team-section">
                 <h2 class="team-title">Creative Team</h2>
                 <div class="members-container">
@@ -338,6 +689,7 @@
                 </div>
             </div>
 
+            <!-- Tour & Incentive Team -->
             <div class="team-section">
                 <h2 class="team-title">Tour & Incentive Team</h2>
                 <div class="members-container">
@@ -352,8 +704,153 @@
             </div>
         </div>
     </div>
-</main>
 
+    <!-- ===== END: NEW TEAM STRUCTURE ===== -->
+    </div>
+    </div>
+
+    <!-- Course Outline Page Content -->
+    <div id="course-page" class="page hidden">
+        <section class="course-section section-padding">
+            <div class="container">
+                <div class="section-title reveal"><h2>5-Day Transformation Program</h2><p style="text-align: center; max-width: 800px; margin: -2rem auto 0 auto;">Master the complete online earning ecosystem in just 5 days with our intensive, practical curriculum. All classes start at 9:00 PM daily.</p></div>
+                <div class="timeline">
+                    <div class="timeline-container left"><div class="timeline-content"><h3>Day 1 (Saturday): Digital Earning Opportunity</h3><ul><li><i class="fas fa-check" style="color: var(--accent-color);"></i> Active vs. Passive Income</li><li><i class="fas fa-check" style="color: var(--accent-color);"></i> The Concept of Time Leverage</li><li><i class="fas fa-check" style="color: var(--accent-color);"></i> ESBI Model Analysis</li></ul><p class="duration"><i class="far fa-clock" style="margin-right: 8px;"></i>Class Time: 9:00 PM - 9:40 PM</p></div></div>
+                    <div class="timeline-container right"><div class="timeline-content"><h3>Day 2 (Sunday): Industry Direction</h3><ul><li><i class="fas fa-check" style="color: var(--accent-color);"></i> Intro to Forever Living Products</li><li><i class="fas fa-check" style="color: var(--accent-color);"></i> Global Market: 85% Aloe Vera & 79% Honey</li></ul><p class="duration"><i class="far fa-clock" style="margin-right: 8px;"></i>Class Time: 9:00 PM - 10:10 PM</p></div></div>
+                    <div class="timeline-container left"><div class="timeline-content"><h3>Day 3 (Monday): The Marketing Plan</h3><ul><li><i class="fas fa-check" style="color: var(--accent-color);"></i> World's Easiest Marketing Plan</li><li><i class="fas fa-check" style="color: var(--accent-color);"></i> 12 Different Types of Income Projects</li></ul><p class="duration"><i class="far fa-clock" style="margin-right: 8px;"></i>Class Time: 9:00 PM - 10:30 PM</p></div></div>
+                    <div class="timeline-container right"><div class="timeline-content"><h3>Day 4 (Tuesday): Product Knowledge</h3><ul><li><i class="fas fa-check" style="color: var(--accent-color);"></i> World's Best Health & Wellness Products</li><li><i class="fas fa-check" style="color: var(--accent-color);"></i> Understanding Product Quality and Benefits</li></ul><p class="duration"><i class="far fa-clock" style="margin-right: 8px;"></i>Class Time: 9:00 PM - 10:10 PM</p></div></div>
+                    <div class="timeline-container left"><div class="timeline-content"><h3>Day 5 (Wednesday): How to Start Your Business</h3><ul><li><i class="fas fa-check" style="color: var(--accent-color);"></i> Fast, Medium, & Slow Business Tracks</li><li><i class="fas fa-check" style="color: var(--accent-color);"></i> Why This is Crucial For You</li><li><i class="fas fa-check" style="color: var(--accent-color);"></i> Live Q&A Session</li></ul><p class="duration"><i class="far fa-clock" style="margin-right: 8px;"></i>Class Time: 9:00 PM - 10:15 PM</p></div></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Achievements Page Content -->
+    <div id="achievements-page" class="page hidden">
+        <section class="achievements-section section-padding">
+            <div class="container">
+                <div class="section-title reveal"><h2>Our Community in Action</h2><p style="text-align: center; max-width: 800px; margin: -2rem auto 0 auto;">We believe in celebrating every milestone. Here's a glimpse of our vibrant community events and achievements.</p></div>
+                <div class="achievements-grid">
+                    <div class="achievement-card reveal"><img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/Screenshot_20250620_200704.jpg?raw=true" alt="Team Celebration Event"><div class="achievement-card-content"><h3>Joypurhat Offline Business Event</h3><p>Celebrating our new achievers at a vibrant offline event in Joypurhat. Here, a new Supervisor is being awarded for their outstanding performance.</p></div></div>
+                    <div class="achievement-card reveal"><img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/474218768_1150182266681257_6084848158409638024_n.jpg?raw=true" alt="New Achiever Celebration - Group Photo"><div class="achievement-card-content"><h3>New Achiever Celebration</h3><p>A proud moment for our top performers and mentors. This group photo captures the spirit of community and shared success that defines our academy.</p></div></div>
+                    <div class="achievement-card reveal"><img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/person%20(2).jpg?raw=true" alt="Leadership Training and Recognition"><div class="achievement-card-content"><h3>Leadership Recognition</h3><p>An exclusive moment where a high-achieving member receives a special award, recognizing their dedication and leadership within the community.</p></div></div>
+                    <div class="achievement-card reveal"><img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/IMG_20250621_230550.remini-enhanced.jpg?raw=true" alt="Team Strategy Session"><div class="achievement-card-content"><h3>Interactive Team Training</h3><p>Our members engage in dynamic training sessions, sharing strategies and fostering a collaborative environment. Success is a team sport at The Superster Academy.</p></div></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- [REPLACED] Success Stories Page Content -->
+    <main id="stories-page" class="page hidden">
+        <section class="stories-section section-padding">
+            <div class="container">
+                <div class="section-title reveal"><h2>From Zero to Hero: Real Success Stories</h2></div>
+
+                <div class="story-highlight reveal">
+                    <img src="https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/481902404_564827639942297_761448422007561494_n.jpg?raw=true" alt="Juwel Rana">
+                    <div>
+                        <h3>The Journey of Mr. Juwel Rana</h3>
+                        <p class="role">Co-Founder & Top Mentor</p>
+                        <p class="quote">"I started with nothing but a dream. Today, I'm living it and helping others do the same. This system works."</p>
+                    </div>
+                </div>
+
+                <div class="success-timeline">
+                    <div class="timeline-item reveal"><p class="date">March 2023</p><h4>The Beginning</h4><p>Started with zero knowledge but immense determination.</p></div>
+                    <div class="timeline-item reveal"><p class="date">June 2023</p><h4>First Success</h4><p>Completed the training and earned the first $100 online.</p></div>
+                    <div class="timeline-item reveal"><p class="date">December 2023</p><h4>The Breakthrough</h4><p>Crossed the $1,000 monthly income milestone.</p></div>
+                    <div class="timeline-item reveal"><p class="date">Present Day</p><h4>Giving Back</h4><p>Became a Co-Founder, now mentoring thousands of students towards their own success.</p></div>
+                </div>
+
+                <h3 style="text-align: center; font-size: 2rem; color: var(--white-color); margin: 4rem 0 2rem 0;" class="reveal">What Our Students Say</h3>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card reveal">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"As a student, I struggled to manage my expenses. Thanks to this academy, I now earn over $1000 a month and support my family. It's truly life-changing!"</p>
+                        <h4>- An Aspiring Student</h4>
+                        <span>Monthly Income: $1,000+</span>
+                    </div>
+                    <div class="testimonial-card reveal">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"I used to drive a CNG, working long hours for little pay. I saw an ad and took a chance. Now, my monthly income is over $7000. I can't believe this is my life!"</p>
+                        <h4>- Former CNG Driver</h4>
+                        <span>Monthly Income: $7,000+</span>
+                    </div>
+                    <div class="testimonial-card reveal">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Being a homemaker, I never thought I could have a career. The Superster Academy gave me the confidence and skills to build my own business from home. I feel so empowered!"</p>
+                        <h4>- A Successful Homemaker</h4>
+                        <span>Building Her Empire</span>
+                    </div>
+                </div>
+
+                <!-- COMMENT SECTION -->
+                <div class="section-padding" style="padding-bottom: 0;">
+                    <div class="section-title reveal" style="margin-bottom: 2rem;">
+                        <h2 style="font-size: 2rem;">Community Feedback</h2>
+                    </div>
+
+                    <div class="comments-list" id="highlighted-comments-container">
+                        <!-- Comments will be dynamically loaded here -->
+                    </div>
+
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <button id="show-all-comments-btn" class="btn">Show All Comments <i class="fas fa-chevron-down"></i></button>
+                    </div>
+
+                    <div class="comments-list" id="all-comments-container" style="display: none;">
+                        <!-- More comments will be dynamically loaded here -->
+                    </div>
+
+                    <div class="comment-form-container reveal">
+                        <h3>Share Your Thoughts</h3>
+                        <form id="comment-form" name="comment-form">
+                            <!-- This is for Comment Form submission -->
+                            <input type="hidden" name="FormType" value="Comment">
+                            <div class="form-group">
+                                <label for="comment-name">Your Name</label>
+                                <input type="text" id="comment-name" name="Name" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="comment-text">Your Comment</label>
+                                <textarea id="comment-text" name="Story" required placeholder="Share your experience with the academy! What did you learn? How has it helped you? আপনার মূল্যবান মতামত এখানে লিখুন..."></textarea>
+                            </div>
+                            <button type="submit" class="btn" style="width: 100%;">Post Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- [REPLACED] Registration Page Content (FORM) -->
+    <div id="register-page" class="page hidden">
+        <span class="close-btn" onclick="closeForm()">×</span>
+        <div class="form-container">
+            <h2>Register for the Free Masterclass</h2>
+            <form id="registration-form" name="registration-form">
+                <input type="hidden" name="FormType" value="Registration">
+                <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="Name" required placeholder="Enter your full name"></div>
+                <div class="form-group"><label for="mentor-name">Mentor's Name (if any)</label><input type="text" id="mentor-name" name="MentorName" placeholder="Enter mentor's full name"></div>
+                <div class="form-row">
+                    <div class="form-group"><label for="division">Division</label><select id="division" name="Division" required><option value="" disabled selected hidden>Select Division</option></select></div>
+                    <div class="form-group"><label for="district">District</label><select id="district" name="District" required disabled><option value="" disabled selected hidden>Select Division First</option></select></div>
+                </div>
+                <div class="form-group"><label for="upazila">Upazila / Thana</label><select id="upazila" name="Upazila" required disabled><option value="" disabled selected hidden>Select District First</option></select></div>
+                <div class="form-row">
+                    <div class="form-group"><label for="number">Mobile Number</label><input type="tel" id="number" name="Mobile" required></div>
+                    <div class="form-group"><label for="whatsapp">WhatsApp Number</label><input type="tel" id="whatsapp" name="WhatsApp" required></div>
+                </div>
+                <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="Email" required></div>
+                <div class="form-group"><label for="profession">Profession</label><select id="profession" name="Profession" required><option value="" disabled selected hidden>Select Profession</option><option value="Student">Student</option><option value="Homemaker">Homemaker</option><option value="Job Holder">Job Holder</option><option value="Businessman">Businessman</option><option value="Unemployed">Unemployed</option><option value="Doctor">Doctor</option><option value="Engineer">Engineer</option><option value="Teacher">Teacher</option><option value="Freelancer">Freelancer</option><option value="Lawyer">Lawyer</option><option value="Banker">Banker</option><option value="Govt. Employee">Govt. Employee</option><option value="Garments Worker">Garments Worker</option><option value="Farmer">Farmer</option><option value="Driver">Driver</option><option value="Expatriate">Expatriate (Probasee)</option><option value="Other">Other</option></select></div>
+                <div class="form-group"><label for="facebook-link">Facebook Profile Link<span class="required-star">*</span></label><input type="url" id="facebook-link" name="FacebookLink" required placeholder="https://www.facebook.com/your-profile"></div>
+                <button type="submit" class="btn" style="width: 100%;">Secure My Spot Now</button>
+            </form>
+        </div>
+    </div>
+
+</main>
 <!-- FOOTER -->
 <footer class="footer">
     <div class="container">
@@ -372,72 +869,594 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        // ======================= HELPER FUNCTIONS =======================
-        const initAboutPageAnimations = () => {
-            const lightToggle = document.getElementById('light-toggle');
-            const aboutPage = document.getElementById('about-page');
+        // ============== GLOBAL VARIABLES & CONSTANTS ==============
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const menuIcon = document.getElementById('menu-icon');
+        const navLinksMobile = document.getElementById('nav-links');
+        const fullAddressData = { "Barishal": { "Barguna": { "Amtali": [], "Bamna": [], "Barguna Sadar": [], "Betagi": [], "Patharghata": [], "Taltali": [] }, "Barishal": { "Agailjhara": [], "Babuganj": [], "Bakerganj": [], "Banaripara": [], "Gaurnadi": [], "Hizla": [], "Barishal Sadar": [], "Mehendiganj": [], "Muladi": [], "Wazirpur": [] }, "Bhola": { "Bhola Sadar": [], "Burhanuddin": [], "Char Fasson": [], "Daulatkhan": [], "Lalmohan": [], "Manpura": [], "Tazumuddin": [] }, "Jhalokati": { "Jhalokati Sadar": [], "Kathalia": [], "Nalchity": [], "Rajapur": [] }, "Patuakhali": { "Bauphal": [], "Dashmina": [], "Galachipa": [], "Kalapara": [], "Mirzaganj": [], "Patuakhali Sadar": [], "Rangabali": [], "Dumki": [] }, "Pirojpur": { "Bhandaria": [], "Kawkhali": [], "Mathbaria": [], "Nazirpur": [], "Pirojpur Sadar": [], "Nesarabad (Swarupkati)": [], "Zianagar": [] } }, "Chattogram": { "Bandarban": { "Alikadam": [], "Bandarban Sadar": [], "Lama": [], "Naikhongchhari": [], "Rowangchhari": [], "Ruma": [], "Thanchi": [] }, "Brahmanbaria": { "Akhaura": [], "Bancharampur": [], "Brahmanbaria Sadar": [], "Kasba": [], "Nabinagar": [], "Nasirnagar": [], "Sarail": [] }, "Chandpur": { "Chandpur Sadar": [], "Faridganj": [], "Haimchar": [], "Haziganj": [], "Kachua": [], "Matlab Dakshin": [], "Matlab Uttar": [], "Shahrasti": [] }, "Chattogram": { "Anwara": [], "Banshkhali": [], "Boalkhali": [], "Chandanaish": [], "Fatikchhari": [], "Hathazari": [], "Lohagara": [], "Mirsharai": [], "Patiya": [], "Rangunia": [], "Raozan": [], "Sandwip": [], "Satkania": [], "Sitakunda": [] }, "Cumilla": { "Barura": [], "Brahmanpara": [], "Burichang": [], "Chandina": [], "Chauddagram": [], "Daudkandi": [], "Debidwar": [], "Homna": [], "Laksam": [], "Muradnagar": [], "Nangalkot": [], "Titas": [] }, "Cox's Bazar": { "Chakaria": [], "Cox's Bazar Sadar": [], "Kutubdia": [], "Maheshkhali": [], "Pekua": [], "Ramu": [], "Teknaf": [], "Ukhia": [] }, "Feni": { "Chhagalnaiya": [], "Daganbhuiyan": [], "Feni Sadar": [], "Fulgazi": [], "Parshuram": [], "Sonagazi": [] }, "Khagrachhari": { "Dighinala": [], "Khagrachhari Sadar": [], "Lakshmichhari": [], "Mahalchhari": [], "Manikchhari": [], "Matiranga": [], "Panchhari": [], "Ramgarh": [] }, "Lakshmipur": { "Kamalnagar": [], "Lakshmipur Sadar": [], "Raipur": [], "Ramganj": [], "Ramgati": [] }, "Noakhali": { "Begumganj": [], "Chatkhil": [], "Noakhali Sadar (Sudharam)": [], "Hatiya": [], "Kabirhat": [], "Senbagh": [], "Subarnachar": [], "Sonaimuri": [] }, "Rangamati": { "Bagaichhari": [], "Barkal": [], "Belaichhari": [], "Juraichhari": [], "Kaptai": [], "Kaukhali (Betbunia)": [], "Langadu": [], "Naniarchar": [], "Rajasthali": [], "Rangamati Sadar": [] } }, "Dhaka": { "Dhaka": { "Dhamrai": [], "Dohar": [], "Keraniganj": [], "Nawabganj": [], "Savar": [] }, "Faridpur": { "Alfadanga": [], "Bhanga": [], "Boalmari": [], "Charbhadrasan": [], "Faridpur Sadar": [], "Madhukhali": [], "Nagarkanda": [], "Sadarpur": [], "Saltha": [] }, "Gazipur": { "Gazipur Sadar": [], "Kaliakair": [], "Kaliganj": [], "Kapasia": [], "Sreepur": [] }, "Gopalganj": { "Gopalganj Sadar": [], "Kashiani": [], "Kotalipara": [], "Muksudpur": [], "Tungipara": [] }, "Kishoreganj": { "Astagram": [], "Bajitpur": [], "Bhairab": [], "Hossainpur": [], "Itna": [], "Karimganj": [], "Katiadi": [], "Kishoreganj Sadar": [], "Kuliarchar": [], "Mithamain": [], "Nikli": [], "Pakundia": [], "Tarail": [] }, "Madaripur": { "Kalkini": [], "Madaripur Sadar": [], "Rajoir": [], "Shibchar": [] }, "Manikganj": { "Daulatpur": [], "Ghior": [], "Harirampur": [], "Manikganj Sadar": [], "saturia": [], "Shibalaya": [], "Singair": [] }, "Munshiganj": { "Gazaria": [], "Lohajang": [], "Munshganj Sadar": [], "Sirajdikhan": [], "Sreenagar": [], "Tongibari": [] }, "Narayanganj": { "Araihazar": [], "Bandar": [], "Narayanganj Sadar": [], "Rupganj": [], "Sonargaon": [] }, "Narsingdi": { "Belabo": [], "Monohardi": [], "Narsingdi Sadar": [], "Palash": [], "Raipura": [], "Shibpur": [] }, "Rajbari": { "Baliakandi": [], "Goalandaghat": [], "Pangsha": [], "Rajbari Sadar": [] }, "Shariatpur": { "Bhedarganj": [], "Damudya": [], "Gosairhat": [], "Naria": [], "Shariatpur Sadar": [], "Zajira": [] }, "Tangail": { "Basail": [], "Bhuapur": [], "Ghatail": [], "Gopalpur": [], "Kalihati": [], "Madhupur": [], "Mirzapur": [], "Nagarpur": [], "Sakhipur": [], "Tangail Sadar": [] } }, "Khulna": { "Bagerhat": { "Bagerhat Sadar": [], "Chitalmari": [], "Fakirhat": [], "Kachua": [], "Mollahat": [], "Mongla": [], "Morrelganj": [], "Rampal": [], "Sarankhola": [] }, "Chuadanga": { "Alamdanga": [], "Chuadanga Sadar": [], "Damurhuda": [], "Jibannagar": [] }, "Jashore": { "Abhaynagar": [], "Bagherpara": [], "Chaugachha": [], "Jashore Sadar": [], "Jhikargachha": [], "Keshabpur": [], "Manirampur": [], "Sharsha": [] }, "Jhenaidah": { "Harinakundu": [], "Jhenaidah Sadar": [], "Kaliganj": [], "Kotchandpur": [], "Maheshpur": [], "Shailkupa": [] }, "Khulna": { "Batiaghata": [], "Dacope": [], "Dighalia": [], "Dumuria": [], "Koyra": [], "Paikgachha": [], "Phultala": [], "Rupsha": [], "Terokhada": [] }, "Kushtia": { "Bheramara": [], "Daulatpur": [], "Khoksa": [], "Kumarkhali": [], "Kushtia Sadar": [], "Mirpur": [] }, "Magura": { "Magura Sadar": [], "Mohammadpur": [], "Shalikha": [], "Sreepur": [] }, "Meherpur": { "Gangni": [], "Meherpur Sadar": [], "Mujibnagar": [] }, "Narail": { "Kalia": [], "Lohagara": [], "Narail Sadar": [] } }, "Mymensingh": { "Jamalpur": { "Baksiganj": [], "Dewanganj": [], "Islampur": [], "Jamalpur Sadar": [], "Madarganj": [], "Melandaha": [], "Sarishabari": [] }, "Mymensingh": { "Bhaluka": [], "Dhobaura": [], "Fulbaria": [], "Gaffargaon": [], "Gauripur": [], "Haluaghat": [], "Ishwarganj": [], "Mymensingh Sadar": [], "Nandail": [], "Phulpur": [], "Trishal": [] }, "Netrokona": { "Atpara": [], "Barhatta": [], "Durgapur": [], "Khaliajuri": [], "Kalmakanda": [], "Kendua": [], "Madan": [], "Mohanganj": [], "Netrokona Sadar": [], "Purbadhala": [] }, "Sherpur": { "Jhenaigati": [], "Nakla": [], "Nalitabari": [], "Sherpur Sadar": [], "Sreebardi": [] } }, "Rajshahi": { "Bogura": { "Adamdighi": [], "Bogura Sadar": [], "Dhunat": [], "Dhupchanchia": [], "Gabtali": [], "Kahaloo": [], "Nandigram": [], "Sariakandi": [], "Shajahanpur": [], "Sherpur": [], "Shibganj": [], "Sonatala": [] }, "Joypurhat": { "Akkelpur": [], "Joypurhat Sadar": [], "Kalai": [], "Khetlal": [], "Panchbibi": [] }, "Naogaon": { "Atrai": [], "Badalgachhi": [], "Dhamoirhat": [], "Manda": [], "Mahadebpur": [], "Naogaon Sadar": [], "Niamatpur": [], "Patnitala": [], "Porsha": [], "Raninagar": [], "Sapahar": [] }, "Pabna": { "Atgharia": [], "Bera": [], "Bhangura": [], "Chatmohar": [], "Faridpur": [], "Ishwardi": [], "Pabna Sadar": [], "Santhia": [], "Sujanagar": [] }, "Rajshahi": { "Bagha": [], "Bagmara": [], "Charghat": [], "Durgapur": [], "Godagari": [], "Mohanpur": [], "Paba": [], "Puthia": [], "Tanore": [] }, "Sirajganj": { "Belkuchi": [], "Chauhali": [], "Kamarkhanda": [], "Kazipur": [], "Raiganj": [], "Shahjadpur": [], "Sirajganj Sadar": [], "Tarash": [], "Ullahpara": [] } }, "Rangpur": { "Dinajpur": { "Biral": [], "Birampur": [], "Birganj": [], "Bochaganj": [], "Chirirbandar": [], "Dinajpur Sadar": [], "Ghoraghat": [], "Hakimpur": [], "Kaharole": [], "Khansama": [], "Nawabganj": [], "Parbatipur": [], "Phulbari": [] }, "Gaibandha": { "Fulchhari": [], "Gaibandha Sadar": [], "Gobindaganj": [], "Palashbari": [], "Sadullapur": [], "Saghata": [], "Sundarganj": [] }, "Kurigram": { "Bhurungamari": [], "Char Rajibpur": [], "Chilmari": [], "Kurigram Sadar": [], "Nageshwari": [], "Phulbari": [], "Rajarhat": [], "Rowmari": [], "Ulipur": [] }, "Lalmonirhat": { "Aditmari": [], "Hatibandha": [], "Kaliganj": [], "Lalmonirhat Sadar": [], "Patgram": [] }, "Nilphamari": { "Dimla": [], "Domar": [], "Jaldhaka": [], "Kishoreganj": [], "Nilphamari Sadar": [], "Syedpur": [] }, "Panchagarh": { "Atwari": [], "Boda": [], "Debiganj": [], "Panchagarh Sadar": [], "Tetulia": [] }, "Rangpur": { "Badarganj": [], "Gangachhara": [], "Kaunia": [], "Mithapukur": [], "Pirgachha": [], "Pirganj": [], "Rangpur Sadar": [], "Taraganj": [] } }, "Sylhet": { "Habiganj": { "Ajmiriganj": [], "Bahubal": [], "Baniyachong": [], "Chunarughat": [], "Habiganj Sadar": [], "Lakhai": [], "Madhabpur": [], "Nabiganj": [] }, "Moulvibazar": { "Barlekha": [], "Juri": [], "Kamalganj": [], "Kulaura": [], "Moulvibazar Sadar": [], "Rajnagar": [], "Sreemangal": [] }, "Sunamganj": { "Bishwamvarpur": [], "Chhatak": [], "Derai": [], "Dharamapasha": [], "Dowarabazar": [], "Jagannathpur": [], "Jamalganj": [], "Sullah": [], "Sunamganj Sadar": [], "Tahirpur": [] }, "Sylhet": { "Balaganj": [], "Beanibazar": [], "Bishwanath": [], "Companiganj": [], "Fenchuganj": [], "Golapganj": [], "Gowainghat": [], "Jaintiapur": [], "Kanaighat": [], "South Surma": [], "Sylhet Sadar": [], "Zakiganj": [] } } };
 
-            if (lightToggle && aboutPage && !lightToggle.hasAttribute('data-listener-added')) {
-                lightToggle.addEventListener('change', () => {
-                    // Toggle classes on both body and the page for different effects
-                    document.body.classList.toggle('about-lights-on');
-                    aboutPage.classList.toggle('lights-on');
-                });
-                lightToggle.setAttribute('data-listener-added', 'true');
+        // ============== HELPER FUNCTIONS ==============
+        const showPage = (pageId, clickedLink) => {
+            pages.forEach(page => page.classList.add('hidden'));
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+            if (clickedLink && !clickedLink.classList.contains('btn')) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                clickedLink.classList.add('active');
+            }
+            if (navLinksMobile) {
+                navLinksMobile.classList.remove('active');
+            }
+            document.body.style.overflow = (pageId === 'register-page') ? 'hidden' : 'auto';
+            if (pageId !== 'register-page') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            const memberCards = document.querySelectorAll('#about-page .member-card');
-            const observer = new IntersectionObserver(entries => {
+            if (pageId === 'about-page') {
+                setTimeout(initAboutPageAnimations, 50);
+            } else {
+                setTimeout(revealElements, 100);
+            }
+        };
+
+        const closeForm = () => {
+            showPage('home-page', document.querySelector('.nav-links a[onclick*="home-page"]'));
+        };
+
+        const revealElements = () => {
+            const reveals = document.querySelectorAll('.page:not(#about-page) .reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1 });
+            reveals.forEach(element => revealObserver.observe(element));
 
-            memberCards.forEach((card, i) => {
-                card.style.transitionDelay = `${i * 50}ms`;
-                observer.observe(card);
-            });
-        };
-
-        const initMobileMenu = () => {
-            const menuIcon = document.getElementById('menu-icon');
-            const navLinksMobile = document.getElementById('nav-links');
-            if (menuIcon && navLinksMobile) {
-                menuIcon.addEventListener('click', () => {
-                    navLinksMobile.classList.toggle('active');
+            const gridContainers = document.querySelectorAll('.how-it-works-grid, .audience-grid, .stats-grid, .testimonials-grid, .achievements-grid');
+            gridContainers.forEach(container => {
+                const items = container.querySelectorAll('.reveal');
+                items.forEach((item, index) => {
+                    item.style.transitionDelay = `${index * 150}ms`;
                 });
+            });
+
+            const timeline = document.querySelector('.timeline');
+            if (timeline) {
+                const timelineObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.2 });
+                timelineObserver.observe(timeline);
+
+                const timelineItems = document.querySelectorAll('.timeline-container');
+                const timelineItemObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.classList.add('visible');
+                            }, index * 200);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                timelineItems.forEach(item => timelineItemObserver.observe(item));
             }
         };
 
-        const initLightTrail = () => {
-            document.addEventListener('mousemove', e => {
-                const trail = document.createElement('div');
-                trail.className = 'trail';
-                trail.style.left = e.pageX + 'px';
-                trail.style.top = e.pageY + 'px';
-                document.body.appendChild(trail);
-                setTimeout(() => {
-                    trail.remove();
-                }, 1000);
+        // ===============================================
+        // START: DIGITAL WATCH JAVASCRIPT (ADDED HERE)
+        // ===============================================
+        const initDigitalWatch = () => {
+            function updateClock() {
+                const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                const now = new Date();
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                let seconds = now.getSeconds();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                const day = dayNames[now.getDay()];
+                const date = now.getDate();
+                const month = monthNames[now.getMonth()];
+                const year = now.getFullYear();
+
+                // Check if elements exist before updating
+                const hoursEl = document.getElementById('hours');
+                const minutesEl = document.getElementById('minutes');
+                const secondsEl = document.getElementById('seconds');
+                const ampmEl = document.getElementById('ampm');
+                const dayEl = document.getElementById('day');
+                const dateEl = document.getElementById('date');
+
+                if(hoursEl) hoursEl.textContent = hours;
+                if(minutesEl) minutesEl.textContent = minutes;
+                if(secondsEl) secondsEl.textContent = seconds;
+                if(ampmEl) ampmEl.textContent = ampm;
+                if(dayEl) dayEl.textContent = day;
+                if(dateEl) dateEl.textContent = `${month} ${date}, ${year}`;
+            }
+            // Update the clock every second
+            setInterval(updateClock, 1000);
+            // Run the clock as soon as the page loads
+            updateClock();
+        }
+        // ===============================================
+        // END: DIGITAL WATCH JAVASCRIPT
+        // ===============================================
+
+        // ============== INITIALIZATION FUNCTIONS ==============
+        const initPreloader = () => {
+            const preloader = document.getElementById('preloader');
+            if (!preloader) return;
+
+            const loaderTextContainer = document.getElementById('loader-text-container');
+            const loaderText = document.getElementById('loader-text');
+            const loaderLogoWrapper = document.getElementById('loader-logo-wrapper');
+            const imageWrapper = document.getElementById('loader-image-wrapper');
+            const loaderImage = document.getElementById('loader-image');
+            const progressBarInner = document.querySelector('.progress-bar-inner');
+            const messages = [ "The Superster Academy", "Founder:\nMr. Omar Faruk", "Co-Founder:\nMr. Juwel Rana", "Start Your Journey..." ];
+            const profiles = {
+                "Founder:\nMr. Omar Faruk": "https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/506989814_3647819795523218_8106587890812539835_n.jpg?raw=true",
+                "Co-Founder:\nMr. Juwel Rana": "https://github.com/md-juwel-rana-104/thesupersteracademyofficial/blob/main/481902404_564827639942297_761448422007561494_n.jpg?raw=true"
+            };
+
+            let messageIndex = 0, charIndex = 0;
+            const typingSpeed = 45, pauseBetweenMessages = 800;
+
+            let totalAnimationTime = 0;
+            messages.forEach(msg => { totalAnimationTime += msg.length * typingSpeed + pauseBetweenMessages; });
+            totalAnimationTime += 500;
+            progressBarInner.style.transition = `width ${totalAnimationTime}ms linear`;
+            setTimeout(() => { progressBarInner.style.width = '100%'; }, 50);
+
+            function typeMessage() {
+                if (messageIndex >= messages.length) {
+                    setTimeout(() => preloader.classList.add('hidden'), 500);
+                    return;
+                }
+                const currentMessage = messages[messageIndex];
+                if (charIndex === 0) {
+                    loaderText.innerHTML = '';
+                    loaderTextContainer.style.color = 'var(--hacker-accent-color)';
+                    if (currentMessage === "The Superster Academy") {
+                        imageWrapper.classList.remove('visible');
+                        loaderLogoWrapper.classList.add('visible');
+                    } else if (profiles[currentMessage]) {
+                        loaderLogoWrapper.classList.remove('visible');
+                        loaderImage.src = profiles[currentMessage];
+                        imageWrapper.classList.add('visible');
+                    } else {
+                        loaderLogoWrapper.classList.remove('visible');
+                        imageWrapper.classList.remove('visible');
+                        loaderTextContainer.style.color = 'var(--gold-color)';
+                    }
+                }
+                if (charIndex < currentMessage.length) {
+                    loaderText.innerHTML += (currentMessage[charIndex] === '\n') ? '<br>' : currentMessage[charIndex];
+                    charIndex++;
+                    setTimeout(typeMessage, typingSpeed);
+                } else {
+                    messageIndex++;
+                    charIndex = 0;
+                    setTimeout(typeMessage, pauseBetweenMessages);
+                }
+            }
+            typeMessage();
+        };
+
+        const initHeroCanvas = () => {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let particles = [], mouse = { x: null, y: null, radius: 150 };
+            const resizeCanvas = () => { canvas.width = window.innerWidth; canvas.height = document.querySelector('.hero').offsetHeight; };
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+            class Particle { constructor(x, y, dX, dY, s, c) { this.x=x; this.y=y; this.directionX=dX; this.directionY=dY; this.size=s; this.color=c; } draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false); ctx.fillStyle=this.color; ctx.fill(); } update() { if(this.x>canvas.width||this.x<0){this.directionX=-this.directionX;} if(this.y>canvas.height||this.y<0){this.directionY=-this.directionY;} let dx=mouse.x-this.x, dy=mouse.y-this.y, dist=Math.sqrt(dx*dx+dy*dy); if(dist<mouse.radius+this.size){if(mouse.x<this.x&&this.x<canvas.width-this.size*10){this.x+=5;}if(mouse.x>this.x&&this.x>this.size*10){this.x-=5;}if(mouse.y<this.y&&this.y<canvas.height-this.size*10){this.y+=5;}if(mouse.y>this.y&&this.y>this.size*10){this.y-=5;}} this.x+=this.directionX; this.y+=this.directionY; this.draw(); } }
+            const initParticles = () => { particles=[]; let num = (canvas.height*canvas.width)/9000; for(let i=0;i<num;i++){ let s=(Math.random()*2)+1, x=(Math.random()*((innerWidth-s*2)-(s*2))+s*2), y=(Math.random()*((innerHeight-s*2)-(s*2))+s*2), dX=(Math.random()*.4)-.2, dY=(Math.random()*.4)-.2, c='rgba(100,255,218,.6)'; particles.push(new Particle(x,y,dX,dY,s,c)); } };
+            const connect = () => { let op=1; for(let a=0;a<particles.length;a++){ for(let b=a;b<particles.length;b++){ let dist=((particles[a].x-particles[b].x)*(particles[a].x-particles[b].x))+((particles[a].y-particles[b].y)*(particles[a].y-particles[b].y)); if(dist<(canvas.width/7)*(canvas.height/7)){ op=1-(dist/20000); ctx.strokeStyle=`rgba(255,215,0,${op})`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(particles[a].x,particles[a].y); ctx.lineTo(particles[b].x,particles[b].y); ctx.stroke(); } } } };
+            const animate = () => { requestAnimationFrame(animate); ctx.clearRect(0,0,innerWidth,innerHeight); for(let i=0;i<particles.length;i++){particles[i].update();} connect(); };
+            initParticles(); animate();
+        };
+
+        const initStatCounters = () => {
+            const statsSection = document.querySelector('.stats-section');
+            if (!statsSection) return;
+            let animated = false;
+            const animateCounters = () => { document.querySelectorAll('.stat-counter').forEach(c => { const update = () => { const t=+c.getAttribute('data-target'), val=+c.innerText.replace(/\D/g,''), inc=t/200; if(val<t){ const nC=Math.ceil(val+inc); if(t===2000000){c.innerText='$'+nC.toLocaleString()+'+';} else if(t===98){c.innerText=nC+'%';} else{c.innerText=nC.toLocaleString()+'+';} setTimeout(update,15); } else { if(t===2000000){c.innerText='$'+t.toLocaleString()+'+';} else if(t===98){c.innerText=t+'%';} else{c.innerText=t.toLocaleString()+'+';} } }; update(); }); };
+            new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting&&!animated){animateCounters();animated=true;}})},{threshold:.5}).observe(statsSection);
+        };
+
+        const initMobileMenu = () => { if (menuIcon && navLinksMobile) menuIcon.addEventListener('click', () => navLinksMobile.classList.toggle('active')); };
+
+        const initLightTrail = () => { document.addEventListener('mousemove', e => { const t=document.createElement('div'); t.className='trail'; t.style.left=e.pageX+'px'; t.style.top=e.pageY+'px'; document.body.appendChild(t); setTimeout(()=>t.remove(),1000); }); };
+
+        const initAboutPageAnimations = () => {
+            const lightToggle = document.getElementById('light-toggle');
+            const aboutPage = document.getElementById('about-page');
+            if (lightToggle && aboutPage && !lightToggle.hasAttribute('data-listener-added')) {
+                lightToggle.addEventListener('change', () => aboutPage.classList.toggle('lights-on'));
+                lightToggle.setAttribute('data-listener-added', 'true');
+            }
+            const memberCards = document.querySelectorAll('#about-page .member-card');
+            const observer = new IntersectionObserver(e => e.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); }), { threshold: 0.1 });
+            memberCards.forEach((card, i) => { card.style.transitionDelay = `${i * 50}ms`; observer.observe(card); });
+        };
+
+        // [REPLACED] Registration Form JS
+        const initRegistrationForm = () => {
+            const form = document.forms['registration-form'];
+            if (!form) return;
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxAr2zzZuPmGCzYj75T-vqqjq94B8Qi5_9suy7jxAIjxi8i1GL6cHHgNGGZ8aS191uA/exec';
+
+            const phoneInput = form.querySelector("#number");
+            const whatsappInput = form.querySelector("#whatsapp");
+            const phoneIti = window.intlTelInput(phoneInput, { initialCountry: "bd", separateDialCode: true, utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js" });
+            const whatsappIti = window.intlTelInput(whatsappInput, { initialCountry: "bd", separateDialCode: true, utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js" });
+
+            const allowNumbersOnly = input => { input.value = input.value.replace(/\D/g, ''); };
+            phoneInput.addEventListener('input', () => allowNumbersOnly(phoneInput));
+            whatsappInput.addEventListener('input', () => allowNumbersOnly(whatsappInput));
+            phoneInput.addEventListener("countrychange", () => whatsappIti.setCountry(phoneIti.getSelectedCountryData().iso2));
+
+            const divisionSelect = form.querySelector('#division');
+            const districtSelect = form.querySelector('#district');
+            const upazilaSelect = form.querySelector('#upazila');
+
+            Object.keys(fullAddressData).forEach(division => {
+                const option = document.createElement('option');
+                option.value = division;
+                option.textContent = division;
+                divisionSelect.appendChild(option);
+            });
+
+            const resetSelect = (selectElement, placeholderText) => {
+                selectElement.innerHTML = `<option value="" disabled selected hidden>${placeholderText}</option>`;
+                selectElement.disabled = true;
+            };
+
+            divisionSelect.onchange = () => {
+                const selectedDivision = divisionSelect.value;
+                resetSelect(districtSelect, "Select District");
+                resetSelect(upazilaSelect, "Select District First");
+                if (selectedDivision) {
+                    Object.keys(fullAddressData[selectedDivision]).forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        option.textContent = district;
+                        districtSelect.appendChild(option);
+                    });
+                    districtSelect.disabled = false;
+                }
+            };
+
+            districtSelect.onchange = () => {
+                const selectedDivision = divisionSelect.value;
+                const selectedDistrict = districtSelect.value;
+                resetSelect(upazilaSelect, "Select Upazila");
+                if (selectedDistrict) {
+                    Object.keys(fullAddressData[selectedDivision][selectedDistrict]).forEach(upazila => {
+                         const option = document.createElement('option');
+                         option.value = upazila;
+                         option.textContent = upazila;
+                         upazilaSelect.appendChild(option);
+                    });
+                    upazilaSelect.disabled = false;
+                }
+            };
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const nameInput = form.querySelector('#name');
+                if (!/^[a-zA-Z\s.'-]{4,}$/.test(nameInput.value)) {
+                    Swal.fire({ icon: 'error', title: 'Invalid Name', text: 'Please enter a valid full name (at least 4 characters).', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d' });
+                    return;
+                }
+                if (!phoneIti.isValidNumber() || !whatsappIti.isValidNumber()) {
+                    Swal.fire({ icon: 'error', title: 'Invalid Phone Number', text: 'Please enter valid Mobile and WhatsApp numbers.', background: '#112240', color: '#ccd6f6', confirmButtonColor: '#ff4d4d' });
+                    return;
+                }
+
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Submitting...';
+
+                const formData = new FormData(form);
+                formData.set('Mobile', phoneIti.getNumber());
+                formData.set('WhatsApp', whatsappIti.getNumber());
+
+                fetch(scriptURL, { method: 'POST', body: formData })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result === 'success') {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: `Thank you, ${nameInput.value}! Your registration is successful.`,
+                                icon: 'success',
+                                background: '#112240',
+                                color: '#ccd6f6',
+                                confirmButtonColor: '#64ffda'
+                            });
+                            form.reset();
+                            resetSelect(districtSelect, "Select Division First");
+                            resetSelect(upazilaSelect, "Select District First");
+                            phoneIti.setCountry("bd");
+                            whatsappIti.setCountry("bd");
+                            closeForm();
+                        } else {
+                             throw new Error(data.error || 'Unknown submission error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error!', error);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred during submission. Please try again.',
+                            icon: 'error',
+                            background: '#112240',
+                            color: '#ccd6f6',
+                            confirmButtonColor: '#ff4d4d'
+                        });
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = 'Secure My Spot Now';
+                    });
             });
         };
 
-        // ======================= MAIN EXECUTION =======================
+        // [REPLACED] Comment Section JS
+        const initCommentSection = () => {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwT9hCQlbkKGoNuFqmXuRJCrG2EJ1KwU624kV7cvMu0XhaSjuqUYsdOZeojlsdAbbOWiw/exec';
+            const form = document.getElementById('comment-form');
+            if (!form) return;
+
+            const localCommentData = {
+                stories: [
+                    { name: 'Sadia Islam', story: "University'r pressure, tuition r taka dia nijer koros chalan lagto  – life ta khub tough chilo. Family'r upor burden hote ar bhalo lagchilo na. The Superstar Academy te join korar por Omar Faruk sir er motivation ar Juwel Rana sir er business plan—ei duitar combined mentorship e aj ami fully self-dependent. Nijer pocket money r jonno ar vabte hoy na, borong last Eid e ammu'r jonno nijer takay ekta sharee kine dilam. Ammur mukher oi hashi ta koti takar cheyeo daami. Shotti bolte, The Superstar Academy'r support system ta na thakle eto dur asha shomvob chilo na. ❤️" },
+                    { name: 'Nusrat Jahan', story: "Ekjon student hishebe amar shobcheye boro bhoy chilo future niye. Ki korbo, kivabe korbo, kichui bujhtam na. Shudhu omar faruk sir er mentorship ta peye amar chokhe ondhokar kete gelo. Tini eto shohoj kore business strategy bujhiyechen, ami kokhono bhabtei parini. Class er pashapashi ghore boshe The superstar Academy er shathe income korchi. Of course, The Superstar Academy'r shobai onnek helpful, kokhono kono problem e porle shathe shathe solution peyechi." },
+                    { name: 'Fatema Akter', story: "Hostel e thaktam, masher sheshe babar kache takar jonno phone dite khub lojja lagto. Omar Faruk sir er personality development class gulo amake notun kore atmobishwashi kore toleche. Tar confidence boost amake independent hote shajjo koreche. Ekhon hostel er meye rao amar kache ashe jante, kivabe eto shundor bhabe life lead korchi. It's all because of TSA's amazing community and Omar sir's guidance." },
+                    { name: 'Israt Jahan Mim', story: "ছোট একটা শহর থেকে এসে ঢাকায় পড়াশোনা করাটা অনেক চ্যালেঞ্জিং ছিল। খরচের চাপে প্রায়ই মনে হতো পড়াশোনা ছেড়ে বাড়ি ফিরে যাই। ঠিক সেই সময়েই The Superstar Academy আমার জীবনে আশীর্বাদ হয়ে আসে। জুয়েল রানা স্যার আর ওমর ফারুক স্যারের গাইডলাইন ছাড়া আমি হয়তো হারিয়েই যেতাম। তারা শুধু ব্যবসাই শেখাননি, শিখিয়েছেন কীভাবে কঠিন সময়েও টিকে থাকতে হয়। একাডেমির প্রতিটি সদস্যের সাপোর্ট আমাকে সবসময় সাহস জুগিয়েছে। আজ আমি নিজের পায়ে দাঁড়িয়েছি, এটাই আমার সবচেয়ে বড় পাওয়া।" },
+                    { name: 'Sumaiya Chowdhury', story: "Amar shob bandhobider dekhtam bhalobhabe cholche, kintu ami simple ekta dress kintew 10 bar bhabtam. The Superstar Academy te ashar por shudhu amar financial condition e change hoyni, amar personality o change hoyeche. Shudhu Omar Faruk sir er mentorship e eta shomvob hoyeche. Tini amake notun kore nijeke chinte shikhiyechen. Of course, The Superstar Academy'r support team er kacheo ami kritoggo. 💪" },
+                    { name: 'আফরোজা খাতুন', story: "গ্রামের একটা সাধারণ মেয়ে আমি, যার বড় কোনো স্বপ্ন দেখারও সাহস ছিল না। The Superstar Academy আমার সেই সাহসের দরজা খুলে দিয়েছে। জুয়েল রানা স্যারের ক্লাসগুলো আমার চিন্তার জগৎকে বদলে দিয়েছে। তার সাপোর্টে আজ আমি শুধু স্বাবলম্বীই নই, আমার গ্রামের আরও দশটা মেয়েকে পথ দেখাচ্ছি। এই সম্মানটুকু পাওয়ার পেছনে আমার মেন্টর ও পুরো একাডেমির অবদান ভোলার নয়।" },
+                    { name: 'Tasnia Kabir', story: "As an English medium student, I always wanted to be independent. The Superstar Academy provided the perfect platform. The system is straightforward, and the support from both Mr. Juwel Rana and Mr. Omar Faruk is incredible. They are more than mentors; they are life coaches. The entire community here is so helpful, which made my journey much easier." },
+                    { name: 'Maria Haque', story: "Part-time job kore porashunar khoroch chalate giye result kharap hochhilo. Tension e ghum hoto na. The Superstar Academy te join korar por Juwel sir er technical support r Omar sir er motivation—ei duitar combination e amar life 180 degree ghuriye diyeche. Ekhon ar part-time job o lage na, result o onek bhalo. Academy'r study material gulo o khub helpful chilo. Alhamdulillah!" },
+                    { name: 'জান্নাতুল মাওয়া', story: "বাবা অসুস্থ হওয়ার পর পড়াশোনা প্রায় বন্ধ হয়ে যাচ্ছিল। পরিবারের বড় মেয়ে হিসেবে আমার অনেক দায়িত্ব ছিল। The Superstar Academy আমাকে সেই দায়িত্ব পালন করার শক্তি জুগিয়েছে। বিশেষ করে জুয়েল রানা স্যারের দেখানো পথে হেঁটে আজ আমি আমার পরিবারের সবচেয়ে বড় অবলম্বন। বাবার চিকিৎসার পুরো খরচ আমিই দিচ্ছি। একাডেমির প্রতিটি মানুষ আমার কঠিন সময়ে পাশে ছিল, যা আমি কোনোদিন ভুলব না।" },
+                    { name: 'Sanjida Akter', story: "Ami khub introvert chilam, manush er sathe kotha boltei bhoy petam. Business korbo, eta chilo oshopno. Kintu The Superstar Academy te Omar Faruk sir er personality development class gulo amake bodle diyeche, r Juwel Rana sir er technical support amake kaaj korte sahosh jogiyeche. Aj ami ekta team lead korchi. Eta shudhu taka income er jayga na, nijeke gore tolar ekta karigar. The Superstar Academy'r support team er kache ami chirokritoggo. 🙏" },
+                    { name: 'Mehedi Hasan', story: "Shudhu ekta bike kenar onek shokh chilo. Baba'ke bolte pari ni. The Superstar Academy te eshe Juwel sir ar Omar sir er class kore matro 6 mashe nijer income diye Yamaha R15 V4 kinechi! Jiboner prothom boro achievement. Ei platform ar er support system na pele eta kokhonoi shomvob chilo na. Thanks to my mentors! 🔥" },
+                    { name: 'আকাশ ইসলাম (বেকার যুবক)', story: "অনার্স শেষ করে দুই বছর ধরে চাকরির জন্য ঘুরছিলাম। হতাশায় ডুবে গিয়েছিলাম। The Superstar Academy আমার জীবনে আশার আলো হয়ে আসে। জুয়েল রানা স্যারের স্ট্র্যাটেজি আর ওমর ফারুক স্যারের মোটিভেশন আমাকে নতুন করে পথ দেখিয়েছে। মাত্র কয়েক মাসেই আমি নিজের পায়ে দাঁড়িয়েছি। একাডেমির প্রতিটি সদস্য, বিশেষ করে সাপোর্ট টিম, আমাকে পরিবারের মতো সাপোর্ট দিয়েছে।" },
+                    { name: 'Rahat Ahmed', story: "Babar pension er takay shongshar cholto. Nijer jonno kichu chaiteo kharap lagto. The Superstar Academy te join korar por shudhu Juwel Rana sir er strategic guidance peyei ekhon ami babar hate mashe mashe taka dite pari. Baba jokhon gorbo kore bolen 'amar chele ekhon shongsharer daayitto niyeche', sheta shunar anondo ta shera. The academy's environment is truly inspiring. 🥹" },
+                    { name: 'Saif Khan', story: "Always wanted a high-end gaming PC for my streaming passion, but it was just a dream. After joining The Superstar Academy, the mentorship I received from Omar Faruk sir was phenomenal. He taught me how to present myself and build a community. The technical skills came from the academy's amazing training modules. Six months later, I built my dream PC with my own earnings." },
+                    { name: 'নাজমুল ইসলাম', story: "কৃষক বাবার সন্তান আমি। বাবার কষ্ট দেখে পড়াশোনার পাশাপাশি কিছু একটা করার তীব্র ইচ্ছা ছিল। The Superstar Academy আমাকে সেই পথ দেখিয়েছে। জুয়েল রানা স্যার আর ওমর ফারুক স্যার আমাকে শিখিয়েছেন, অবস্থান কোনো বাধা নয়, ইচ্ছাই আসল। একাডেমির সাপোর্ট টিম সবসময় আমার পাশে ছিল। আজ আমি আমার পুরো সেমিস্টারের ফি নিজেই দিই। বাবাকে এখন আর ক্ষেতে একা কাজ করতে হয় না। এই পরিবর্তনটাই আমার সাফল্য।" },
+                    { name: 'Fahim Islam', story: "I was a good student, but I had zero practical skills. The Superstar Academy didn't just teach me how to earn; it taught me communication, leadership, and financial management. Juwel sir's business insights and the academy's weekly workshops are priceless. This is more than an earning platform; it's a life school." },
+                    { name: 'আমেনা বেগম', story: "বিয়ের পর আমার পৃথিবীটা যেন চার দেয়ালে বন্দী হয়ে গিয়েছিল। নিজের একটা পরিচয় ছিল না। The Superstar Academy আমার সেই হারিয়ে যাওয়া আত্মবিশ্বাস ফিরিয়ে দিয়েছে। জুয়েল রানা স্যারের সহজভাবে বোঝানোর ধরণ আর ওমর ফারুক স্যারের অনুপ্রেরণা—এই দুইয়ের সমন্বয়ে আমি আজ ঘরে বসেই একজন সফল উদ্যোক্তা। একাডেমির অন্যান্য সফল আপুদের দেখে আমি আরও সাহস পেয়েছি। আমরা সবাই এখানে একটা পরিবার।" },
+                    { name: 'Halima Khatun', story: "Shongsharer shob kaj koreo mone hoto, amar nijer kono porichoy nei. Chele-meyera boro hochhe. The Superstar Academy amake shei shujog kore diyeche. Shudhu Juwel Rana sir er mentorship e ekhon ami shoshurer cheyeo beshi income kori. Amar shami o ekhon amake niye onnek proud. The Superstar Academy'r support system best." },
+                    { name: 'শারমিন আক্তার', story: "বাচ্চা ছোট হওয়ায় বাইরে গিয়ে চাকরি করা সম্ভব ছিল না। কিন্তু সংসারে একটু সাহায্য করার ইচ্ছাটা সবসময় ছিল। The Superstar Academy আমার জন্য আশীর্বাদের মতো। বিশেষ করে ওমর ফারুক স্যারের অনুপ্রেরণামূলক কথাগুলো আমাকে সাহস জুগিয়েছে। আজ আমি একজন গর্বিত মা এবং একজন সফল বিজনেস ওম্যান। একাডেমির হেল্পলাইন সবসময় আমার জন্য খোলা ছিল।" },
+                    { name: 'Rehana Parvin', story: "My husband had a small business, and we were always struggling financially. I decided to support him and joined The Superstar Academy. The guidance from both Juwel sir and Omar sir was so effective that my income now helps run our family smoothly. We are a team, and the academy's supportive community made it possible. I feel so empowered." },
+                    { name: 'রীতা রায়', story: "আমার শাশুড়ি বলতেন, 'বউ মানুষের আবার আয়-রোজগার কীসের!' এই কথাটা আমার বুকে বিঁধত। The Superstar Academy-তে যোগ দিয়ে আমি প্রমাণ করে দিয়েছি যে মেয়েরা সব পারে। জুয়েল রানা স্যার আর ওমর ফারুক স্যারের হাত ধরে আজ আমি এত সফল যে, আমার শাশুড়িই এখন সবার কাছে আমার প্রশংসা করেন। এই পরিবর্তনটাই আমার জয়, যা একাডেমির সাপোর্ট ছাড়া সম্ভব ছিল না।" },
+                    { name: 'Asif Ahmed (Banker)', story: "The 9-to-5 banking grind was draining me. I joined The Superstar Academy out of curiosity. Within a year, my income from this platform surpassed my banking salary. It's not just about the money; it's about reclaiming my time. The mentorship from both Mr. Juwel Rana and Mr. Omar Faruk is world-class, and the academy provides an incredible support structure. This is true financial freedom." },
+                    { name: 'Dr. Rehnuma Parvin (Doctor)', story: "Serving patients is my passion, but financial stress was a constant worry. The Superstar Academy offered a way to build a secondary, stable income stream. The ethical business model taught by Juwel sir and the mindset coaching from Omar sir were key. The academy's flexible schedule allowed me to do this without compromising my medical practice. Now I can focus more on my patients, free from financial anxiety." },
+                    { name: 'রফিকুল ইসলাম (পুলিশ)', story: "দেশের সেবা করি, এটা আমার গর্ব। কিন্তু চাকরির ডিউটির পর পরিবারের জন্য একটা সুন্দর ভবিষ্যৎ গড়ার চিন্তাটা সবসময় মাথায় ঘুরত। The Superstar Academy আমাকে সেই সুযোগটা করে দিয়েছে। ডিউটির বাইরের সময়টাকে কাজে লাগিয়ে আমি এখন একটা নির্ভরযোগ্য দ্বিতীয় আয়ের উৎস তৈরি করতে পেরেছি। জুয়েল রানা স্যারের গাইডলাইন আর একাডেমির সাপোর্ট না থাকলে এটা সম্ভব হতো না। জয় বাংলা।" },
+                    { name: 'Kamrul Islam (Govt. Employee)', story: "Sorkari chakri kori, shomman ache kintu shokh puron korar moto extra income chilo na. Chele-meyeder bhalo school e poranor ichha ta opurno theke jachchilo. The Superstar Academy te shudhu Omar sir er mentorship e ekhon amar mashik aay double. Tini amake time management er je koushol shikhiechen, ta अद्भुत. The academy support team is also very responsive." },
+                    { name: 'Tanzim Hasan (Software Engineer)', story: "As an engineer, I believed only in logic. The concept of network marketing seemed illogical. But The Superstar Academy's systematic approach, explained brilliantly by Juwel sir, opened my eyes. This isn't magic; it's a proven business science. The academy's resource library is a goldmine for anyone who wants to learn. My analytical mind is satisfied, and so is my bank account." },
+                    { name: 'ফারহানা মিলি (শিক্ষিকা)', story: "স্কুলে সারাদিন বাচ্চাদের পড়ানোর পর নিজের বাচ্চার জন্য ভালো কিছু করার মতো শক্তি বা টাকা, কোনোটিই থাকত না। The Superstar Academy আমার মতো শিক্ষকদের জন্য একটা অসাধারণ সুযোগ। জুয়েল রানা স্যার আর ওমর ফারুক স্যারের প্রতি আমি কৃতজ্ঞ, কারণ তাদের দেখানো পথে হেঁটে এবং একাডেমির সাপ্তাহিক ট্রেনিং সেশনে অংশ নিয়ে আমি আজ আমার শিক্ষকতার পাশাপাশি অতিরিক্ত সম্মানজনক আয় করতে পারছি।" },
+                    { name: 'Sabbir Rahman (Freelancer)', story: "Freelancer life manei income er kono nishchoyota nai. The Superstar Academy amake passive income er shokti bujhiyeche. Juwel sir er business model training e aj ami client er opor dependent na. Amar ekhon ekta system ache ja amar jonno 24/7 kaaj kore. The academy's community keeps me motivated every day. The ultimate freedom!" },
+                    { name: 'Rezaul Karim (Sales Executive)', story: "Target er pressure e jibon shesh. The Superstar Academy te join korar por Omar sir er communication skill training e ami amar regular job eo onek উন্নতি korechi. Ar eikhaner income to bonus! The academy's environment helps you to grow personally and professionally. Eta shudhu taka na, nijeke upgrade korar ekta platform." },
+                    { name: 'আরিফুল হক (ছোট ব্যবসায়ী)', story: "আমার একটা ছোট কাপড়ের দোকান ছিল। করোনায় ব্যবসার অবস্থা খুব খারাপ হয়ে যায়। আমি প্রায় ভেঙ্গে পড়েছিলাম। The Superstar Academy আমাকে নতুন করে ঘুরে দাঁড়ানোর সাহস দিয়েছে। জুয়েল রানা স্যার ও ওমর ফারুক স্যার আমাকে ডিজিটাল মার্কেটিং এবং বিজনেস ম্যানেজমেন্টের এমন কিছু কৌশল শিখিয়েছেন যা আমার পুরনো ব্যবসাকেও লাভজনক করতে সাহায্য করেছে। একাডেমির সাপোর্ট ছাড়া এটা হতো না। আমি চিরকৃতজ্ঞ।" },
+                    { name: 'Nasrin Sultana (Nurse)', story: "Hospitale patient der sheba kortam, kintu nijer poribarer arthik chinta matha theke jeto na. The Superstar Academy amake shei durotar obosan gotiyese. Juwel Rana স্যার ও Omar Faruk স্যারের mentorship e aj ami amar shob financial goal achieve korte perechi. Patient der ekhon aro hasimukhe sheba dite pari. The academy's 24/7 support is a lifesaver for professionals like me." },
+                    { name: 'Jamal Uddin (Expatriate, Dubai)', story: "Bidesher matite eka eka 12 ghonta porishrom kore deshe taka pathatam. Kintu deshe fire ki korbo, shei chintay ghum hoto na. The Superstar Academy amake deshe boshei ekta permanent income source toiri korar poth dekhiyeche. Juwel sir ar Omar sir boro bhai er moto guide koren. Ami ekhon onek shantite achi, karon jani deshe firle amake ar chinta korte hobe na. Academy'r online system ta amader moto probasider jonno ekta ashirbad." },
+                    { name: 'বিপ্লব দাস (আর্টিস্ট)', story: "আমি একজন শিল্পী, ছবি এঁকেই আমার চলত। কিন্তু শিল্প দিয়ে সবসময় পেট চলে না। এই কঠিন সত্যটা আমাকে হতাশ করে দিয়েছিল। The Superstar Academy-তে এসে আমি আমার শিল্পী সত্ত্বাকে বাঁচিয়ে রেখেই একটা স্থিতিশীল আয়ের পথ খুঁজে পেয়েছি। জুয়েল রানা স্যার আর ওমর ফারুক স্যার শিখিয়েছেন, প্যাশনের সাথে প্রফেশনকে কীভাবে সুন্দরভাবে মেলানো যায়। একাডেমির ফ্লেক্সিবিলিটি আমাকে আমার শিল্পচর্চা চালিয়ে যেতে সাহায্য করেছে।" },
+                    { name: 'Sonia Rahman (Fashion Designer)', story: "I had my own small boutique, but the competition was fierce. The Superstar Academy, under the guidance of Mr. Juwel Rana, taught me about personal branding and online presence. My boutique's sales have tripled, and my income from the academy itself provides me with capital to expand. The support from the whole TSA community has been invaluable. It's a win-win situation." },
+                    { name: 'কালাম শেখ (ড্রাইভার)', story: "দিন-রাত গাড়ি চালিয়েও সংসারের অভাব ঘোচাতে পারতাম না। এক প্যাসেঞ্জারের কাছে The Superstar Academy-র কথা শুনি। প্রথমে ভেবেছিলাম, আমার মতো মানুষ কি পারবে! কিন্তু ওমর ফারুক স্যার এত সহজ করে বোঝালেন, আমার সব ভয় কেটে গেল। আজ আমি গাড়ি চালাই শখে, অভাবে না। আমার ছেলেকে ইংলিশ মিডিয়ামে পড়াচ্ছি। এই সবই আমার মেন্টর আর একাডেমির সাপোর্টের জন্য সম্ভব হয়েছে।" }
+                ]
+            };
+
+            const addCommentToDOM = (name, comment) => {
+                const container = document.getElementById('highlighted-comments-container');
+                const newCommentDiv = document.createElement('div');
+                newCommentDiv.className = 'comment-card new-comment-animation';
+
+                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                const sanitizedComment = document.createElement('p');
+                sanitizedComment.textContent = comment;
+
+                newCommentDiv.innerHTML = `
+                    <div class="comment-avatar">${initials}</div>
+                    <div class="comment-body">
+                        <div class="comment-meta">
+                            <span class="name">${name}</span>
+                            <span class="date">Just now</span>
+                        </div>
+                        <p class="comment-text">${sanitizedComment.innerHTML.replace(/\n/g, '<br>')}</p>
+                    </div>`;
+                container.prepend(newCommentDiv);
+            };
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nameInput = form.querySelector('#comment-name');
+                const commentInput = document.getElementById('comment-text');
+                if (nameInput.value.trim() === '' || commentInput.value.trim() === '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please fill out all fields.',
+                        background: '#112240',
+                        color: '#ccd6f6',
+                        confirmButtonColor: '#ff4d4d'
+                    });
+                    return;
+                }
+
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Posting...';
+
+                const formData = new FormData(form);
+                formData.set('Name', nameInput.value);
+                formData.set('Story', commentInput.value);
+
+                fetch(scriptURL, { method: 'POST', body: formData })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.result === 'success') {
+                            Swal.fire({
+                                title: 'Thank You!',
+                                text: 'Your comment has been posted!',
+                                icon: 'success',
+                                background: '#112240',
+                                color: '#ccd6f6',
+                                confirmButtonColor: '#64ffda'
+                            });
+                            addCommentToDOM(nameInput.value, commentInput.value);
+                            form.reset();
+                        } else {
+                            throw new Error(data.error || 'Unknown error');
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred while posting. Please try again.',
+                            icon: 'error',
+                            background: '#112240',
+                            color: '#ccd6f6',
+                            confirmButtonColor: '#ff4d4d'
+                        });
+                    })
+                    .finally(() => {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = 'Post Comment';
+                    });
+            });
+
+            const generateAndDisplayComments = (commentData) => {
+                const highlightedContainer = document.getElementById('highlighted-comments-container');
+                const allCommentsContainer = document.getElementById('all-comments-container');
+                const showAllBtn = document.getElementById('show-all-comments-btn');
+
+                if (!highlightedContainer || !allCommentsContainer || !showAllBtn) return;
+                highlightedContainer.innerHTML = '';
+                allCommentsContainer.innerHTML = '';
+
+                const shuffledStories = [...commentData.stories].sort(() => 0.5 - Math.random());
+                const highlightedCount = 5;
+
+                if (shuffledStories.length === 0) {
+                    showAllBtn.style.display = 'none';
+                    return;
+                }
+
+                shuffledStories.forEach((storyData, index) => {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.className = 'comment-card';
+
+                    const name = storyData.name || 'Anonymous';
+                    const story = storyData.story || 'No story provided.';
+                    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                    const sanitizedComment = document.createElement('p');
+                    sanitizedComment.textContent = story;
+
+                    const generateRandomTimeAgo = () => {
+                        const r = Math.random();
+                        let val;
+                        if (r < 0.05) { val = Math.floor(Math.random() * 59) + 1; return `${val} minute${val > 1 ? 's' : ''} ago`; }
+                        else if (r < 0.20) { val = Math.floor(Math.random() * 23) + 1; return `${val} hour${val > 1 ? 's' : ''} ago`; }
+                        else if (r < 0.70) { val = Math.floor(Math.random() * 6) + 1; return `${val} day${val > 1 ? 's' : ''} ago`; }
+                        else if (r < 0.90) { val = Math.floor(Math.random() * 3) + 1; return `${val} week${val > 1 ? 's' : ''} ago`; }
+                        else { val = Math.floor(Math.random() * 3) + 1; return `${val} month${val > 1 ? 's' : ''} ago`; }
+                    };
+
+                    commentDiv.innerHTML = `
+                        <div class="comment-avatar">${initials}</div>
+                        <div class="comment-body">
+                            <div class="comment-meta">
+                                <span class="name">${name}</span>
+                                <span class="date">${generateRandomTimeAgo()}</span>
+                            </div>
+                            <p class="comment-text">${sanitizedComment.innerHTML.replace(/\n/g, '<br>')}</p>
+                        </div>`;
+
+                    if (index < highlightedCount) {
+                        highlightedContainer.appendChild(commentDiv);
+                    } else {
+                        allCommentsContainer.appendChild(commentDiv);
+                    }
+                });
+
+                if (shuffledStories.length > highlightedCount) {
+                    showAllBtn.style.display = 'inline-block';
+                } else {
+                    showAllBtn.style.display = 'none';
+                }
+
+                const newShowAllBtn = showAllBtn.cloneNode(true);
+                showAllBtn.parentNode.replaceChild(newShowAllBtn, showAllBtn);
+                newShowAllBtn.addEventListener('click', () => {
+                    allCommentsContainer.style.display = 'flex';
+                    newShowAllBtn.style.display = 'none'; // Corrected this line
+                }, { once: true });
+            };
+
+            const fetchAndDisplayComments = () => {
+                generateAndDisplayComments(localCommentData); // Show local data first
+
+                // Then, try to fetch fresh data from Google Sheets
+                fetch(`${scriptURL}?action=getComments`)
+                    .then(res => res.json())
+                    .then(response => {
+                        if (response.result === 'success' && response.data && response.data.length > 0) {
+                            // Combine local and fetched data, ensuring no duplicates
+                            const combinedStories = [...localCommentData.stories, ...response.data];
+                            const uniqueStories = Array.from(new Set(combinedStories.map(s => s.story)))
+                                                      .map(story => combinedStories.find(s => s.story === story));
+                            generateAndDisplayComments({ stories: uniqueStories });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching comments from Google Sheet, showing local data only:', error);
+                    });
+            };
+
+            fetchAndDisplayComments();
+        };
+
+        // ============== MAIN EXECUTION ==============
+        initPreloader();
+        initHeroCanvas();
+        initDigitalWatch();
+        initStatCounters();
         initMobileMenu();
         initLightTrail();
-        initAboutPageAnimations();
-
-        // Ensure the page and body have the correct classes on load
-        document.getElementById('about-page').classList.remove('hidden');
-        document.body.classList.add('about-lights-on'); // For fixed background light
-        document.getElementById('about-page').classList.add('lights-on'); // For on-page glow effects
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
+        initRegistrationForm(); // Updated function
+        initCommentSection(); // Updated function
+        navLinks.forEach(l=>{const pM=l.getAttribute('onclick').match(/'([^']+)'/);if(pM&&pM[1]){const pId=pM[1];l.addEventListener('click',e=>{e.preventDefault();showPage(pId,l);});}});
+        window.showPage=showPage; window.closeForm=closeForm;
+        showPage('home-page', document.querySelector('.nav-links a[onclick*="home-page"]'));
     });
 </script>
-
 </body>
 </html>
