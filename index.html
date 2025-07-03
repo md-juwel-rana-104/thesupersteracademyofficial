@@ -197,39 +197,7 @@
             letter-spacing: 2px;
             text-shadow: 0 0 5px var(--text-light);
         }
-        /* Media query for smaller screens */
-        @media (max-width: 992px) {
-    #about-page { padding: 10px; padding-top: 80px; }
-    .light-bar { width: 80%; max-width: 350px; }
-    .main-title { font-size: 1.8rem; margin-top: 10px; }
-    .team-section::before { display: none; }
-    .members-container {
-        gap: 10px; /* কার্ডগুলোর মধ্যে ফাঁকা জায়গা কমানো হয়েছে */
-    }
-    .member-card {
-        width: 100px; /* মোবাইলের জন্য কার্ডের সাইজ ছোট করা হয়েছে */
-    }
-    .member-photo-container {
-        width: 65px;  /* মোবাইলের জন্য ছবির সাইজ ছোট করা হয়েছে */
-        height: 65px;
-    }
-    .member-name {
-        font-size: 0.7rem;
-    }
-    .member-card.founder .member-photo-container {
-        width: 80px;  /* মোবাইলের জন্য Founder-এর ছবিও ছোট করা হয়েছে */
-        height: 80px;
-    }
-    .member-card:hover { transform: translateY(0) !important; }
-    .light-switch-container {
-        top: 100px;
-        right: 15px;
-    }
-    .member-card.founder {
-        transform: translateY(0);
-        order: -1;
-    }
-}
+       
         /* ======================================================== */
         /* END: DIGITAL WATCH CSS                                   */
         /* ======================================================== */
@@ -287,89 +255,150 @@
         }
         #about-page::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient( ellipse at 50% 25%, #ffc94d 0%, #d48a0f 25%, rgba(10, 25, 47, 0) 70% );
+            background: radial-gradient( ellipse at 50% 15%, #ffc94d 0%, #d48a0f 25%, rgba(10, 25, 47, 0) 70% );
             opacity: var(--about-background-opacity);
             transition: opacity 0.7s ease-in-out;
             z-index: -1;
         }
         .about-header-wrapper { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
-        .banner-lights { display: flex; justify-content: center; margin-bottom: 30px; }
-        .cabinet-light { display: flex; flex-direction: column; align-items: center; }
-        .arm { width: 25px; height: 50px; background: linear-gradient(to top, #444, #888); border-radius: 10px 10px 0 0; }
-        .light-bar {
-            width: 350px; height: 18px; background-color: #fff; border-radius: 20px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, var(--about-glow-opacity)), 0 0 20px rgba(255, 255, 255, var(--about-glow-opacity)), 0 0 40px rgba(255, 201, 77, var(--about-glow-opacity)), 0 0 var(--about-glow-spread) rgba(212, 138, 15, var(--about-glow-opacity));
-            transition: box-shadow 0.7s ease-in-out;
+        .light-switch-container {
+            position: fixed;
+            top: 100px;
+            right: 20px; /* Adjusted position */
+            z-index: 1001;
+            display: none; /* Hidden by default */
         }
-        .light-switch-container { position: fixed; top: 100px; right: 25px; z-index: 1001; }
-        .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
+        #about-page.page:not(.hidden) .light-switch-container {
+             display: block; /* Only show when about page is active */
+        }
+        .switch { position: relative; display: inline-block; width: 68px; height: 36px; } /* Slightly larger */
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #3b2a5f; transition: .4s; border-radius: 34px; border: 1px solid var(--gold-color); }
-        .slider:before { position: absolute; content: "🌙"; height: 26px; width: 26px; left: 4px; bottom: 3px; display: flex; align-items: center; justify-content: center; background-color: white; transition: .4s; border-radius: 50%; color: #231a3b; }
-        input:checked + .slider { background-color: var(--gold-color); }
-        input:checked + .slider:before { transform: translateX(26px); content: "☀️"; }
-        .org-chart-container { max-width: 1400px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 70px; padding-bottom: 100px; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #3b2a5f;
+            transition: .4s;
+            border-radius: 36px;
+            border: 1px solid var(--gold-color);
+        }
+        .slider:before {
+            position: absolute; content: "🌙"; height: 28px; width: 28px;
+            left: 4px; bottom: 3px;
+            display: flex; align-items: center; justify-content: center;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            color: #231a3b;
+            font-size: 18px;
+        }
+        input:checked + .slider { background-color: #f9d71c; box-shadow: 0 0 15px #f9d71c; } /* Brighter yellow */
+        input:checked + .slider:before { transform: translateX(32px); content: "☀️"; } /* Adjusted transform */
+
+        .org-chart-container { max-width: 1400px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 50px; padding-bottom: 100px; }
         .about-header-section { display: flex; justify-content: center; align-items: center; flex-direction: column; margin-bottom: 20px; }
         .about-logo-link { display: block; margin-bottom: 20px; }
         .about-logo {
-            width: 80px; height: 80px; background: url('https://raw.githubusercontent.com/md-juwel-rana-104/thesupersteracademyofficial/refs/heads/main/the%20superster%20academy.jfif') no-repeat center center;
-            background-size: cover; border-radius: 10px; border: 2px solid var(--gold-color); transition: transform 0.3s ease;
+            width: 100px; height: 100px; 
+            background: url('https://raw.githubusercontent.com/md-juwel-rana-104/thesupersteracademyofficial/refs/heads/main/the%20superster%20academy.jfif') no-repeat center center;
+            background-size: contain;
+            border-radius: 20px; 
+            border: 3px solid #64ffda; 
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
         }
-        .about-logo-link:hover .about-logo { transform: scale(1.1); box-shadow: 0 0 15px var(--accent-color); }
-        .main-title { font-size: 2.5rem; font-weight: 700; text-transform: uppercase; color: var(--accent-color); }
+        .about-logo-link:hover .about-logo { transform: scale(1.1); box-shadow: 0 0 25px var(--accent-color); }
+        .main-title { font-size: 2.5rem; font-weight: 700; text-transform: uppercase; color: var(--accent-color); text-shadow: 0 0 10px rgba(100, 255, 218, 0.5); }
+        
+        /* New Light Fixture */
+        .light-fixture-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .light-fixture {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .light-fixture .arm {
+            width: 12px;
+            height: 40px;
+            background: #555;
+            background-image: linear-gradient(to right, #444, #666);
+            border-radius: 5px 5px 0 0;
+        }
+        .light-fixture .bulb-container {
+            width: 30px;
+            height: 30px;
+            background: #777;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 5px;
+        }
+        .light-fixture .bulb {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: box-shadow 0.7s ease-in-out;
+            box-shadow: 0 0 10px rgba(255, 255, 255, var(--about-glow-opacity)),
+                        0 0 20px rgba(255, 255, 255, var(--about-glow-opacity)),
+                        0 0 40px rgba(255, 201, 77, var(--about-glow-opacity)),
+                        0 0 var(--about-glow-spread) rgba(212, 138, 15, var(--about-glow-opacity));
+        }
+
         .team-section { display: flex; flex-direction: column; align-items: center; position: relative; width: 100%;}
-        .team-section:not(:first-of-type)::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: 2px; height: 70px; background-color: var(--about-connector-color); }
-        .team-title { font-size: 1.2rem; font-weight: 600; text-transform: uppercase; margin-bottom: 30px; color: var(--text-light); padding: 5px 20px; border: 1px solid var(--about-connector-color); border-radius: 20px; background-color: var(--secondary-color); }
-        .members-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .member-card { display: flex; flex-direction: column; align-items: center; width: 130px; transition: transform 0.3s ease, opacity 0.5s ease; opacity: 0; transform: translateY(20px); }
+        .team-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            color: var(--text-light);
+            padding: 8px 30px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 50px;
+            background-color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        .members-container { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; align-items: center; }
+        .member-card { display: flex; flex-direction: column; align-items: center; width: 150px; transition: transform 0.3s ease, opacity 0.5s ease; opacity: 0; transform: translateY(20px); }
         .member-card.visible { opacity: 1; transform: translateY(0); }
         .member-card:hover { transform: translateY(-8px) scale(1.05) !important; }
-        .member-photo-container { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--gold-color); overflow: hidden; margin-bottom: 10px; background: #fff; transition: box-shadow 0.3s ease; }
-        .member-card:hover .member-photo-container { box-shadow: 0 0 15px var(--accent-color), 0 0 5px var(--accent-color); }
+        .member-photo-container {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid var(--gold-color);
+            overflow: hidden;
+            margin-bottom: 12px;
+            background: #fff;
+            transition: box-shadow 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+        .member-card:hover .member-photo-container { box-shadow: 0 0 20px var(--accent-color), 0 0 8px var(--accent-color); }
         .member-photo-container img { width: 100%; height: 100%; object-fit: cover; }
-        .member-details { background-color: var(--secondary-color); padding: 8px 10px; border-radius: 5px; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        .member-name { font-size: 0.8rem; font-weight: 600; line-height: 1.2; color: var(--text-light); }
-        .member-role { font-size: 0.7rem; opacity: 0.8; text-transform: uppercase; color: var(--accent-color); }
-        .member-card.founder { transform: translateY(-20px); }
-        .member-card.founder .member-photo-container { width: 110px; height: 110px; border-color: #e74c3c; }
-        .member-card.founder .member-details { background-color: #e74c3c; }
-        .member-card.founder .member-name { font-size: 0.9rem; color: var(--white-color); }
-        .member-card.founder .member-role { color: var(--gold-color); }
-        .member-card.co-founder .member-details { background-color: var(--primary-color); }
+        .member-details {
+            background-color: var(--secondary-color);
+            padding: 10px 12px;
+            border-radius: 8px;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        .member-name { font-size: 0.9rem; font-weight: 600; line-height: 1.3; color: var(--text-light); margin: 0; }
+        .member-role { font-size: 0.75rem; text-transform: uppercase; color: var(--accent-color); margin-top: 4px; }
+        
+        .member-card.founder { transform: translateY(0); }
+        .member-card.founder .member-photo-container { width: 120px; height: 120px; border-color: #e74c3c; }
+        .member-card.founder .member-details { background-color: #c0392b; }
+        .member-card.founder .member-name { font-size: 1rem; color: var(--white-color); }
+        .member-card.founder .member-role { color: var(--gold-color); font-weight: 700; }
+        
+        .member-card.co-founder .member-details { background-color: #1a3a69; }
         .member-card.co-founder .member-role { color: var(--gold-color); }
 
-        @media (max-width: 992px) {
-            #about-page { padding: 10px; padding-top: 80px; }
-            .light-bar { width: 80%; max-width: 350px; }
-            .main-title { font-size: 1.8rem; margin-top: 10px; }
-            .team-section::before { display: none; }
-            .members-container {
-                gap: 15px;
-            }
-            .member-card {
-                width: 110px; /* Adjusted size for denser layout */
-            }
-             .member-photo-container {
-                width: 75px;
-                height: 75px;
-            }
-            .member-name {
-                font-size: 0.7rem;
-            }
-             .member-card.founder .member-photo-container {
-                width: 90px;
-                height: 90px;
-            }
-            .member-card:hover { transform: translateY(0) !important; }
-            .light-switch-container {
-                top: 100px; /* Moved switch down to a better position */
-                right: 15px;
-            }
-            .member-card.founder {
-                transform: translateY(0);
-                order: -1;
-            }
-        }
         /* ============== END: IMPROVED ABOUT US PAGE STYLES ============== */
 
         /* Course Outline Page */
@@ -471,7 +500,8 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; } h2 { font-size: 2rem; }
+            h1 { font-size: 2.5rem; } 
+            h2 { font-size: 2rem; }
             .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background-color: var(--secondary-color); flex-direction: column; justify-content: center; align-items: center; transition: right 0.5s ease-in-out; box-shadow: -5px 0 15px rgba(0,0,0,0.3); }
             .nav-links.active { right: 0; }
             .nav-links li { margin: 1.5rem 0; }
@@ -487,6 +517,12 @@
             .success-timeline::before { left: 10px; }
             .timeline-item { margin-left: 40px; }
             .timeline-item::before { left: -28.5px; }
+            
+             /* Digital watch responsive */
+            .digital-watch-container { padding: 15px 20px; margin: 2rem auto; }
+            .time-display span { font-size: 2.5rem; }
+            #ampm { font-size: 1.2rem; }
+            .date-display { font-size: 0.9rem; }
         }
     </style>
 
@@ -593,11 +629,6 @@
 
     <!-- About Page Content (IMPROVED VERSION) -->
     <div id="about-page" class="page hidden lights-on">
-        <div class="about-header-wrapper">
-            <div class="banner-lights">
-                <div class="cabinet-light"> <div class="arm"></div> <div class="light-bar"></div> </div>
-            </div>
-        </div>
 
         <div class="light-switch-container">
             <label class="switch">
@@ -608,6 +639,14 @@
 
         <div class="org-chart-container">
             <div class="about-header-section">
+                <div class="light-fixture-container">
+                    <div class="light-fixture">
+                        <div class="arm"></div>
+                        <div class="bulb-container">
+                            <div class="bulb"></div>
+                        </div>
+                    </div>
+                </div>
                 <a href="#" class="about-logo-link" aria-label="The Superstar Academy Homepage">
                     <div class="about-logo"></div>
                 </a>
@@ -692,9 +731,6 @@
         </div>
     </div>
 
-            <!-- ===== END: NEW TEAM STRUCTURE ===== -->
-        </div>
-    </div>
 
     <!-- Course Outline Page Content -->
     <div id="course-page" class="page hidden">
@@ -1447,5 +1483,6 @@
 </script>
 </body>
 </html>
+
 
 
